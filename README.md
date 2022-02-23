@@ -64,7 +64,7 @@ As an example the following specifies a serial chain graph such that each task d
 
 
 Scripts to generate graph files are in the `graphs/` directory. 
-`viz.py` is used to draw graphs to the screen using networkx
+`viz.py` is used to draw graphs to the screen (uses and REQUIRES networkx [https://networkx.org/] )
 `run.py` is used to launch 
 
 The command line options for all scripts can be inspected by using '-h'.
