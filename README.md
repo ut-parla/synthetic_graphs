@@ -1,4 +1,4 @@
-# synthetic_graphs
+# Parla Synthetic Graphs
 Synthetic Task Graphs for Parla Testing and Benchmarks
 
 
@@ -9,6 +9,8 @@ The first line of the file specifies an initial data partitioning.
 This is a comma separated list of the number of elements in each partition.
 
 Each subsequent line represents a task. 
+
+
 `<task_id> | <task time (μs)>, <1/vcus>, <location>, <# gil access>, <gil time (μs)> | <task dependencies> | <in_data> : <out_data> : <inout_data>`
 
 `<task_id>` can be an arbitrarily long list of comma seperated integers.
