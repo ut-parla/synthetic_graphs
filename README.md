@@ -74,7 +74,7 @@ Example usage is:
 
 ```
 python graph/generate_serial_graph.py
-python run.py -graph graph/serial.gph --data_move 0
+python run.py -graph graph/serial.gph -data_move 0
 ```
 
 This would generate a serial graph (with default configuration) and runs it without any data movement. 
