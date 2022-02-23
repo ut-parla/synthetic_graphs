@@ -26,7 +26,7 @@ Note this must be a valid launch order for Parla, otherwise the dependencies won
 
 As an example the following specifies a serial chain graph such that each task depends (redundently) on its two immediate predecessors. 
 
-- Each task is launched on the GPU and consumes a whole device. 
+- Each task is launched on the GPU and consumes a whole device (`vcus=1`). 
 - Each task busy waits for 50000 microseconds without the GIL and 200 microsecoonds with the GIL. 
 - Each task reads data_block[1] of size 100 and read/writes to data_block[0] of size 40. 
 
