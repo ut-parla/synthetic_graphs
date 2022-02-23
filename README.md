@@ -3,6 +3,23 @@ Synthetic Task Graphs for Parla Testing and Benchmarks
 
 
 This is a small directory for setting up toy synthetic graphs for the Parla Python tasking system. 
+
+
+## Install
+
+You must compile the Cython `sleep` module which requires Cython & CUDA and must be set to an architecture newer than Pascal. 
+[This allows one to potentially use the __nanosleep routine, which is currently unused in this implementation] 
+
+The architecture is currently hardcoded in `setup.py` for Frontera's RTX nodes (`sm_70`). 
+But this can be changed on L24. 
+After updating architeture the module can be compiled simply with `make` or `python setup.py install <options>`.
+
+For simplicity we use the Kokkos `nvcc` wrapper to avoid having to precompile the CUDA into a shared object file. 
+
+The `synthetic` directory is currently maintained to be used as a module in-place.
+
+## Usage
+
 Graphs are specified with "\*.gph" files with the following semantics:
 
 The first line of the file specifies an initial data partitioning. 
