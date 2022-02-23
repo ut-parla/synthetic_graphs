@@ -14,9 +14,8 @@ Generates an independent set of tasks:
 """
 
 
-
-
-
+def fstr(template, **kwargs):
+        return eval(f"f'{template}'", kwargs)
 
 
 parser = argparse.ArgumentParser(description='Create embarassingly parallel graph')

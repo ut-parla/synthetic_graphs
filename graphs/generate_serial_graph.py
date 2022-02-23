@@ -1,6 +1,7 @@
 import numpy as np
 import argparse
 
+
 """
 
 Generates a chain of tasks:
@@ -19,13 +20,12 @@ Options:
 
 """
 
+def fstr(template, **kwargs):
+        return eval(f"f'{template}'", kwargs)
 
+parser = argparse.ArgumentParser(description='Create serial chain graph')
 
-
-
-
-parser = argparse.ArgumentParser(description='Create embarassingly parallel graph')
-parser.add_argument('-levels', metavar='width', type=int, help='the length of the task chain', default=10)
+parser.add_argument('-levels', metavar='levels', type=int, help='Length of the task chain', default=10)
 parser.add_argument('-overlap', metavar='overlap', type=int, help='type of data read. e.g are the buffers shared. options = (False=0, True=1)', default=0)
 parser.add_argument('-output', metavar='output', type=str, help='name of output file containing the graph', default="serial.gph")
 parser.add_argument('-weight', metavar='weight', type=int, help='time (in microseconds) that the computation of the task should take', default=50000)
@@ -63,6 +63,7 @@ else:
     #All tasks in the chain read/write different data
     n_partitions = level
     N = N * level
+print(n_partitions)
 
 with open(output, 'w') as graph:
 
@@ -92,6 +93,8 @@ with open(output, 'w') as graph:
             dependency += "{" + f"i - {j}" + "}"
             if j+1 < limit:
                 dependency += " : "
+
+        dependency = fstr(dependency, i=i)
 
         graph.write(f"{i} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {dependency} | : : {index} \n")
 

@@ -20,7 +20,7 @@ Options:
 
 """
 
-parser = argparse.ArgumentParser(description='Create embarassingly parallel graph')
+parser = argparse.ArgumentParser(description='Create iterations of a domain decomposition-like graph')
 parser.add_argument('-levels', metavar='levels', type=int, help='the number of iterations', default=4)
 parser.add_argument('-width', metavar='width', type=int, help='the length of the task chain', default=4)
 parser.add_argument('-overlap', metavar='overlap', type=int, help='type of data read. e.g are the buffers shared. options = (False=0, True=1)', default=0)

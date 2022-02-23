@@ -24,12 +24,12 @@ Options:
 """
 
 
+def fstr(template, **kwargs):
+        return eval(f"f'{template}'", kwargs)
 
 
-
-
-parser = argparse.ArgumentParser(description='Create embarassingly parallel graph')
-parser.add_argument('-levels', metavar='width', type=int, help='the length of the task chain', default=4)
+parser = argparse.ArgumentParser(description='Create tree graph')
+parser.add_argument('-levels', metavar='levels', type=int, help='the number of levels in the tree', default=4)
 parser.add_argument('-overlap', metavar='overlap', type=int, help='type of data read. e.g are the buffers shared. options = (False=0, True=1)', default=0)
 parser.add_argument('-output', metavar='output', type=str, help='name of output file containing the graph', default="tree.gph")
 parser.add_argument('-weight', metavar='weight', type=int, help='time (in microseconds) that the computation of the task should take', default=50000)

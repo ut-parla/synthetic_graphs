@@ -28,10 +28,8 @@ Options:
 
 """
 
-
-
-
-
+def fstr(template, **kwargs):
+        return eval(f"f'{template}'", kwargs)
 
 parser = argparse.ArgumentParser(description='Create embarassingly parallel graph')
 parser.add_argument('-levels', metavar='width', type=int, help='the length of the task chain', default=4)
