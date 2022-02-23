@@ -11,7 +11,9 @@ This is a comma separated list of the number of elements in each partition.
 Each subsequent line represents a task. 
 
 
-`<task_id> | <task time (μs)>, <1/vcus>, <location>, <# gil access>, <gil time (μs)> | <task dependencies> | <in_data> : <out_data> : <inout_data>`
+```
+<task_id> | <task time (μs)>, <1/vcus>, <location>, <# gil access>, <gil time (μs)> | <task dependencies> | <in_data> : <out_data> : <inout_data>
+```
 
 `<task_id>` can be an arbitrarily long list of comma seperated integers.
 
@@ -23,9 +25,10 @@ Tasks are launched in file-order from top to bottom.
 Note this must be a valid launch order for Parla, otherwise the dependencies won't resolve. 
 
 As an example the following specifies a serial chain graph such that each task depends (redundently) on its two immediate predecessors. 
-Each task is launched on the GPU and consumes a whole device. 
-Each task busy waits for 50000 microseconds without the GIL and 200 microsecoonds with the GIL. 
-Each task reads data_block[1] of size 100 and read/writes to data_block[0] of size 40. 
+
+- Each task is launched on the GPU and consumes a whole device. 
+- Each task busy waits for 50000 microseconds without the GIL and 200 microsecoonds with the GIL. 
+- Each task reads data_block[1] of size 100 and read/writes to data_block[0] of size 40. 
 
 
 ```
