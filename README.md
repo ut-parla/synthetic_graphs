@@ -1,4 +1,4 @@
-# Parla Synthetic Graphs
+# Synthetic Test Graphs for Parla
 Synthetic Task Graphs for Parla Testing and Benchmarks
 
 
