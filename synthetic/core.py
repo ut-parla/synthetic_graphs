@@ -174,7 +174,7 @@ def convert_to_dict(G):
 
     for task in G:
         ids, info, dep, data = task
-        
+
         tuple_dep = [tuple(ids)] if dep[0] is None else [tuple(idx) for idx in dep]
         depend_dict[tuple(ids)] = tuple_dep
 
@@ -199,7 +199,7 @@ def bfs(graph, node, target, writes):
         for neighbor in graph[s]:
 
             writes_to = writes[neighbor]
-            
+
             if target in writes_to:
                 return neighbor if neighbor != node else None
 
@@ -332,7 +332,7 @@ def create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, 
                 where = -1 if isinstance(block, np.ndarray) else block.device.id
                 if verbose:
                     print(f"Task {ids} :: Auto Move.. Data[{in_data}] is on Device[{where}]. Check={block[0, 0]}", flush=True)
-        
+
         if data[2] is not None:
             for inout_data in data[2]:
                 block = array[inout_data]
@@ -352,8 +352,8 @@ def create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, 
 
 
 def create_task_no(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, verbose=False):
-
-    @spawn(task_space[tuple(ids)], dependencies=deps, placement=place, vcus=1)
+    ids = tuple(ids)
+    @spawn(task_space[ids], dependencies=deps, placement=place, vcus=1)
     def busy_sleep():
 
         start = time.perf_counter()
@@ -361,7 +361,7 @@ def create_task_no(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil
         waste_time(ids, weight, gil, verbose)
 
         end = time.perf_counter()
-        print(f"-Task {ids} elapsed (before sync): ", end - start, "seconds", flush=True)
+        print(f"-Task {ids} elapsed: ", end - start, "seconds", flush=True)
 
 def create_tasks(G, array, data_move=0, verbose=False):
 
