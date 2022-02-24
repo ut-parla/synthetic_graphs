@@ -72,6 +72,8 @@ NOTE: `viz.py` also computes the average width and critical path length. (which 
 `run.py` is used to launch the tasks
 'verify.py' can take the verbose standard output of 'run.py' and verify that the observed ordering is correct
 
+Note: graph analysis should only be interpreted for runtime estimates when run without data movement edges. 
+
 The command line options for all scripts can be inspected by using '-h'. 
 Theres a lot more than have been listed here and its worth taking a look. 
 Important ones are: '-graph' to read a graph file, and '--data_move' to disable movement entirely, or enable lazy/eager copies. 
@@ -88,8 +90,7 @@ python run.py -graph graphs/serial.gph -data_move 0 |tee output.txt
 //Verify that output ran in a valid ordering
 python verify.py -graph graphs/serial.gph -input output.txt
 
-//Vizualize the graph with data movement edges
-//Note: This also gives analysis of the graph such as critical path length and generation width statistics under a topological ordering
+//Vizualize and analyze the graph with data movement edges
 python viz.py -graph graphs/serial.gph -data 1 
 ```
 
