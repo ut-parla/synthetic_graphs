@@ -65,7 +65,10 @@ As an example the following specifies a serial chain graph such that each task d
 
 Scripts to generate graph files are in the `graphs/` directory. 
 `viz.py` is used to draw graphs to the screen (uses and REQUIRES networkx [https://networkx.org/] )
-`run.py` is used to launch 
+NOTE: `viz.py` also computes the average width and critical path length. (which can be used to estimate runtime)
+
+`run.py` is used to launch the tasks
+'verify.py' can take the verbose standard output of 'run.py' and verify that the observed ordering is correct
 
 The command line options for all scripts can be inspected by using '-h'.
 Important ones are: '-graph' to read a graph file, and '--data_move' to disable movement entirely, or enable lazy/eager copies. 
@@ -73,9 +76,21 @@ Important ones are: '-graph' to read a graph file, and '--data_move' to disable 
 Example usage is:
 
 ```
+//Generate the graph
 python graph/generate_serial_graph.py
-python run.py -graph graph/serial.gph -data_move 0
+
+//Run the graph with Parla
+python run.py -graph graphs/serial.gph -data_move 0 |tee output.txt
+
+//Verify that output ran in a valid ordering
+python verify.py -graph graphs/serial.gph -input output.txt
+
+//Vizualize the graph with data movement edges
+//Note: This also gives analysis of the graph such as critical path length and generation width statistics under a topological ordering
+python viz.py -graph graphs/serial.gph -data 1 
 ```
 
 This would generate a serial graph (with default configuration) and runs it without any data movement. 
+
+
 
