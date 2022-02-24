@@ -133,7 +133,7 @@ with open(output, 'w') as graph:
 
 
             write_dep = ""
-            for k in range(1, depends):
+            for k in range(0, depends):
                 write_dep += f"{(j)*depends + k}"
 
                 if k+1 < depends:
@@ -141,7 +141,7 @@ with open(output, 'w') as graph:
 
             #print(read_dep)
 
-            graph.write(f"{i}, {j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {read_dep} : {write_dep} : {self_index} \n")
+            graph.write(f"{i}, {j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {read_dep} : : {write_dep} \n")
 
 
 print(f"Wrote graph to {args.output}.")

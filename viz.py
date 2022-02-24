@@ -28,10 +28,11 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True):
 
     for target, deps in dep_dict.items():
         for source in deps:
-            if target[0] == source[0] and target[1] == source[1] and plot_isolated:
+            is_isolated = all( [target[i] == source[i] for i in range(len(target))])
+            if is_isolated and plot_isolated:
                 #G.add_edge(source, target, color='black', style='dotted')
                 G.add_node(source)
-            elif target[0] != source[0] or target[1] != source[1]:
+            elif not is_isolated:
                 G.add_edge(source, target, color='black')
 
     if args.data:

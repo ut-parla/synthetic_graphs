@@ -199,12 +199,14 @@ def bfs(graph, node, target, writes):
         for neighbor in graph[s]:
 
             writes_to = writes[neighbor]
+            
             if target in writes_to:
-                return neighbor
+                return neighbor if neighbor != node else None
 
             if neighbor not in visited:
                 visited.append(neighbor)
                 queue.append(neighbor)
+
     return None
 
 
