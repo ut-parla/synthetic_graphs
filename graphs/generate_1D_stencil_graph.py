@@ -76,7 +76,6 @@ with open(output, 'w') as graph:
     global_index = 0
     #setup task information
     for i in range(level):
-        print("---")
         for j in range(width):
 
             lbound = -1
@@ -108,8 +107,6 @@ with open(output, 'w') as graph:
                                 valid -= 1
                             task_dep += f"{i-1}, {j-inc}"
                             valid = 1
-
-            print(i, j, "|", task_dep)
 
 
             self_index = depends*j
@@ -147,4 +144,4 @@ with open(output, 'w') as graph:
             graph.write(f"{i}, {j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {read_dep} : {write_dep} : {self_index} \n")
 
 
-print("Wrote graph to {args.output}.")
+print(f"Wrote graph to {args.output}.")

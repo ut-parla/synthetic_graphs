@@ -185,4 +185,4 @@ with open(output, 'w') as graph:
 
             graph.write(f"{i}, {j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {task_read} : {task_write} : \n")
 
-print("Wrote graph to {args.output}.")
+print(f"Wrote graph to {args.output}.")

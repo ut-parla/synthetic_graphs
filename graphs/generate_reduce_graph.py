@@ -125,6 +125,6 @@ with open(output, 'w') as graph:
 
 
 
-print("Wrote graph to {args.output}.")
+print(f"Wrote graph to {args.output}.")
 
 
