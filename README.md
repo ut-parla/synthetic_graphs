@@ -12,13 +12,19 @@ You must compile the Cython `sleep` module which requires Cython & CUDA and must
 [This allows one to potentially use the __nanosleep routine, which is currently unused in this implementation but might be more accurate for a future version] 
 ```
 
-The architecture is currently hardcoded in `setup.py` for Frontera's RTX nodes (`sm_70`). 
-But this can be changed on L24. 
-After updating architeture the module can be compiled simply with `make` or `python setup.py install <options>`.
+The architecture is currently hardcoded in `setup.py` for Frontera's RTX nodes (`sm_70`), but this can be changed on `L24`. 
+After updating architeture the module can be compiled simply with `make` or 
 
-For simplicity we use the Kokkos `nvcc` wrapper to avoid having to precompile the CUDA into a shared object file. 
+```
+python setup.py install <the usual options>
+```
 
-The `synthetic` directory is currently maintained to be used as a module in-place. It can likely be pip installed, but its not recommended. 
+For simplicity we use the Kokkos `nvcc` wrapper to avoid having to precompile the CUDA into a shared object file.
+Depending on your enviornment you may need to change the path in `nvcc_wrapper` to your `g++` executable.
+Keep in mind that your CUDA env has a maximum supported version of GCC.  
+
+The `synthetic` directory is currently maintained to be used as a module in-place.
+It can likely be pip installed, but its not recommended. 
 
 ## Usage
 
