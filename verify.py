@@ -8,14 +8,6 @@ import argparse
 
 from synthetic.core import *
 
-import networkx as nx
-import pydot 
-import matplotlib.image as mpimg
-import io 
-from networkx.drawing.nx_agraph import graphviz_layout, to_agraph
-
-import matplotlib.pyplot as plt
-
 parser = argparse.ArgumentParser(description='Verify graph execution order')
 parser.add_argument('-input', metavar='input', type=str, help='the output from the parla run', required=True, default='output.txt')
 parser.add_argument('-graph', metavar='graph', type=str, help='the input graph file to run', required=True, default='graph/independent.gph')
@@ -67,6 +59,6 @@ if __name__ == '__main__':
         print("Ordering: VALID")
     else:
         print("Ordering: INCORRECT")
-    
+
 
 
