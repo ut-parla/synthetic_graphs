@@ -91,7 +91,7 @@ Example usage is:
 python graph/generate_serial_graph.py
 
 //Run the graph with Parla
-python run.py -graph graphs/serial.gph -data_move 0 |tee output.txt
+python run.py -graph graphs/serial.gph -data_move 0 --verbose > output.txt
 
 //Verify that output ran in a valid ordering
 python verify.py -graph graphs/serial.gph -input output.txt
