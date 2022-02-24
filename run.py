@@ -30,7 +30,6 @@ def main_parla(G, array, verbose=False):
 def main():
 
     G = read_graph(args.graph)
-    print("GRAPH", G)
     array = setup_data(G, args.d, args.verbose)
 
     start = time.perf_counter()

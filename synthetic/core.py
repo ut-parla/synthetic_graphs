@@ -235,7 +235,7 @@ def find_data_edges(dicts):
 def waste_time(ids, weight, gil, verbose=False):
 
     if verbose:
-        print(f"Task {ids} running on CPU", f"for {weight} total milliseconds", flush=True)
+        print(f"+Task {ids} running on CPU", f"for {weight} total milliseconds", flush=True)
 
     gil_count, gil_time = gil
 
@@ -259,7 +259,7 @@ def waste_time_gpu(ids, weight, gil, verbose=False):
     ticks = int((weight/(10**6))*cycles_per_second)
 
     if verbose:
-        print(f"Task {ids} running on ", device_id, f"for {ticks} total cycles", flush=True)
+        print(f"+Task {ids} running on ", device_id, f"for {ticks} total cycles", flush=True)
 
     for i in range(gil_count):
 
@@ -284,20 +284,20 @@ def create_task_lazy(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, g
         if data[0] is not None:
             for in_data in data[0]:
                 block = array[in_data]
-                where = -1 if isinstance(block, np.ndarray) else block.device.index
+                where = -1 if isinstance(block, np.ndarray) else block.device.id
                 arr = clone_here(block)
                 local[in_data] = arr
                 if verbose:
-                    print(f"Task {ids} moved Data[{in_data}] from Device[{where}]. Check={arr[0]}", flush=True)
+                    print(f"Task {ids} moved Data[{in_data}] from Device[{where}]. Check={arr[0, 0]}", flush=True)
 
         if data[2] is not None:
             for inout_data in data[2]:
                 block = array[inout_data]
-                where = -1 if isinstance(block, np.ndarray) else block.device.index
+                where = -1 if isinstance(block, np.ndarray) else block.device.id
                 arr = clone_here(block)
                 local[inout_data] = arr
                 if verbose:
-                    print(f"Task {ids} moved Data[{inout_data}] from Device[{where}]. Check={arr[0]}", flush=True)
+                    print(f"Task {ids} moved Data[{inout_data}] from Device[{where}]. Check={arr[0, 0]}", flush=True)
 
         waste_time(ids, weight, gil, verbose)
 
@@ -314,7 +314,7 @@ def create_task_lazy(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, g
         end = time.perf_counter()
 
         if verbose:
-            print(f"Task {ids} elapsed: ", end - start, "seconds", flush=True)
+            print(f"-Task {ids} elapsed: ", end - start, "seconds", flush=True)
 
 def create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, array, data, verbose=False):
 
@@ -327,17 +327,17 @@ def create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, 
             for in_data in data[0]:
                 block = array[in_data]
                 block = block.array
-                where = -1 if isinstance(block, np.ndarray) else block.device.index
+                where = -1 if isinstance(block, np.ndarray) else block.device.id
                 if verbose:
-                    print(f"Task {ids} :: Auto Move.. Data[{in_data}] is on Device[{where}]. Check={block[0]}", flush=True)
+                    print(f"Task {ids} :: Auto Move.. Data[{in_data}] is on Device[{where}]. Check={block[0, 0]}", flush=True)
         
         if data[2] is not None:
             for inout_data in data[2]:
                 block = array[inout_data]
                 block = block.array
-                where = -1 if isinstance(block, np.ndarray) else block.device.index
+                where = -1 if isinstance(block, np.ndarray) else block.device.id
                 if verbose:
-                    print(f"Task {ids} :: Auto Move.. Data[{inout_data}] is on Device[{where}]. Check={block[0]}", flush=True)
+                    print(f"Task {ids} :: Auto Move.. Data[{inout_data}] is on Device[{where}]. Check={block[0, 0]}", flush=True)
 
         start = time.perf_counter()
 
@@ -346,7 +346,7 @@ def create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, 
         end = time.perf_counter()
 
         if verbose:
-            print(f"Task {ids} elapsed: ", end - start, "seconds", flush=True)
+            print(f"-Task {ids} elapsed: ", end - start, "seconds", flush=True)
 
 
 def create_task_no(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, verbose=False):
@@ -359,7 +359,7 @@ def create_task_no(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil
         waste_time(ids, weight, gil, verbose)
 
         end = time.perf_counter()
-        print(f"Task {ids} elapsed (before sync): ", end - start, "seconds", flush=True)
+        print(f"-Task {ids} elapsed (before sync): ", end - start, "seconds", flush=True)
 
 def create_tasks(G, array, data_move=0, verbose=False):
 

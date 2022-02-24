@@ -21,16 +21,17 @@ parser.add_argument('-graph', metavar='graph', type=str, help='the input graph f
 parser.add_argument('-output', metavar='output', type=str, help='the output png file name', required=False, default='graph_output.png')
 args = parser.parse_args()
 
-def plot_graph_nx(depend_dict, data_dict):
+def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True):
     G = nx.DiGraph()
 
     dep_dict = depend_dict[0]
 
     for target, deps in dep_dict.items():
         for source in deps:
-            if target[0] == source[0] and target[1] == source[1]:
-                G.add_edge(source, target, color='black', style='dotted')
-            else:
+            if target[0] == source[0] and target[1] == source[1] and plot_isolated:
+                #G.add_edge(source, target, color='black', style='dotted')
+                G.add_node(source)
+            elif target[0] != source[0] or target[1] != source[1]:
                 G.add_edge(source, target, color='black')
 
     if args.data:
@@ -41,18 +42,30 @@ def plot_graph_nx(depend_dict, data_dict):
     #nx.draw(G, with_labels=True, font_weight='bold')
     #plt.show()
 
-    pg = nx.drawing.nx_pydot.to_pydot(G)
+    if plot:
+        pg = nx.drawing.nx_pydot.to_pydot(G)
+        
+        png_str = pg.create_png(prog="dot")
+        sio = io.BytesIO()
+        sio.write(png_str)
+        sio.seek(0)
+        img = mpimg.imread(sio)
+
+        implot = plt.imshow(img, aspect='equal')
+        plt.show()
+
+        pg.write_png(args.output)
+
+    if plot_isolated:
+        critical_path = nx.dag_longest_path(G)
+        generations = nx.topological_generations(G)
+        gen_size = np.array([len(g) for g in generations])
+
+        print("Graph analysis:")
+        print("--------------")
+        print(f"The longest path in the DAG is: {len(critical_path)}")
+        print(f"Generation Sizes. Min: {np.min(gen_size)}, Mean: {np.mean(gen_size)}, Max: {np.max(gen_size)}")
     
-    png_str = pg.create_png(prog="dot")
-    sio = io.BytesIO()
-    sio.write(png_str)
-    sio.seek(0)
-    img = mpimg.imread(sio)
-
-    implot = plt.imshow(img, aspect='equal')
-    plt.show()
-
-    pg.write_png(args.output)
 
     #A = to_agraph(G)
     #A.layout('dot')
@@ -82,8 +95,11 @@ def plot_graph_pydot(depend_dict, data_dict):
 if __name__ == '__main__':
     #Throwaway data information
     G = read_graph(args.graph)
-    print("Generating graph plot...")
-    print("Showing data movement = ", args.data)
+    if args.data:
+       print("Generating graph plot with data movement.")
+    else:
+       print("Generating graph plot without data movement.")
+    
 
     G.pop(0)
     depend_dict = convert_to_dict(G)
