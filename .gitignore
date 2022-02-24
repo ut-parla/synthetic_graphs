@@ -7,3 +7,6 @@
 *.so
 *.gph
 *.cpp
+__pycache__/
+**/__pycache__/
+*.png
