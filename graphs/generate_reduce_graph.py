@@ -31,8 +31,8 @@ Options:
 def fstr(template, **kwargs):
         return eval(f"f'{template}'", kwargs)
 
-parser = argparse.ArgumentParser(description='Create embarassingly parallel graph')
-parser.add_argument('-levels', metavar='width', type=int, help='the length of the task chain', default=4)
+parser = argparse.ArgumentParser(description='Create inverted tree [reduction] graph')
+parser.add_argument('-levels', metavar='width', type=int, help='how many levels in the reduction tree', default=4)
 parser.add_argument('-overlap', metavar='overlap', type=int, help='type of data read. e.g are the buffers shared. options = (False=0, True=1)', default=0)
 parser.add_argument('-output', metavar='output', type=str, help='name of output file containing the graph', default="reduce.gph")
 parser.add_argument('-weight', metavar='weight', type=int, help='time (in microseconds) that the computation of the task should take', default=50000)
@@ -69,17 +69,17 @@ n_partitions = branch**(level+1)
 N = N * n_partitions
 
 with open(output, 'w') as graph:
-    print(level, branch)
 
     #setup data information
     n_local = N//n_partitions
     level_count = 0
+    count = 0
     for i in range(level, 0, -1):
         for j in range(branch**i):
-            print(i, j)
-            graph.write(f"{n_local}")
-            if i+1 < n_partitions:
+            if count > 0:
                 graph.write(", ")
+            graph.write(f"{n_local}")
+            count += 1
         level_count += 1
         #if <some condition>:
         #    n_local = n_local * branch
@@ -95,22 +95,25 @@ with open(output, 'w') as graph:
             if level_count:
                 task_dep = " "
                 for k in range(branch):
-                    task_dep += f"{level_count-1, branch*j + k}"
+                    task_dep += f"{level_count-1}, {branch*j + k}"
                     if k+1 < branch:
                         task_dep += " : "
             else:
                 task_dep = " "
 
             if overlap and level_count:
+                start_index = branch**(level+1) - branch**(i+2)
+                start_index = start_index // (branch -1)
+
                 read_dep = " "
                 for k in range(branch):
-                    read_dep += f"{global_index-(2**(i+1)) + k}"
+                    read_dep += f"{start_index + branch*j + k}"
                     if k+1 < branch:
                         read_dep += " , "
             else:
                 read_dep = " "
 
-            graph.write(f"{level_count, j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {read_dep} : : {global_index} \n")
+            graph.write(f"{level_count}, {j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {read_dep} : : {global_index} \n")
 
 
             global_index += 1
@@ -121,5 +124,7 @@ with open(output, 'w') as graph:
 
 
 
+
+print("Wrote graph to {args.output}.")
 
 

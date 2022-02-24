@@ -15,7 +15,7 @@ from networkx.drawing.nx_agraph import graphviz_layout, to_agraph
 import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(description='Plot graph file')
-parser.add_argument('--data', metavar='data', type=bool, default=False, help="Bool: whether to include data dependencies in plot")
+parser.add_argument('-data', metavar='data', type=int, default=0, help="Bool: whether to include data dependencies in plot")
 parser.add_argument('-backend', metavar='backend', type=int, default=0, help='What plotting backed to use. networkx=0, pydot=1')
 parser.add_argument('-graph', metavar='graph', type=str, help='the input graph file to run', required=True, default='graph/independent.gph')
 parser.add_argument('-output', metavar='output', type=str, help='the output png file name', required=False, default='graph_output.png')
@@ -28,11 +28,15 @@ def plot_graph_nx(depend_dict, data_dict):
 
     for target, deps in dep_dict.items():
         for source in deps:
-            G.add_edge(source, target, color='black')
+            if target[0] == source[0] and target[1] == source[1]:
+                G.add_edge(source, target, color='black', style='dotted')
+            else:
+                G.add_edge(source, target, color='black')
 
-    for target, deps in data_dict.items():
-        for source in deps:
-            G.add_edge(source, target, color='red')
+    if args.data:
+        for target, deps in data_dict.items():
+            for source in deps:
+                G.add_edge(source, target, color='red')
 
     #nx.draw(G, with_labels=True, font_weight='bold')
     #plt.show()
@@ -78,13 +82,17 @@ def plot_graph_pydot(depend_dict, data_dict):
 if __name__ == '__main__':
     #Throwaway data information
     G = read_graph(args.graph)
+    print("Generating graph plot...")
+    print("Showing data movement = ", args.data)
+
     G.pop(0)
     depend_dict = convert_to_dict(G)
-    data_dict = find_data_edges(depend_dict)
-    
-    #print(depend_dict)
-    print(data_dict)
 
+    if args.data:
+        data_dict = find_data_edges(depend_dict)
+    else:
+        data_dict = dict()
+    
     plot_graph_nx(depend_dict, data_dict)
 
 

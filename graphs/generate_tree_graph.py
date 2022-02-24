@@ -96,7 +96,7 @@ with open(output, 'w') as graph:
             else:
                 read_dep = " "
 
-            graph.write(f"{i, j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {parent_dep} | {read_dep} : : {global_index} \n")
+            graph.write(f"{i}, {j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {parent_dep} | {read_dep} : : {global_index} \n")
 
 
             global_index += 1
@@ -108,3 +108,4 @@ with open(output, 'w') as graph:
 
 
 
+print("Wrote graph to {args.output}.")

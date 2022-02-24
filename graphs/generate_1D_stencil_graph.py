@@ -20,6 +20,9 @@ Options:
 
 """
 
+def fstr(template, **kwargs):
+        return eval(f"f'{template}'", kwargs)
+
 parser = argparse.ArgumentParser(description='Create iterations of a domain decomposition-like graph')
 parser.add_argument('-levels', metavar='levels', type=int, help='the number of iterations', default=4)
 parser.add_argument('-width', metavar='width', type=int, help='the length of the task chain', default=4)
@@ -62,7 +65,6 @@ with open(output, 'w') as graph:
     #assume equipartition
     #TODO: Change this to uneven sizes for "ghost points"?
 
-    print("Start")
     n_local = N//n_partitions
     for i in range(n_partitions):
         graph.write(f"{n_local}")
@@ -77,45 +79,72 @@ with open(output, 'w') as graph:
         print("---")
         for j in range(width):
 
-            lbound = 0
+            lbound = -1
             rbound = width
 
             task_dep = " "
-            if level:
-                task_dep += "{i-1, j}"
-                for k in range(2, depends-1):
+            valid = 1
+            if i > 0:
+                task_dep += f"{i-1}, {j}"
+
+                for k in range(1, depends):
+
                     side = k % 2
-                    inc = k // 2
+                    inc = (k+1) // 2
+
+                    #print("k", k, side, inc, rbound, lbound, i, j)
 
                     if side:
                         if j + inc < rbound:
-                            task_dep += f"{i-1, j+inc}"
+                            if valid:
+                                task_dep += " : "
+                                valid -= 1
+                            task_dep += f"{i-1}, {j+inc}"
+                            valid = 1
                     else:
                         if (j - inc) > lbound:
-                            task_dep += f"{i-1, j-inc}"
+                            if valid:
+                                task_dep += " : "
+                                valid -= 1
+                            task_dep += f"{i-1}, {j-inc}"
+                            valid = 1
 
-                    if k + 1 < depends:
-                        task_dep += " : "
-
-            print(i, j, task_dep)
+            print(i, j, "|", task_dep)
 
 
             self_index = depends*j
-            read_dep = f"{(j)*depends}"
-            for k in range(2, depends-1):
+            read_dep = ""
+            valid = 0
+            for k in range(1, depends):
                 side = k % 2
-                inc = k // 2
+                inc = (k+1) // 2
 
                 if side:
                     if j + inc < rbound:
+                        if valid:
+                            valid -= 1
+                            read_dep += ", "
                         read_dep += f"{(j+inc)*depends + inc}"
+                        valid = 1
                 else:
                     if (j - inc) > lbound:
-                        read_dep += f"{(j-inc)*depends + depends - inc}"
+                        if valid:
+                            valid -= 1
+                            read_dep += ", "
+                        read_dep += f"{(j-inc)*depends + (depends - inc)}"
+                        valid = 1
 
-                if k + 1 < depends:
-                    task_dep += " : "
 
-            print(read_dep)
+            write_dep = ""
+            for k in range(1, depends):
+                write_dep += f"{(j)*depends + k}"
 
-            graph.write(f"{i, j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {read_dep} : : {self_index} \n")
+                if k+1 < depends:
+                    write_dep += ", " 
+
+            #print(read_dep)
+
+            graph.write(f"{i}, {j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {read_dep} : {write_dep} : {self_index} \n")
+
+
+print("Wrote graph to {args.output}.")

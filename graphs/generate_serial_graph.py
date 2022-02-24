@@ -63,7 +63,6 @@ else:
     #All tasks in the chain read/write different data
     n_partitions = level
     N = N * level
-print(n_partitions)
 
 with open(output, 'w') as graph:
 
@@ -105,3 +104,4 @@ with open(output, 'w') as graph:
 
 
 
+print("Wrote graph to {args.output}.")

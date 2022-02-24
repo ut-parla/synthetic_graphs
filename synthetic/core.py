@@ -97,7 +97,7 @@ def read_graph(filename):
             #Section 0: Self Id
             #Cannot be empty (Not checked)
 
-            print("First Segment: ", task[0])
+            #print("First Segment: ", task[0])
             values = task[0].split(",")
             task_ids = np.zeros(len(values), dtype=np.int32)
 
@@ -107,7 +107,7 @@ def read_graph(filename):
             #Section 1: Self Info
             #Cannot be empty (Not checked)
 
-            print("Second Segment: ", task[1])
+            #print("Second Segment: ", task[1])
             values = task[1].split(",")
             task_info = np.zeros(len(values), dtype=np.int32)
 
@@ -117,7 +117,7 @@ def read_graph(filename):
 
             if len(task) > 2:
                 #Section 2: Dependency Info
-                print("Third Segment: ", task[2])
+                #print("Third Segment: ", task[2])
                 deps = task[2].split(":")
 
                 if (len(deps) > 0) and (not deps[0].isspace()):
@@ -140,9 +140,9 @@ def read_graph(filename):
             if len(task) > 3:
                 #Section 3: Data Info
                 types = task[3].split(":")
-                print("Fourth Segment: ", task[3])
+                #print("Fourth Segment: ", task[3])
 
-                check = [t.isspace() for t in types]
+                check = [not t.isspace() for t in types]
 
                 if any(check):
                     task_data = [None, None, None]
@@ -166,7 +166,7 @@ def read_graph(filename):
     return G
 
 def convert_to_dict(G):
-    print(G)
+    #print(G)
 
     depend_dict = dict()
     write_dict = dict()
@@ -175,7 +175,7 @@ def convert_to_dict(G):
     for task in G:
         ids, info, dep, data = task
         
-        tuple_dep = [] if dep[0] is None else [tuple(idx) for idx in dep]
+        tuple_dep = [tuple(ids)] if dep[0] is None else [tuple(idx) for idx in dep]
         depend_dict[tuple(ids)] = tuple_dep
 
         list_in = [] if data[0] is None else [k for k in data[0]]
@@ -215,7 +215,8 @@ def find_data_edges(dicts):
     for task, deps in depend_dict.items():
         reads = read_dict[task]
         writes = write_dict[task]
-        touches = set(reads+writes)
+        #touches = set(reads+writes)
+        touches = set(reads)
 
         data_deps = []
 
@@ -273,6 +274,8 @@ def waste_time_gpu(ids, weight, gil, verbose=False):
 
 def create_task_lazy(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, array, data, verbose=False):
 
+    ids = tuple(ids)
+
     @spawn(task_space[ids], placement=place, dependencies=deps, vcus=cu)
     def busy_sleep():
         start = time.perf_counter()
@@ -280,17 +283,21 @@ def create_task_lazy(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, g
         local = dict()
         if data[0] is not None:
             for in_data in data[0]:
-                arr = clone_here(array[in_data])
+                block = array[in_data]
+                where = -1 if isinstance(block, np.ndarray) else block.device.index
+                arr = clone_here(block)
                 local[in_data] = arr
                 if verbose:
-                    print(f"Task {ids} moved Data[{in_data}]")
+                    print(f"Task {ids} moved Data[{in_data}] from Device[{where}]. Check={arr[0]}", flush=True)
 
         if data[2] is not None:
             for inout_data in data[2]:
-                arr = clone_here(array[inout_data])
+                block = array[inout_data]
+                where = -1 if isinstance(block, np.ndarray) else block.device.index
+                arr = clone_here(block)
                 local[inout_data] = arr
                 if verbose:
-                    print(f"Task {ids} moved Data[{inout_data}]")
+                    print(f"Task {ids} moved Data[{inout_data}] from Device[{where}]. Check={arr[0]}", flush=True)
 
         waste_time(ids, weight, gil, verbose)
 
@@ -309,10 +316,29 @@ def create_task_lazy(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, g
         if verbose:
             print(f"Task {ids} elapsed: ", end - start, "seconds", flush=True)
 
-def create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, verbose=False):
+def create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, array, data, verbose=False):
+
+    ids = tuple(ids)
 
     @spawn(task_space[ids], placement=place, dependencies=deps, input=IN, ouput=OUT, inout=INOUT, vcus=cu)
     def busy_sleep():
+
+        if data[0] is not None:
+            for in_data in data[0]:
+                block = array[in_data]
+                block = block.array
+                where = -1 if isinstance(block, np.ndarray) else block.device.index
+                if verbose:
+                    print(f"Task {ids} :: Auto Move.. Data[{in_data}] is on Device[{where}]. Check={block[0]}", flush=True)
+        
+        if data[2] is not None:
+            for inout_data in data[2]:
+                block = array[inout_data]
+                block = block.array
+                where = -1 if isinstance(block, np.ndarray) else block.device.index
+                if verbose:
+                    print(f"Task {ids} :: Auto Move.. Data[{inout_data}] is on Device[{where}]. Check={block[0]}", flush=True)
+
         start = time.perf_counter()
 
         waste_time(ids, weight, gil, verbose)
@@ -366,13 +392,13 @@ def create_tasks(G, array, data_move=0, verbose=False):
         else:
             place = [cpu, gpu]
 
-        print(ids, deps, place, IN, OUT, INOUT, vcus, weight)
+        #print(ids, deps, place, IN, OUT, INOUT, vcus, weight)
 
         if data_move == 0:
             create_task_no(task_space, ids, deps, place, IN, OUT, INOUT, vcus, weight, gil, verbose)
         if data_move == 1:
             create_task_lazy(task_space, ids, deps, place, IN, OUT, INOUT, vcus, weight, gil, array, data, verbose)
         if data_move == 2:
-            create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, vcus, weight, gil, verbose)
+            create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, vcus, weight, gil, array, data, verbose)
 
     return task_space
