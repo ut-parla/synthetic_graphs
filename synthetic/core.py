@@ -1,4 +1,5 @@
 import time
+import re
 
 import numpy as np
 from sleep.core import *
@@ -24,6 +25,110 @@ from parla.function_decorators import specialized
 
 from parla.parray import asarray_batch
 
+
+def get_dimension(file):
+    with open(file, mode='r') as f:
+        lines = f.readlines()
+
+        for line in lines:
+            is_dim = bool(re.search("dim", line))
+            info = re.search("\(.*\)", line)
+            info = None if info is None else info.group(0)
+
+            if is_dim and info:
+                #unpack tuple
+                d = eval(info)
+                d = d[0]
+                return d
+
+
+def get_movement_type(file):
+    with open(file, mode='r') as f:
+        lines = f.readlines()
+
+        for line in lines:
+            is_move = bool(re.search("dim", line))
+            info = re.search("\(.*\)", line)
+            info = None if info is None else info.group(0)
+
+            if is_move and info:
+                #unpack tuple
+                move = eval(info)
+                move = move[0]
+                return move
+
+
+def get_data_locations(file, launch_graph, locations):
+    pass
+
+
+def get_execution_info(file):
+    
+    G_time = dict()
+    G_loc = dict()
+
+    with open(file, mode='r') as f:
+        lines = f.readlines()
+
+        for line in lines:
+
+            is_started = bool(re.search("\+Task", line))
+
+            is_finished = bool(re.search("\-Task", line))
+
+            task_id = re.search("\(.*\)", line)
+            task_id = None if task_id is None else task_id.group(0)
+
+
+            info = re.search("\[.*\]", line)
+            info = None if info is None else info.group(0).strip("[]")
+
+            #print(is_started, is_finished, task_id, info)
+
+            if is_started and (info is not None) and (task_id is not None):
+                #This is device information
+                G_loc[task_id] = info
+
+            if is_finished and (info is not None) and (task_id is not None):
+                #This is time information
+                G_time[task_id] = info
+
+    return G_time, G_loc
+
+
+
+def verify(file, G):
+    G = G[0]
+    correct = True
+    started_tasks = []
+    finished_tasks = []
+
+    with open(file, mode='r') as f:
+        lines = f.readlines()
+
+        for line in lines:
+
+            is_started = bool(re.search("\+Task", line))
+            is_finished = bool(re.search("-Task", line))
+            task_id = re.search("\(.*\)", line)
+            task_id = None if task_id is None else task_id.group(0)
+
+            if task_id is not None:
+                task_id = eval(task_id)
+
+                if is_started:
+                    started_tasks.append(task_id)
+                if is_finished:
+                    finished_tasks.append(task_id)
+
+                if is_started:
+                    #Search for dependencies in is finished
+                    deps = G[task_id]
+                    check = [dep in finished_tasks for dep in deps]
+
+                    correct = all(check)
+
+    return correct
 
 def str2bool(v):
     if isinstance(v, bool):
@@ -222,10 +327,13 @@ def bfs(graph, node, target, writes):
     return None
 
 
-def find_data_edges(dicts):
+def find_data_edges(dicts, data_sizes=None, location_filter=None):
     depend_dict, read_dict, write_dict = dicts
 
     data_dict = dict()
+    weight_dict = dict()
+    target_dict = dict()
+
     for task, deps in depend_dict.items():
         reads = read_dict[task]
         writes = write_dict[task]
@@ -237,19 +345,43 @@ def find_data_edges(dicts):
         for target in touches:
             last = bfs(depend_dict, task, target, write_dict)
             if last is None:
-                data_deps.append(f"D{target}")
+                last = f"D{target}"
+
+                if location_filter is not None:
+                    #All data starts initialized on the CPU
+                    #TODO: Change this assumption
+                    location_filter[last] = -1
+
+                data_deps.append(last)
             else:
                 data_deps.append(last)
 
+            if data_sizes is not None:
+                edge_id = str(last)+"-"+str(task)
+                weight = data_sizes[target]
+
+                if location_filter is not None:
+
+                    #task that last used
+                    loc_target = location_filter[target]
+                    loc_last = location_filter[target]
+
+                    if loc_target == loc_last:
+                        weight = 0
+
+                weight_dict[edge_id] = weight_dict.get(edge_id, []) + [weight]
+                target_dict[edge_id] = target_dict.get(edge_id, []) + [target]
+
         data_dict[task] = data_deps
 
-    return data_dict
+    return (data_dict, weight_dict, target_dict)
+
 
 @specialized
 def waste_time(ids, weight, gil, verbose=False):
 
     if verbose:
-        print(f"+Task {ids} running on CPU", f"for {weight} total milliseconds", flush=True)
+        print(f"+Task {ids} running on Device[-1] CPU", f"for {weight} total milliseconds", flush=True)
 
     gil_count, gil_time = gil
 
@@ -273,7 +405,7 @@ def waste_time_gpu(ids, weight, gil, verbose=False):
     ticks = int((weight/(10**6))*cycles_per_second)
 
     if verbose:
-        print(f"+Task {ids} running on ", device_id, f"for {ticks} total cycles", flush=True)
+        print(f"+Task {ids} running on Device[{device_id}] GPU for {ticks} total cycles", flush=True)
 
     for i in range(gil_count):
 
@@ -286,7 +418,7 @@ def waste_time_gpu(ids, weight, gil, verbose=False):
         sleep_with_gil(gil_time)
 
 
-def create_task_lazy(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, array, data, verbose=False):
+def create_task_lazy(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, array, data, verbose=False, check=False):
 
     ids = tuple(ids)
 
@@ -301,8 +433,10 @@ def create_task_lazy(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, g
                 where = -1 if isinstance(block, np.ndarray) else block.device.id
                 arr = clone_here(block)
                 local[in_data] = arr
+                old = None if not check else np.copy(arr[0, 1])
+                arr[0, 1] = -launch_id
                 if verbose:
-                    print(f"Task {ids} moved Data[{in_data}] from Device[{where}]. Check={arr[0, 0]}", flush=True)
+                    print(f"Task {ids} moved Data[{in_data}] from Device[{where}]. Block={arr[0, 0]} | Value={arr[0,1]}, {old}", flush=True)
 
         if data[2] is not None:
             for inout_data in data[2]:
@@ -310,8 +444,10 @@ def create_task_lazy(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, g
                 where = -1 if isinstance(block, np.ndarray) else block.device.id
                 arr = clone_here(block)
                 local[inout_data] = arr
+                old = None if not check else np.copy(arr[0, 1])
+                arr[0,1] = -launch_id
                 if verbose:
-                    print(f"Task {ids} moved Data[{inout_data}] from Device[{where}]. Check={arr[0, 0]}", flush=True)
+                    print(f"Task {ids} moved Data[{inout_data}] from Device[{where}]. Block={arr[0, 0]} | Value={arr[0, 1]}, {old}", flush=True)
 
         waste_time(ids, weight, gil, verbose)
 
@@ -328,9 +464,9 @@ def create_task_lazy(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, g
         end = time.perf_counter()
 
         if verbose:
-            print(f"-Task {ids} elapsed: ", end - start, "seconds", flush=True)
+            print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
 
-def create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, array, data, verbose=False):
+def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, array, data, verbose=False, check=False):
 
     ids = tuple(ids)
 
@@ -342,16 +478,20 @@ def create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, 
                 block = array[in_data]
                 block = block.array
                 where = -1 if isinstance(block, np.ndarray) else block.device.id
+                old = None if check else np.copy(block[0, 1])
+                block[0, 1] = -launch_id
                 if verbose:
-                    print(f"Task {ids} :: Auto Move.. Data[{in_data}] is on Device[{where}]. Check={block[0, 0]}", flush=True)
+                    print(f"Task {ids} :: Auto Move.. Data[{in_data}] is on Device[{where}]. Block={block[0, 0]} | Value={block[0,1]}, {old}", flush=True)
 
         if data[2] is not None:
             for inout_data in data[2]:
                 block = array[inout_data]
                 block = block.array
                 where = -1 if isinstance(block, np.ndarray) else block.device.id
+                old = None if not check else np.copy(block[0, 1])
+                block[0, 1] = -launch_id
                 if verbose:
-                    print(f"Task {ids} :: Auto Move.. Data[{inout_data}] is on Device[{where}]. Check={block[0, 0]}", flush=True)
+                    print(f"Task {ids} :: Auto Move.. Data[{inout_data}] is on Device[{where}]. Check={block[0, 0]} | Value={block[0,1]}, {old}", flush=True)
 
         start = time.perf_counter()
 
@@ -360,7 +500,7 @@ def create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, 
         end = time.perf_counter()
 
         if verbose:
-            print(f"-Task {ids} elapsed: ", end - start, "seconds", flush=True)
+            print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
 
 
 def create_task_no(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, verbose=False):
@@ -373,13 +513,13 @@ def create_task_no(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil
         waste_time(ids, weight, gil, verbose)
 
         end = time.perf_counter()
-        print(f"-Task {ids} elapsed: ", end - start, "seconds", flush=True)
+        print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
 
-def create_tasks(G, array, data_move=0, verbose=False):
+def create_tasks(G, array, data_move=0, verbose=False, check=False):
 
     task_space = TaskSpace('TaskSpace')
 
-
+    launch_id = 0
     for task in G:
         ids, info, dep, data = task
 
@@ -409,10 +549,12 @@ def create_tasks(G, array, data_move=0, verbose=False):
         #print(ids, deps, place, IN, OUT, INOUT, vcus, weight)
 
         if data_move == 0:
-            create_task_no(task_space, ids, deps, place, IN, OUT, INOUT, vcus, weight, gil, verbose)
+            create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, vcus, weight, gil, verbose)
         if data_move == 1:
-            create_task_lazy(task_space, ids, deps, place, IN, OUT, INOUT, vcus, weight, gil, array, data, verbose)
+            create_task_lazy(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, vcus, weight, gil, array, data, verbose, check)
         if data_move == 2:
-            create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, vcus, weight, gil, array, data, verbose)
+            create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, vcus, weight, gil, array, data, verbose, check)
+
+        launch_id += 1
 
     return task_space
