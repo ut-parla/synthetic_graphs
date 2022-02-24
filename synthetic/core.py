@@ -24,6 +24,18 @@ from parla.function_decorators import specialized
 
 from parla.parray import asarray_batch
 
+
+def str2bool(v):
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
+
 #approximate average on frontera RTX
 cycles_per_second = 1919820866.3481758
 

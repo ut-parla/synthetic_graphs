@@ -19,6 +19,8 @@ parser.add_argument('-data', metavar='data', type=int, default=0, help="Bool: wh
 parser.add_argument('-backend', metavar='backend', type=int, default=0, help='What plotting backed to use. networkx=0, pydot=1')
 parser.add_argument('-graph', metavar='graph', type=str, help='the input graph file to run', required=True, default='graph/independent.gph')
 parser.add_argument('-output', metavar='output', type=str, help='the output png file name', required=False, default='graph_output.png')
+parser.add_argument('-p', metavar='p', type=int, help='the number of devices to run', default=4)
+parser.add_argument('--no-plot', type=str2bool, nargs='?', const=True, default=True, help='Toggle generate plots (default=True)')
 args = parser.parse_args()
 
 def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True):
@@ -126,7 +128,7 @@ if __name__ == '__main__':
         task_time = compute_time + gil_count * gil_time
         task_time = task_time / 10**6
         
-        p = 1
+        p = args.p
 
         serial = task_time * len(G)
         est = max(serial/p, (depth*task_time))

@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser(description='Launch graph file in Parla')
 parser.add_argument('-d', metavar='N', type=int, help='The dimension of data segments. (Increase to make movement more expensive)', default=10)
 parser.add_argument('-data_move', metavar='data_move', type=int, help='type of data movement. options=(None=0, Lazy=1, Eager=2)', default=0)
 parser.add_argument('-graph', metavar='graph', type=str, help='the input graph file to run', required=True, default='graph/independent.gph')
-parser.add_argument('--verbose', metavar='verbose', type=bool, default=False)
+parser.add_argument('--verbose', metavar='verbose', nargs='?', const=True, type=str2bool, default=False, help='Activate verbose mode (required for verifying output)')
 
 args = parser.parse_args()
 
