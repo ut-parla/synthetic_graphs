@@ -62,12 +62,15 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True):
         generations = nx.topological_generations(G)
         gen_size = np.array([len(g) for g in generations])
 
+        print()
         print("Graph analysis:")
         print("--------------")
         print(f"The longest path in the DAG is: {len(critical_path)}")
         print(f"Generation Sizes. Min: {np.min(gen_size)}, Mean: {np.mean(gen_size)}, Max: {np.max(gen_size)}")
-    
 
+        return (len(critical_path), np.max(gen_size))
+
+    return None
     #A = to_agraph(G)
     #A.layout('dot')
     #A.draw('output.png')
@@ -105,11 +108,33 @@ if __name__ == '__main__':
     G.pop(0)
     depend_dict = convert_to_dict(G)
 
+
     if args.data:
         data_dict = find_data_edges(depend_dict)
     else:
         data_dict = dict()
     
-    plot_graph_nx(depend_dict, data_dict)
+    info = plot_graph_nx(depend_dict, data_dict)
+
+    if info is not None:
+        depth, width = info
+        task = G[0]
+        task_info = task[1]
+        compute_time = task_info[0]
+        gil_count = task_info[3]
+        gil_time = task_info[4]
+        task_time = compute_time + gil_count * gil_time
+        task_time = task_time / 10**6
+        
+        p = 1
+
+        serial = task_time * len(G)
+        est = max(serial/p, (depth*task_time))
+        print("Assuming equal sized tasks and no data movement:")
+        print("Degree of Parallelism =", width)
+        print("Task Size: ", task_time)
+        print("Lower bound estimate: ", est)
+        print("Serial Time: ", serial)
+
 
 
