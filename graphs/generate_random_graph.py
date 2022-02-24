@@ -164,7 +164,7 @@ with open(output, 'w') as graph:
             for k in range(args.partitions):
                 self_list.append(j*args.partitions+k)
 
-            read_list = read_list + self_list
+            read_list = list(set(read_list + self_list))
 
             write_list = self_list
 
