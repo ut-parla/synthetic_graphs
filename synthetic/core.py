@@ -5,6 +5,7 @@ from sleep.core import *
 
 from parla import Parla
 from parla.cpu import cpu
+from parla.array import copy, clone_here
 
 try:  # if the system has no GPU
     import cupy as cp
@@ -29,7 +30,7 @@ cycles_per_second = 1919820866.3481758
 def estimate_frequency(n_samples= 10, ticks=cycles_per_second):
 
     stream = cp.cuda.get_current_stream()
-    cycles = cycles_per_second
+    cycles = ticks
     device_id = 0
 
     print(f"Starting GPU Frequency benchmark.")
@@ -120,18 +121,20 @@ def read_graph(filename):
                 deps = task[2].split(":")
 
                 if (len(deps) > 0) and (not deps[0].isspace()):
-                    task_deps = np.zeros(len(deps)*3, dtype=np.int32)
+                    task_deps = []
 
                     for i in range(len(deps)):
-                        ids = deps[i].split(",")
+                        if not deps[i].isspace():
+                            ids = deps[i].split(",")
+                            task_deps.append(np.zeros(len(ids), dtype=np.int32))
 
-                        for j in range(len(ids)):
-                            if not ids[j].isspace():
-                                task_deps[3*i+j] = int(ids[j])
+                            for j in range(len(ids)):
+                                if not ids[j].isspace():
+                                    task_deps[-1][j] = int(ids[j])
                 else:
-                    task_deps = None
+                    task_deps = [None]
             else:
-                task_deps = None
+                task_deps = [None]
 
 
             if len(task) > 3:
@@ -162,6 +165,71 @@ def read_graph(filename):
 
     return G
 
+def convert_to_dict(G):
+    print(G)
+
+    depend_dict = dict()
+    write_dict = dict()
+    read_dict = dict()
+
+    for task in G:
+        ids, info, dep, data = task
+        
+        tuple_dep = [] if dep[0] is None else [tuple(idx) for idx in dep]
+        depend_dict[tuple(ids)] = tuple_dep
+
+        list_in = [] if data[0] is None else [k for k in data[0]]
+        list_out = [] if data[1] is None else [k for k in data[1]]
+        list_inout = [] if data[2] is None else [k for k in data[2]]
+
+        read_dict[tuple(ids)] = list_in+list_inout
+        write_dict[tuple(ids)] = list_out + list_inout
+
+    return depend_dict, read_dict, write_dict
+
+def bfs(graph, node, target, writes):
+    queue = []
+    visited = []
+    visited.append(node)
+    queue.append(node)
+
+    while queue:
+        s = queue.pop(0)
+
+        for neighbor in graph[s]:
+
+            writes_to = writes[neighbor]
+            if target in writes_to:
+                return neighbor
+
+            if neighbor not in visited:
+                visited.append(neighbor)
+                queue.append(neighbor)
+    return None
+
+
+def find_data_edges(dicts):
+    depend_dict, read_dict, write_dict = dicts
+
+    data_dict = dict()
+    for task, deps in depend_dict.items():
+        reads = read_dict[task]
+        writes = write_dict[task]
+        touches = set(reads+writes)
+
+        data_deps = []
+
+        for target in touches:
+            last = bfs(depend_dict, task, target, write_dict)
+            if last is None:
+                data_deps.append(f"D{target}")
+            else:
+                data_deps.append(last)
+
+        data_dict[task] = data_deps
+
+    return data_dict
+
 @specialized
 def waste_time(ids, weight, gil, verbose=False):
 
@@ -171,7 +239,7 @@ def waste_time(ids, weight, gil, verbose=False):
     gil_count, gil_time = gil
 
     for i in range(gil_count):
-        weight_per_loop = ticks//gil_count
+        weight_per_loop = weight//gil_count
         bsleep(weight_per_loop)
         sleep_with_gil(gil_time)
 
@@ -210,30 +278,36 @@ def create_task_lazy(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, g
         start = time.perf_counter()
 
         local = dict()
-        for in_data in data[0]:
-            arr = clone_here(array[in_data])
-            local[in_data] = arr
-            print(f"Task {ids} moved Data[{in_data}]")
+        if data[0] is not None:
+            for in_data in data[0]:
+                arr = clone_here(array[in_data])
+                local[in_data] = arr
+                if verbose:
+                    print(f"Task {ids} moved Data[{in_data}]")
 
-        for inout_data in data[2]:
-            arr = clone_here(array[inout_data])
-            local[inout_data] = arr
-            print(f"Task {ids} moved Data[{in_data}]")
+        if data[2] is not None:
+            for inout_data in data[2]:
+                arr = clone_here(array[inout_data])
+                local[inout_data] = arr
+                if verbose:
+                    print(f"Task {ids} moved Data[{inout_data}]")
 
         waste_time(ids, weight, gil, verbose)
 
         #Update location of data to this copy?
         #Should this be a copy back to where it was
-        for out_data in data[1]:
-            array[out_data] = local[out_data]
+        if data[1] is not None:
+            for out_data in data[1]:
+                array[out_data] = local[out_data]
 
-        for inout_data in data[2]:
-            array[inout_data] = local[inout_data]
+        if data[2] is not None:
+            for inout_data in data[2]:
+                array[inout_data] = local[inout_data]
 
         end = time.perf_counter()
 
         if verbose:
-            print(f"Task {ids} elapsed (no sync after move): ", end - start, "seconds", flush=True)
+            print(f"Task {ids} elapsed: ", end - start, "seconds", flush=True)
 
 def create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, verbose=False):
 
@@ -251,7 +325,7 @@ def create_task_eager(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, 
 
 def create_task_no(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, verbose=False):
 
-    @spawn(task_space[ids], dependencies=[], placement=place, vcus=1)
+    @spawn(task_space[tuple(ids)], dependencies=deps, placement=place, vcus=1)
     def busy_sleep():
 
         start = time.perf_counter()
@@ -261,11 +335,10 @@ def create_task_no(task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil
         end = time.perf_counter()
         print(f"Task {ids} elapsed (before sync): ", end - start, "seconds", flush=True)
 
-def create_tasks(G, array, verbose=False):
+def create_tasks(G, array, data_move=0, verbose=False):
 
     task_space = TaskSpace('TaskSpace')
 
-    data_move = args.data_move
 
     for task in G:
         ids, info, dep, data = task
@@ -276,13 +349,14 @@ def create_tasks(G, array, verbose=False):
         OUT = [] if data[2] is None else [array[f] for f in data[2]]
 
         #Generate dep list
-        deps = [] if dep is None else [task_space[idx[0], idx[1], idx[2]] for idx in dep]
+        deps = [] if dep[0] is None else [task_space[tuple(idx)] for idx in dep]
 
         #Generate task weight
         weight = info[0]
         vcus = 1/info[1]
         gil_count = info[2]
         gil_time = info[3]
+        gil = (gil_count, gil_time)
 
         #Generate placement list
         if info[2] == 0:

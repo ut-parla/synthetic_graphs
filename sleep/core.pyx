@@ -1,5 +1,6 @@
 from sleep.core cimport sleeper, busy_sleep
 from libc.stdint cimport intptr_t
+import time 
 
 def sleep(t):
     cdef unsigned int c_t = t

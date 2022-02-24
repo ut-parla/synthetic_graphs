@@ -13,14 +13,14 @@
 # or g++ as their back-end compiler.  The defaults can be overwritten
 # by using the usual arguments (e.g., -arch=sm_30 -ccbin icpc).
 
-default_arch="sm_35"
+default_arch="sm_70"
 #default_arch="sm_50"
 
 #
 # The default C++ compiler.
 #
-host_compiler=${NVCC_WRAPPER_DEFAULT_COMPILER:-"g++"}
-#host_compiler="icpc"
+#host_compiler=${NVCC_WRAPPER_DEFAULT_COMPILER:-"g++"}
+host_compiler="/home/williamlruys/miniconda3/envs/new/bin/x86_64-conda_cos6-linux-gnu-g++"
 #host_compiler="/usr/local/gcc/4.8.3/bin/g++"
 #host_compiler="/usr/local/gcc/4.9.1/bin/g++"
 

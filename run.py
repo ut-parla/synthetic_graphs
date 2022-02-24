@@ -14,15 +14,15 @@ parser = argparse.ArgumentParser(description='Launch graph file in Parla')
 parser.add_argument('-d', metavar='N', type=int, help='The dimension of data segments. (Increase to make movement more expensive)', default=10)
 parser.add_argument('-data_move', metavar='data_move', type=int, help='type of data movement. options=(None=0, Lazy=1, Eager=2)', default=0)
 parser.add_argument('-graph', metavar='graph', type=str, help='the input graph file to run', required=True, default='graph/independent.gph')
-parser.add_argument('-verbose', metavar='verbose', type=bool, default=False)
+parser.add_argument('--verbose', metavar='verbose', type=bool, default=False)
 
 args = parser.parse_args()
 
-def main_parla(G, array):
+def main_parla(G, array, verbose=False):
     @spawn(placement=cpu)
     async def main_task():
         start_internal = time.perf_counter()
-        await create_tasks(G, array)
+        await create_tasks(G, array, args.data_move, verbose)
         end_internal = time.perf_counter()
 
         print("Elapsed Internal Main Task: ", end_internal - start_internal, "seconds", flush=True)
@@ -30,6 +30,7 @@ def main_parla(G, array):
 def main():
 
     G = read_graph(args.graph)
+    print("GRAPH", G)
     array = setup_data(G, args.d, args.verbose)
 
     start = time.perf_counter()
