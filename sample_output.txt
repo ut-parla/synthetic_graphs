@@ -1,0 +1,118 @@
+Task (0, 3) moved Data[6] from Device[-1]. Check=6.0
+Task (0, 3) moved Data[7] from Device[-1]. Check=7.0
+Task (0, 3) moved Data[6] from Device[-1]. Check=6.0
++Task (0, 3) running on  0 for 95991043 total cycles
+-Task (0, 3) elapsed:  0.06602522797766142 seconds
+Task (1, 2) moved Data[4] from Device[-1]. Check=4.0
+Task (1, 2) moved Data[5] from Device[-1]. Check=5.0
+Task (1, 2) moved Data[6] from Device[0]. Check=6.0
+Task (1, 2) moved Data[4] from Device[-1]. Check=4.0
++Task (1, 2) running on  0 for 95991043 total cycles
+-Task (1, 2) elapsed:  0.060006096988217905 seconds
+Task (4, 0) moved Data[0] from Device[-1]. Check=0.0
+Task (4, 0) moved Data[1] from Device[-1]. Check=1.0
+Task (4, 0) moved Data[4] from Device[0]. Check=4.0
+Task (4, 0) moved Data[1] from Device[-1]. Check=1.0
++Task (4, 0) running on  0 for 95991043 total cycles
+-Task (4, 0) elapsed:  0.058472183998674154 seconds
+Task (3, 0) moved Data[0] from Device[-1]. Check=0.0
+Task (3, 0) moved Data[1] from Device[0]. Check=1.0
+Task (3, 0) moved Data[4] from Device[0]. Check=4.0
+Task (3, 0) moved Data[0] from Device[-1]. Check=0.0
++Task (3, 0) running on  0 for 95991043 total cycles
+-Task (3, 0) elapsed:  0.0572818240034394 seconds
+Task (2, 3) moved Data[4] from Device[0]. Check=4.0
+Task (2, 3) moved Data[6] from Device[0]. Check=6.0
+Task (2, 3) moved Data[7] from Device[-1]. Check=7.0
+Task (2, 3) moved Data[7] from Device[-1]. Check=7.0
++Task (2, 3) running on  0 for 95991043 total cycles
+-Task (2, 3) elapsed:  0.05622412599041127 seconds
+Task (4, 2) moved Data[4] from Device[0]. Check=4.0
+Task (4, 2) moved Data[5] from Device[-1]. Check=5.0
+Task (4, 2) moved Data[7] from Device[0]. Check=7.0
+Task (4, 2) moved Data[4] from Device[0]. Check=4.0
++Task (4, 2) running on  0 for 95991043 total cycles
+-Task (4, 2) elapsed:  0.05061762800323777 seconds
+Task (1, 0) moved Data[0] from Device[0]. Check=0.0
+Task (1, 0) moved Data[1] from Device[0]. Check=1.0
+Task (1, 0) moved Data[7] from Device[0]. Check=7.0
+Task (1, 0) moved Data[1] from Device[0]. Check=1.0
++Task (1, 0) running on  0 for 95991043 total cycles
+-Task (1, 0) elapsed:  0.05002436198992655 seconds
+Task (0, 2) moved Data[4] from Device[0]. Check=4.0
+Task (0, 2) moved Data[5] from Device[-1]. Check=5.0
+Task (0, 2) moved Data[5] from Device[-1]. Check=5.0
++Task (0, 2) running on  0 for 95991043 total cycles
+-Task (0, 2) elapsed:  0.05072577900136821 seconds
+Task (1, 3) moved Data[5] from Device[0]. Check=5.0
+Task (1, 3) moved Data[6] from Device[0]. Check=6.0
+Task (1, 3) moved Data[7] from Device[0]. Check=7.0
+Task (1, 3) moved Data[6] from Device[0]. Check=6.0
++Task (1, 3) running on  0 for 95991043 total cycles
+-Task (1, 3) elapsed:  0.0498463710246142 seconds
+Task (3, 2) moved Data[4] from Device[0]. Check=4.0
+Task (3, 2) moved Data[5] from Device[0]. Check=5.0
+Task (3, 2) moved Data[7] from Device[0]. Check=7.0
+Task (3, 2) moved Data[4] from Device[0]. Check=4.0
++Task (3, 2) running on  0 for 95991043 total cycles
+-Task (3, 2) elapsed:  0.04983907099813223 seconds
+Task (4, 1) moved Data[2] from Device[-1]. Check=2.0
+Task (4, 1) moved Data[3] from Device[-1]. Check=3.0
+Task (4, 1) moved Data[5] from Device[0]. Check=5.0
+Task (4, 1) moved Data[2] from Device[-1]. Check=2.0
++Task (4, 1) running on  0 for 95991043 total cycles
+-Task (4, 1) elapsed:  0.05137046400341205 seconds
+Task (2, 2) moved Data[4] from Device[0]. Check=4.0
+Task (2, 2) moved Data[5] from Device[0]. Check=5.0
+Task (2, 2) moved Data[7] from Device[0]. Check=7.0
+Task (2, 2) moved Data[4] from Device[0]. Check=4.0
++Task (2, 2) running on  0 for 95991043 total cycles
+-Task (2, 2) elapsed:  0.049922201986191794 seconds
+Task (4, 3) moved Data[4] from Device[0]. Check=4.0
+Task (4, 3) moved Data[6] from Device[0]. Check=6.0
+Task (4, 3) moved Data[7] from Device[0]. Check=7.0
+Task (4, 3) moved Data[7] from Device[0]. Check=7.0
++Task (4, 3) running on  0 for 95991043 total cycles
+-Task (4, 3) elapsed:  0.049936972005525604 seconds
+Task (3, 1) moved Data[2] from Device[0]. Check=2.0
+Task (3, 1) moved Data[3] from Device[-1]. Check=3.0
+Task (3, 1) moved Data[4] from Device[0]. Check=4.0
+Task (3, 1) moved Data[2] from Device[0]. Check=2.0
++Task (3, 1) running on  0 for 95991043 total cycles
+-Task (3, 1) elapsed:  0.05042869600583799 seconds
+Task (2, 0) moved Data[0] from Device[0]. Check=0.0
+Task (2, 0) moved Data[1] from Device[0]. Check=1.0
+Task (2, 0) moved Data[7] from Device[0]. Check=7.0
+Task (2, 0) moved Data[1] from Device[0]. Check=1.0
++Task (2, 0) running on  0 for 95991043 total cycles
+-Task (2, 0) elapsed:  0.049837441998533905 seconds
+Task (0, 1) moved Data[2] from Device[0]. Check=2.0
+Task (0, 1) moved Data[3] from Device[-1]. Check=3.0
+Task (0, 1) moved Data[2] from Device[0]. Check=2.0
++Task (0, 1) running on  0 for 95991043 total cycles
+-Task (0, 1) elapsed:  0.05030254498706199 seconds
+Task (2, 1) moved Data[2] from Device[0]. Check=2.0
+Task (2, 1) moved Data[3] from Device[-1]. Check=3.0
+Task (2, 1) moved Data[3] from Device[-1]. Check=3.0
++Task (2, 1) running on  0 for 95991043 total cycles
+-Task (2, 1) elapsed:  0.0506108780100476 seconds
+Task (0, 0) moved Data[0] from Device[0]. Check=0.0
+Task (0, 0) moved Data[1] from Device[0]. Check=1.0
+Task (0, 0) moved Data[0] from Device[0]. Check=0.0
++Task (0, 0) running on  0 for 95991043 total cycles
+-Task (0, 0) elapsed:  0.04988115202286281 seconds
+Task (1, 1) moved Data[1] from Device[0]. Check=1.0
+Task (1, 1) moved Data[2] from Device[0]. Check=2.0
+Task (1, 1) moved Data[3] from Device[0]. Check=3.0
+Task (1, 1) moved Data[3] from Device[0]. Check=3.0
++Task (1, 1) running on  0 for 95991043 total cycles
+-Task (1, 1) elapsed:  0.0498521710105706 seconds
+Task (3, 3) moved Data[3] from Device[0]. Check=3.0
+Task (3, 3) moved Data[6] from Device[0]. Check=6.0
+Task (3, 3) moved Data[7] from Device[0]. Check=7.0
+Task (3, 3) moved Data[6] from Device[0]. Check=6.0
++Task (3, 3) running on  0 for 95991043 total cycles
+-Task (3, 3) elapsed:  0.04984715100727044 seconds
+Elapsed Internal Main Task:  1.0611956990032922 seconds
+Total Elapsed:  2.0730866999947466 seconds
+Time to Spawn Main Task:  0.0002223020128440112 seconds

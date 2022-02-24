@@ -183,6 +183,6 @@ with open(output, 'w') as graph:
 
             self_index += 1
 
-            graph.write(f"{i}, {j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {task_read} : {task_write} : \n")
+            graph.write(f"{i}, {j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {task_read} : : {task_write} \n")
 
 print(f"Wrote graph to {args.output}.")
