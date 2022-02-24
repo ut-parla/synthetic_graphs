@@ -8,7 +8,9 @@ This is a small directory for setting up toy synthetic graphs for the Parla Pyth
 ## Install
 
 You must compile the Cython `sleep` module which requires Cython & CUDA and must be set to an architecture newer than Pascal. 
-[This allows one to potentially use the __nanosleep routine, which is currently unused in this implementation] 
+```
+[This allows one to potentially use the __nanosleep routine, which is currently unused in this implementation but might be more accurate for a future version] 
+```
 
 The architecture is currently hardcoded in `setup.py` for Frontera's RTX nodes (`sm_70`). 
 But this can be changed on L24. 
@@ -16,7 +18,7 @@ After updating architeture the module can be compiled simply with `make` or `pyt
 
 For simplicity we use the Kokkos `nvcc` wrapper to avoid having to precompile the CUDA into a shared object file. 
 
-The `synthetic` directory is currently maintained to be used as a module in-place.
+The `synthetic` directory is currently maintained to be used as a module in-place. It can likely be pip installed, but its not recommended. 
 
 ## Usage
 
@@ -70,7 +72,8 @@ NOTE: `viz.py` also computes the average width and critical path length. (which 
 `run.py` is used to launch the tasks
 'verify.py' can take the verbose standard output of 'run.py' and verify that the observed ordering is correct
 
-The command line options for all scripts can be inspected by using '-h'.
+The command line options for all scripts can be inspected by using '-h'. 
+Theres a lot more than have been listed here and its worth taking a look. 
 Important ones are: '-graph' to read a graph file, and '--data_move' to disable movement entirely, or enable lazy/eager copies. 
 
 Example usage is:
