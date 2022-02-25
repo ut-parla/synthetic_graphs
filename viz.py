@@ -120,7 +120,7 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
 
                             if location:
                                 #TODO: Update this to be compatible with MSI
-                                G.nodes[edge_id]['loc'] = location[str(target)]
+                                G.nodes[temp_id]['loc'] = location[str(target)]
 
                         d_idx += 1
 
