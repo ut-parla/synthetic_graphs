@@ -38,7 +38,7 @@ def main():
         print(f"dim=({args.d})")
 
     G = read_graph(args.graph)
-    array = setup_data(G, args.d, args.verbose)
+    array = setup_data(G, args.d, data_move=args.data_move)
 
     start = time.perf_counter()
 

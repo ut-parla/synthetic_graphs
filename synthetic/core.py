@@ -470,7 +470,7 @@ def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, c
 
     ids = tuple(ids)
 
-    @spawn(task_space[ids], placement=place, dependencies=deps, input=IN, ouput=OUT, inout=INOUT, vcus=cu)
+    @spawn(task_space[ids], placement=place, dependencies=deps, input=IN, output=OUT, inout=INOUT, vcus=cu)
     def busy_sleep():
 
         if data[0] is not None:
