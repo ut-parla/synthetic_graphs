@@ -6,7 +6,7 @@ This is a small directory for setting up toy synthetic graphs for the Parla Pyth
 
 ## Features
 
-- generate test graphs
+- Scripts to generate test graphs
 - execute test graphs with Parla
 - visualize test graphs dependencies (including data movement tasks)
 - analyze test graphs (average width and critical path length)
