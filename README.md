@@ -14,7 +14,7 @@ Task graphs execute with optional data movement and burn time with user specifie
    - Enable with no data movement, lazy movement, or eager movement
 - visualize test graphs dependencies (with or without data movement tasks)
 - analyze test graphs (average width and critical path length)
-- verify parla task execution and data movement executed in a valid ordering
+- verify parla tasks and data movement executed in a valid ordering
 - IN PROGRESS: analyze Parla output and policy
    - Vizualize execution order and assigned mapping
    - Compute expected time (using observed task times and bandwidth)
