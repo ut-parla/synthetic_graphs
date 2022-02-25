@@ -89,7 +89,7 @@ As an example the following specifies a serial chain graph such that each task d
 
 Scripts to generate graph files are in the `graphs/` directory. 
 `viz.py` is used to draw graphs to the screen (uses and REQUIRES networkx [https://networkx.org/] )
-NOTE: `viz.py` also computes the average width and critical path length. (which can be used to estimate runtime)
+NOTE: `viz.py` also computes the average width and critical path length. (which can be used to bound runtime)
 
 `run.py` is used to launch the tasks
 'verify.py' can take the verbose standard output of 'run.py' and verify that the observed ordering is correct
