@@ -7,9 +7,9 @@ import argparse
 from synthetic.core import *
 
 import networkx as nx
-import pydot 
+import pydot
 import matplotlib.image as mpimg
-import io 
+import io
 from networkx.drawing.nx_agraph import graphviz_layout, to_agraph
 
 import matplotlib.pyplot as plt
@@ -138,7 +138,7 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
 
     if plot:
         pg = nx.drawing.nx_pydot.to_pydot(G)
-        
+
         png_str = pg.create_png(prog="dot")
         sio = io.BytesIO()
         sio.write(png_str)
@@ -151,7 +151,7 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
         pg.write_png(args.output)
 
     if plot_isolated:
-        critical_path = nx.dag_longest_path(G)
+        critical_path = nx.dag_longest_path(G, weight=1)
         #print(critical_path)
         generations = nx.topological_generations(G)
         gen_size = np.array([len(g) for g in generations])
@@ -207,8 +207,8 @@ if __name__ == '__main__':
        print("Generating graph plot with data movement.")
     else:
        print("Generating graph plot without data movement.")
-    
-    
+
+
     data_sizes = G.pop(0)
     depend_dict = convert_to_dict(G)
 
@@ -224,7 +224,7 @@ if __name__ == '__main__':
         data_dict = find_data_edges(depend_dict, data_sizes)
     else:
         data_dict = (dict(), None, None)
-    
+
     data_dict, weight_dict, target_dict = data_dict
     data_dict = data_dict, target_dict
     info = plot_graph_nx(depend_dict, data_dict, weights=weight_dict, data_task=(args.data_nodes,args.merge), location=G_loc, times=G_time)
@@ -239,7 +239,7 @@ if __name__ == '__main__':
         gil_time = task_info[4]
         task_time = compute_time + gil_count * gil_time
         task_time = task_time / 10**6
-        
+
         p = args.p
 
         serial = task_time * len(G)

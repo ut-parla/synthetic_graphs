@@ -63,7 +63,7 @@ def get_data_locations(file, launch_graph, locations):
 
 
 def get_execution_info(file):
-    
+
     G_time = dict()
     G_loc = dict()
 
@@ -130,6 +130,65 @@ def verify(file, G):
 
     return correct
 
+def verify_movement(file, depend_dict, data_dep):
+
+    task_dep, read_dep, write_dep = depend_dict
+
+    index_to_task = task_dep.keys()
+
+    correct = True
+    started_tasks = []
+    finished_tasks = []
+
+    with open(file, mode='r') as f:
+        lines = f.readlines()
+
+        for line in lines:
+
+            is_movement = bool(re.search("\=Task", line))
+            task_id = re.search("\(.*\)", line)
+            task_id = None if task_id is None else task_id.group(0)
+
+            old_index = re.search("\<.*\>", line)
+            old_index = None if old_index is None else task_id.group(0).trim("<>")
+            old_index = None if old_index is None else int(old_index)
+
+            data_idx = re.search("Data\[.*\]", line)
+            data_idx = None if data_idx is None else data_idx.group(0).trim("Data[]")
+            data_idx = None if data_idx is None else int(data_idx)
+
+            data_obs = re.search("Block=\[.*\]", line)
+            data_obs = None if data_obs is None else data_obs.group(0).trim("Block=[]")
+            data_obs = None if data_obs is None else int(data_obs)
+
+
+            device_obs = re.search("Device\[.*\]", line)
+            device_obs = None if device_obs is None else device_obs.group(0).trim("Device[]")
+            device_obs = None if device_obs is None else int(device_obs)
+
+
+            from_idx = old_idx
+
+            print(line)
+            print(is_movement, task_id, device_obs, data_idx, data_obs, from_idx)
+
+            if from_idx > 0:
+                from_task_id = f"D{abs(from_idx-1)}"
+            else:
+                from_task_id = intex_to_task[from_idx]
+
+
+
+
+
+
+
+
+    return correct
+
+
+
+
 def str2bool(v):
     if isinstance(v, bool):
         return v
@@ -180,7 +239,7 @@ def setup_data(G, d = 10, verbose=False, device_list=None, data_move=1):
     data = []
     count = 0
     for segment in data_config:
-        array = np.zeros([segment, d], dtype=np.float32)+count
+        array = np.zeros([segment, d], dtype=np.float32)+count+1
         data.append(array)
         count += 1
 
@@ -436,7 +495,9 @@ def create_task_lazy(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu
                 old = None if not check else np.copy(arr[0, 1])
                 arr[0, 1] = -launch_id
                 if verbose:
-                    print(f"Task {ids} moved Data[{in_data}] from Device[{where}]. Block={arr[0, 0]} | Value={arr[0,1]}, {old}", flush=True)
+                    print(f"=Task {ids} moved Data[{in_data}] from \
+                            Device[{where}]. Block=[{arr[0, 0]}] | \
+                            Value=[{arr[0,1]}], <{old}>", flush=True)
 
         if data[2] is not None:
             for inout_data in data[2]:
@@ -447,7 +508,9 @@ def create_task_lazy(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu
                 old = None if not check else np.copy(arr[0, 1])
                 arr[0,1] = -launch_id
                 if verbose:
-                    print(f"Task {ids} moved Data[{inout_data}] from Device[{where}]. Block={arr[0, 0]} | Value={arr[0, 1]}, {old}", flush=True)
+                    print(f"=Task {ids} moved Data[{inout_data}] from \
+                    Device[{where}]. Block=[{arr[0, 0]}] | \
+                    Value=[{arr[0, 1]}], <{old}>", flush=True)
 
         waste_time(ids, weight, gil, verbose)
 
@@ -481,7 +544,9 @@ def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, c
                 old = None if not check else np.copy(block[0, 1])
                 block[0, 1] = -launch_id
                 if verbose:
-                    print(f"Task {ids} :: Auto Move.. Data[{in_data}] is on Device[{where}]. Block={block[0, 0]} | Value={block[0,1]}, {old}", flush=True)
+                    print(f"=Task {ids} :: Auto Move.. Data[{in_data}] is on \
+                            Device[{where}]. Block=[{block[0, 0]}] | \
+                            Value=[{block[0,1]}], <{old}>", flush=True)
 
         if data[2] is not None:
             for inout_data in data[2]:
@@ -491,7 +556,9 @@ def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, c
                 old = None if not check else np.copy(block[0, 1])
                 block[0, 1] = -launch_id
                 if verbose:
-                    print(f"Task {ids} :: Auto Move.. Data[{inout_data}] is on Device[{where}]. Block={block[0, 0]} | Value={block[0,1]}, {old}", flush=True)
+                    print(f"=Task {ids} :: Auto Move.. Data[{inout_data}] is \
+                    on Device[{where}]. Block=[{block[0, 0]} | \
+                            Value=[{block[0,1]}], <{old}>", flush=True)
 
         start = time.perf_counter()
 

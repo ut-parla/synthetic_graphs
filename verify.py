@@ -17,15 +17,21 @@ if __name__ == '__main__':
     #Throwaway data information
     G = read_graph(args.graph)
 
-    G.pop(0)
+    data_sizes = G.pop(0)
     depend_dict = convert_to_dict(G)
 
     result = verify(args.input, depend_dict)
 
     if result:
-        print("Ordering: VALID")
+        print("Task Ordering: VALID")
     else:
-        print("Ordering: INCORRECT")
+        print("Task Ordering: INCORRECT")
+
+    data_dict = find_data_edges(depend_dict, data_sizes)
+    data_dep, weight_dict, target_dict = data_dict
+
+    verify_movement(args.input, depend_dict, data_dep)
+
 
 
 
