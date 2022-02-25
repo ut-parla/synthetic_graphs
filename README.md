@@ -154,7 +154,11 @@ dim=(2)
 -Task (9,) elapsed: [0.060309198000140896] seconds
 Elapsed Internal Main Task:  0.6859247080001296 seconds
 Total Elapsed:  1.7873143400001936 seconds
-Time to Spawn Main Task:  0.00023081200015440118 seconds   
+Time to Spawn Main Task:  0.00023081200015440118 seconds 
+
+Task Ordering: VALID
+Data Blocks: VALID
+Data Movement: VALID  
 ```
 
 
