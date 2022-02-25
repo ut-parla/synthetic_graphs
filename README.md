@@ -15,6 +15,7 @@ This is a small directory for setting up toy synthetic graphs for the Parla Pyth
    - Vizualize execution order and assigned mapping
    - Compute expected time (using observed task times and bandwidth)
    - Compute total data movement cost 
+- IN PROGRESS: Dynamic task context names for inspection with vizviewer
 
 ## Install
 
