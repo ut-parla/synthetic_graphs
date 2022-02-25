@@ -12,7 +12,7 @@ Task graphs execute with optional data movement and burn time with user specifie
 - scripts to generate test graphs
 - execute test graphs with Parla 
    - Enable with no data movement, lazy movement, or eager movement
-- visualize test graphs dependencies (including data movement tasks)
+- visualize test graphs dependencies (with or without data movement tasks)
 - analyze test graphs (average width and critical path length)
 - verify parla task execution and data movement executed in a valid ordering
 - IN PROGRESS: analyze Parla output and policy
