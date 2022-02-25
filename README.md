@@ -159,6 +159,16 @@ Time to Spawn Main Task:  0.00023081200015440118 seconds
 Task Ordering: VALID
 Data Blocks: VALID
 Data Movement: VALID  
+
+Graph analysis:
+--------------
+The longest path in the DAG is: 10
+Generation Sizes. Min: 1, Mean: 1.0, Max: 1
+Assuming equal sized tasks and no data movement:
+Degree of Parallelism in Generational Ordering = 1
+Average Task Size:  0.0502 seconds 
+Lower bound estimate:  0.502  seconds
+Serial Time:  0.502  seconds   
 ```
 
 
