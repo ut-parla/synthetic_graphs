@@ -10,7 +10,7 @@ This is a small directory for setting up toy synthetic graphs for the Parla Pyth
 - execute test graphs with Parla
 - visualize test graphs dependencies (including data movement tasks)
 - analyze test graphs (average width and critical path length)
-- verify parla task execution and data movement was in a valid ordering
+- verify parla task execution and data movement executed in a valid ordering
 - IN PROGRESS: analyze Parla output and policy
    - Vizualize execution order and assigned mapping
    - Compute expected time (using observed task times and bandwidth)
