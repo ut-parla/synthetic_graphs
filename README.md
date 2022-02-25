@@ -4,6 +4,9 @@ Synthetic Task Graphs for Parla Testing and Benchmarks
 
 This is a small directory for setting up toy synthetic graphs for the Parla Python tasking system. 
 
+Task graphs execute with optinonal data movement and burn time with user specified busy waits (on CPU or GPU)
+
+
 ## Features
 
 - scripts to generate test graphs
