@@ -42,7 +42,7 @@ Keep in mind that your CUDA env has a maximum supported version of GCC.
 The `synthetic` directory is currently maintained to be used as a module in-place.
 It can likely be pip installed, but its not recommended. 
 
-NOTE: GPU BUSY SLEEP requires knowing the steady-state GPU clock frequency. This module is configured for Frontera. If running on a different system this frequency can the estimated with `estimate_frequency()`. And example of this is commented out in `run.py`.  
+NOTE: GPU BUSY SLEEP requires knowing the steady-state GPU clock frequency. This module is configured for Frontera. If running on a different system this frequency can be estimated with `estimate_frequency()`. And example of this is commented out in `run.py`.  
 
 ## Usage
 
