@@ -47,7 +47,7 @@ gil_time = args.gil_time
 
 if overlap:
     n_partitions = 1
-    N = N//width
+    N = args.N//width
 else:
     n_partitions = width
 
@@ -55,7 +55,7 @@ with open(output, 'w') as graph:
 
     #setup data information
     #assume equipartition
-    n_local = N//n_partitions
+    n_local = args.N//n_partitions
     for i in range(n_partitions):
         graph.write(f"{n_local}")
         if i+1 < n_partitions:

@@ -130,15 +130,17 @@ def verify(file, G):
 
     return correct
 
-def verify_movement(file, depend_dict, data_dep):
+def load_movement(file, depend_dict, verify=False):
 
     task_dep, read_dep, write_dep = depend_dict
 
-    index_to_task = task_dep.keys()
+    index_to_task = list(task_dep.keys())
 
     correct = True
     started_tasks = []
     finished_tasks = []
+
+    observed_movement = dict()
 
     with open(file, mode='r') as f:
         lines = f.readlines()
@@ -146,45 +148,81 @@ def verify_movement(file, depend_dict, data_dep):
         for line in lines:
 
             is_movement = bool(re.search("\=Task", line))
-            task_id = re.search("\(.*\)", line)
+            task_id = re.search("\(.*?\)", line)
             task_id = None if task_id is None else task_id.group(0)
 
-            old_index = re.search("\<.*\>", line)
-            old_index = None if old_index is None else task_id.group(0).trim("<>")
-            old_index = None if old_index is None else int(old_index)
+            #last touched by
+            old_index = re.search("\<.*?\>", line)
+            old_index = None if old_index is None else old_index.group(0).strip("<>")
+            old_index = None if old_index is None else int(float(old_index))
 
-            data_idx = re.search("Data\[.*\]", line)
-            data_idx = None if data_idx is None else data_idx.group(0).trim("Data[]")
+            data_idx = re.search("Data\[.*?\]", line)
+            data_idx = None if data_idx is None else data_idx.group(0).strip("Data[] ")
             data_idx = None if data_idx is None else int(data_idx)
 
-            data_obs = re.search("Block=\[.*\]", line)
-            data_obs = None if data_obs is None else data_obs.group(0).trim("Block=[]")
-            data_obs = None if data_obs is None else int(data_obs)
+            data_obs = re.search("Block=\[.*?\]", line)
+            data_obs = None if data_obs is None else data_obs.group(0).strip("Block=[] ")
+            data_obs = None if data_obs is None else int(float(data_obs))
 
+            current_index = re.search("Value=\[.*?\]", line)
+            current_index = None if current_index is None else current_index.group(0).strip("Value=[] ")
+            current_index = None if current_index is None else int(float(current_index))
+            
 
-            device_obs = re.search("Device\[.*\]", line)
-            device_obs = None if device_obs is None else device_obs.group(0).trim("Device[]")
+            device_obs = re.search("Device\[.*?\]", line)
+            device_obs = None if device_obs is None else device_obs.group(0).strip("Device[] ")
             device_obs = None if device_obs is None else int(device_obs)
 
 
-            from_idx = old_idx
+            from_idx = old_index
+            to_idx = current_index
 
-            print(line)
-            print(is_movement, task_id, device_obs, data_idx, data_obs, from_idx)
+            #print(line)
+            #print(is_movement, task_id, device_obs, data_idx, data_obs, to_idx, from_idx)
 
-            if from_idx > 0:
-                from_task_id = f"D{abs(from_idx-1)}"
-            else:
-                from_task_id = intex_to_task[from_idx]
+            if is_movement:
+
+                if from_idx is not None:
+                    if from_idx > 0:
+                        from_task_id = f"D{abs(from_idx)-1}"
+                    else:
+                        from_task_id = index_to_task[abs(from_idx)]
+                else:
+                    from_task_id = None
+
+                if to_idx is not None:
+                    if to_idx > 0:
+                        to_task_id = f"D{abs(to_idx)-1}"
+                    else:
+                        to_task_id = index_to_task[abs(to_idx)]
+                else:
+                    to_task_id = None
+
+                
+                observed_movement[to_task_id] = (data_idx, from_task_id)
+
+                #print("FROM TASK: ", from_task_id)
+                #print("TO TASK: ", to_task_id)
+
+                if data_obs is None or abs(data_obs)-1 != data_idx:
+                    correct = False 
+
+                if not correct and verify:
+                    print("Data Blocks: INCORRECT")
+
+    if correct and verify:
+        print("Data Blocks: VALID")
+
+    return observed_movement
 
 
+def verify_movement(observed_movement, depend_dicts, data_depends):
+    task_dep, read_dep, write_dep = depend_dicts
+    data_dep = data_depends 
 
-
-
-
-
-
-    return correct
+    for to_id, from_tuple in observed_movement:
+        data_idx, from_id = from_tuple 
+        
 
 
 
@@ -436,6 +474,10 @@ def find_data_edges(dicts, data_sizes=None, location_filter=None):
     return (data_dict, weight_dict, target_dict)
 
 
+def concat_tuple(obj):
+    return '_'.join([str(s) for s in obj])
+
+
 @specialized
 def waste_time(ids, weight, gil, verbose=False):
 
@@ -495,9 +537,7 @@ def create_task_lazy(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu
                 old = None if not check else np.copy(arr[0, 1])
                 arr[0, 1] = -launch_id
                 if verbose:
-                    print(f"=Task {ids} moved Data[{in_data}] from \
-                            Device[{where}]. Block=[{arr[0, 0]}] | \
-                            Value=[{arr[0,1]}], <{old}>", flush=True)
+                    print(f"=Task {ids} moved Data[{in_data}] from Device[{where}]. Block=[{arr[0, 0]}] | Value=[{arr[0,1]}], <{old}>", flush=True)
 
         if data[2] is not None:
             for inout_data in data[2]:
@@ -508,9 +548,7 @@ def create_task_lazy(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu
                 old = None if not check else np.copy(arr[0, 1])
                 arr[0,1] = -launch_id
                 if verbose:
-                    print(f"=Task {ids} moved Data[{inout_data}] from \
-                    Device[{where}]. Block=[{arr[0, 0]}] | \
-                    Value=[{arr[0, 1]}], <{old}>", flush=True)
+                    print(f"=Task {ids} moved Data[{inout_data}] from Device[{where}]. Block=[{arr[0, 0]}] | Value=[{arr[0, 1]}], <{old}>", flush=True)
 
         waste_time(ids, weight, gil, verbose)
 
@@ -544,9 +582,7 @@ def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, c
                 old = None if not check else np.copy(block[0, 1])
                 block[0, 1] = -launch_id
                 if verbose:
-                    print(f"=Task {ids} :: Auto Move.. Data[{in_data}] is on \
-                            Device[{where}]. Block=[{block[0, 0]}] | \
-                            Value=[{block[0,1]}], <{old}>", flush=True)
+                    print(f"=Task {ids} :: Auto Move.. Data[{in_data}] is on Device[{where}]. Block=[{block[0, 0]}] | Value=[{block[0,1]}], <{old}>", flush=True)
 
         if data[2] is not None:
             for inout_data in data[2]:
@@ -556,9 +592,7 @@ def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, c
                 old = None if not check else np.copy(block[0, 1])
                 block[0, 1] = -launch_id
                 if verbose:
-                    print(f"=Task {ids} :: Auto Move.. Data[{inout_data}] is \
-                    on Device[{where}]. Block=[{block[0, 0]} | \
-                            Value=[{block[0,1]}], <{old}>", flush=True)
+                    print(f"=Task {ids} :: Auto Move.. Data[{inout_data}] is on Device[{where}]. Block=[{block[0, 0]} | Value=[{block[0,1]}], <{old}>", flush=True)
 
         start = time.perf_counter()
 
@@ -575,12 +609,27 @@ def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, 
     @spawn(task_space[ids], dependencies=deps, placement=place, vcus=1)
     def busy_sleep():
 
-        start = time.perf_counter()
+        #create named frame for profiler (Error: This doesn't work)
+        def create_body(name):
+            def task(*args):
 
-        waste_time(ids, weight, gil, verbose)
+                start = time.perf_counter()
 
-        end = time.perf_counter()
-        print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
+                waste_time(ids, weight, gil, verbose)
+
+                end = time.perf_counter()
+                print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
+            task.__name__ = name
+            return task
+
+        name = 'task_'+concat_tuple(ids)
+        task_body = create_body('{name}')
+
+
+        #run task body
+        task_body()
+
+
 
 def create_tasks(G, array, data_move=0, verbose=False, check=False):
 

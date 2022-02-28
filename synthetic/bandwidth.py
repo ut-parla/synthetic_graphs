@@ -48,3 +48,7 @@ def generate_bandwidth(N=2**23, d=10, samples=10):
             timing[i, j] = timing[i,j]/samples
 
     return timing
+
+if __name__ == '__main__':
+    print("Bandwidth: ")
+    print(generate_bandwidth())

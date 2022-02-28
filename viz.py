@@ -46,6 +46,10 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
         default_weight = 0
         show_weights = True
 
+    if not data_task:
+        show_weights = False
+
+
     for target, deps in dep_dict.items():
         for source in deps:
             is_isolated = all( [target[i] == source[i] for i in range(len(target))])
@@ -246,9 +250,9 @@ if __name__ == '__main__':
         est = max(serial/p, (depth*task_time))
         print("Assuming equal sized tasks and no data movement:")
         print("Degree of Parallelism in Generational Ordering =", width)
-        print("Task Size: ", task_time)
-        print("Lower bound estimate: ", est)
-        print("Serial Time: ", serial)
+        print("Average Task Size: ", task_time, "seconds ")
+        print("Lower bound estimate: ", est, " seconds")
+        print("Serial Time: ", serial, " seconds")
 
 
 

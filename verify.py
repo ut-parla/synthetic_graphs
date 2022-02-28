@@ -30,7 +30,9 @@ if __name__ == '__main__':
     data_dict = find_data_edges(depend_dict, data_sizes)
     data_dep, weight_dict, target_dict = data_dict
 
-    verify_movement(args.input, depend_dict, data_dep)
+    movement_obs = load_movement(args.input, depend_dict, verify=True)
+    #verify_movement(movement_obs, depend_dict, data_dict)
+    print(movement_obs)
 
 
 
