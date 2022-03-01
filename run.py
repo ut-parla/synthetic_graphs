@@ -109,8 +109,8 @@ def main():
     if args.reinit:
         data_mean = np.mean(np.array(data_execution_times))
         data_median = np.median(np.array(data_execution_times))
-        print(f"----Data Reinit Time:: Average = {data_mean} | Median = {data_median}")
-        print("Note: included in Parla total time")
+        print(f"----Data ReInit Time:: Average = {data_mean} | Median = {data_median}")
+        print("Note: Data ReInit Time is included in Parla Total Time (subtract out as necessary)")
 
 
 if __name__ == '__main__':
