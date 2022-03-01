@@ -22,6 +22,7 @@ parser.add_argument('--check_data', metavar='check_data', dest='check', nargs='?
 execution_times = []
 
 args = parser.parse_args()
+
 task_space = TaskSpace("Graph Iterations")
 
 def main_parla(iteration, G, array, verbose=False):
