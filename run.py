@@ -8,26 +8,36 @@ from parla.cpu import cpu
 
 import argparse
 
-from synthetic.core import *
+from synthetic.core_old import *
 
 parser = argparse.ArgumentParser(description='Launch graph file in Parla')
 parser.add_argument('-d', metavar='N', type=int, help='The dimension of data segments >=2 (Increase to make movement more expensive)', default=2)
 parser.add_argument('-data_move', metavar='data_move', type=int, help='type of data movement. options=(None=0, Lazy=1, Eager=2)', default=0)
 parser.add_argument('-graph', metavar='graph', type=str, help='the input graph file to run', required=True, default='graph/independent.gph')
 parser.add_argument('--verbose', metavar='verbose', nargs='?', const=True, type=str2bool, default=False, help='Activate verbose mode (required for verifying output)')
-
+parser.add_argumennt('-loop', metavar='loop', default=1, help='How many times to repeat the graph execution')
 parser.add_argument('--check_data', metavar='check_data', dest='check', nargs='?', const=True, type=str2bool, default=False, help='Activate data check mode (required for verifying movement output output)')
 
-args = parser.parse_args()
 
-def main_parla(G, array, verbose=False):
-    @spawn(placement=cpu)
+execution_times = []
+
+args = parser.parse_args()
+task_space = TaskSpace("Graph Iterations")
+
+def main_parla(iteration, G, array, verbose=False):
+
+    dep = [task_space[iteration-1]] if iteration > 0 else [] 
+
+    @spawn(task_space[iteration], dependencies=dep, placement=cpu)
     async def main_task():
         start_internal = time.perf_counter()
         await create_tasks(G, array, args.data_move, verbose, args.check)
         end_internal = time.perf_counter()
 
-        print("Elapsed Internal Main Task: ", end_internal - start_internal, "seconds", flush=True)
+        graph_elapsed = end_internal - start_internal
+        execution_times.append(graph_elapsed)
+        print(f"Iteration {iteration} | Graph Execution Time: ", graph_elapsed, "seconds", flush=True)
+        
 
 def main():
 
@@ -43,9 +53,10 @@ def main():
     start = time.perf_counter()
 
     with Parla():
-        start_internal = time.perf_counter()
-        main_parla(G, array, args.verbose)
-        end_internal = time.perf_counter()
+        for iteration in range(args.loop):
+            start_internal = time.perf_counter()
+            main_parla(G, array, args.verbose)
+            end_internal = time.perf_counter()
 
     end = time.perf_counter()
 
