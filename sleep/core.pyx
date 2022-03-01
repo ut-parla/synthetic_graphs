@@ -14,8 +14,7 @@ def bsleep(t):
 
 def sleep_with_gil(t):
     cdef unsigned int c_t = t
-    with nogil:
-        busy_sleep(c_t)
+    busy_sleep(c_t)
 
 def spin_gil(interval):
     start = time.perf_counter()
