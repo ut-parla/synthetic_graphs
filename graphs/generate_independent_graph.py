@@ -9,8 +9,8 @@ Generates an independent set of tasks:
     Options:
         -width: how many tasks to generate
         -overlap:
-            0: each task reads the same data
-            1: each task reads a separate data block
+            0: each task reads a separate data block
+            1: each task reads the same data
 """
 
 
