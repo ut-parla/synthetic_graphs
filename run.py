@@ -15,7 +15,7 @@ parser.add_argument('-d', metavar='N', type=int, help='The dimension of data seg
 parser.add_argument('-data_move', metavar='data_move', type=int, help='type of data movement. options=(None=0, Lazy=1, Eager=2)', default=0)
 parser.add_argument('-graph', metavar='graph', type=str, help='the input graph file to run', required=True, default='graph/independent.gph')
 parser.add_argument('--verbose', metavar='verbose', nargs='?', const=True, type=str2bool, default=False, help='Activate verbose mode (required for verifying output)')
-parser.add_argumennt('-loop', metavar='loop', default=1, help='How many times to repeat the graph execution')
+parser.add_argument('-loop', metavar='loop', default=1, help='How many times to repeat the graph execution')
 parser.add_argument('--check_data', metavar='check_data', dest='check', nargs='?', const=True, type=str2bool, default=False, help='Activate data check mode (required for verifying movement output output)')
 
 
@@ -55,7 +55,7 @@ def main():
     with Parla():
         for iteration in range(args.loop):
             start_internal = time.perf_counter()
-            main_parla(G, array, args.verbose)
+            main_parla(iteration, G, array, args.verbose)
             end_internal = time.perf_counter()
 
     end = time.perf_counter()
