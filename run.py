@@ -95,8 +95,10 @@ def main():
         #if args.verbose:
         #    print(f"Outer Iteration: {outer} | Time to Spawn Main Task: ", end_internal - start_internal, "seconds", flush=True)
 
-        print("---------------")
+        print("--------------- \n")
 
+
+    print("Summary: ")
     graph_mean = np.mean(np.array(graph_execution_times))
     graph_median = np.median(np.array(graph_execution_times))
 
