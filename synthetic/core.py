@@ -167,7 +167,7 @@ def load_movement(file, depend_dict, verify=False):
             current_index = re.search("Value=\[.*?\]", line)
             current_index = None if current_index is None else current_index.group(0).strip("Value=[] ")
             current_index = None if current_index is None else int(float(current_index))
-            
+
 
             device_obs = re.search("Device\[.*?\]", line)
             device_obs = None if device_obs is None else device_obs.group(0).strip("Device[] ")
@@ -198,14 +198,14 @@ def load_movement(file, depend_dict, verify=False):
                 else:
                     to_task_id = None
 
-                
+
                 observed_movement[to_task_id] = (data_idx, from_task_id)
 
                 #print("FROM TASK: ", from_task_id)
                 #print("TO TASK: ", to_task_id)
 
                 if data_obs is None or abs(data_obs)-1 != data_idx:
-                    correct = False 
+                    correct = False
 
                 if not correct and verify:
                     print("Data Blocks: INCORRECT")
@@ -218,11 +218,11 @@ def load_movement(file, depend_dict, verify=False):
 
 def verify_movement(observed_movement, depend_dicts, data_depends):
     task_dep, read_dep, write_dep = depend_dicts
-    data_dep = data_depends 
+    data_dep = data_depends
 
     for to_id, from_tuple in observed_movement:
-        data_idx, from_id = from_tuple 
-        
+        data_idx, from_id = from_tuple
+
 
 
 
@@ -267,12 +267,11 @@ def estimate_frequency(n_samples= 10, ticks=cycles_per_second):
     print("Estimated GPU Frequency: Mean: ", estimated_speed, ", Median: ", median_speed, flush=True)
     return estimated_speed
 
-def setup_data(G, d = 10, verbose=False, device_list=None, data_move=1):
+def setup_data(data_config, d = 10, verbose=False, device_list=None, data_move=1):
     """
     Setup data into blocks of data specified by the graph config.
     At the moment all data will be initialized on the CPU.
     """
-    data_config = G.pop(0)
 
     data = []
     count = 0
@@ -605,12 +604,10 @@ def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, c
 
 
 def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, verbose=False):
+
     ids = tuple(ids)
 
-    print("Spawning with VCUS", cu)
-    cu = 0.1
-
-    @spawn(task_space[ids], dependencies=deps, vcus=cu, placement=place, memory=2e9)
+    @spawn(task_space[ids], dependencies=deps, placement=place, vcus=cu)
     def busy_sleep():
 
         #create named frame for profiler (Error: This doesn't work)
