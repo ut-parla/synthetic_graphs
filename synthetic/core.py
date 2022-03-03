@@ -255,12 +255,13 @@ def estimate_frequency(n_samples= 10, ticks=cycles_per_second):
         gpu_sleep(device_id, cycles, stream)
         stream.synchronize()
         end = time.perf_counter()
-        print(f"...collected frequency sample {i}")
+        print(f"...collected frequency sample {i} ", end-start)
 
         times[i] = (end-start)
 
-    elapsed = np.sum(times)
-    estimated_speed = (cycles*n_samples/elapsed)
+    times = times[2:]
+    elapsed = np.mean(times)
+    estimated_speed = cycles/np.mean(times)
     median_speed = cycles/np.median(times)
 
     print("Finished Benchmark.")
