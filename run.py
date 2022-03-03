@@ -118,7 +118,8 @@ def main():
 if __name__ == '__main__':
     #Estimate GPU frequency for busy wait timing
     #global cycles_per_second
-    #cycles_per_second = estimate_frequency(50, ticks=10**8)
+    #cycles_per_second = estimate_frequency(100, ticks=0.05*1910*10**6)
+    #print(cycles_per_second)
 
     #Launch experiment
     main()

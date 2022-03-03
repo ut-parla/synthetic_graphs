@@ -16,10 +16,20 @@ void busy_sleep(const unsigned milli){
 */
 
 void busy_sleep(const unsigned micro){
+    //int count = 0;
     auto block = chrono::microseconds(micro);
     auto time_start = chrono::high_resolution_clock::now();
-    while(chrono::duration<double>(chrono::high_resolution_clock::now()-time_start) < block){
+
+    auto now = chrono::high_resolution_clock::now();
+    auto elapsed = chrono::duration_cast<chrono::microseconds>(now - time_start);
+
+    do{
+
+        now = chrono::high_resolution_clock::now();
+        elapsed = chrono::duration_cast<chrono::microseconds>(now - time_start);
     }
+    while(elapsed.count() < micro);
+    //return count;
 }
 
 

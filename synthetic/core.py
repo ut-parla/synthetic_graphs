@@ -482,7 +482,7 @@ def concat_tuple(obj):
 def waste_time(ids, weight, gil, verbose=False):
 
     if verbose:
-        print(f"+Task {ids} running on Device[-1] CPU", f"for {weight} total milliseconds", flush=True)
+        print(f"+Task {ids} running on Device[-1] CPU", f"for {weight} total microseconds", flush=True)
 
     gil_count, gil_time = gil
 
@@ -652,8 +652,8 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False):
         #Generate task weight
         weight = info[0]
         vcus = 1/info[1]
-        gil_count = info[2]
-        gil_time = info[3]
+        gil_count = info[3]
+        gil_time = info[4]
         gil = (gil_count, gil_time)
 
         #Generate placement list
