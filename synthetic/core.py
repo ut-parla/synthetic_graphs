@@ -97,7 +97,7 @@ def get_execution_info(file):
 
 
 
-def verify(file, G):
+def verify(file, G, location=None):
     G = G[0]
     correct = True
     started_tasks = []
@@ -110,6 +110,7 @@ def verify(file, G):
 
             is_started = bool(re.search("\+Task", line))
             is_finished = bool(re.search("-Task", line))
+
             task_id = re.search("\(.*\)", line)
             task_id = None if task_id is None else task_id.group(0)
 
@@ -127,6 +128,13 @@ def verify(file, G):
                     check = [dep in finished_tasks for dep in deps]
 
                     correct = all(check)
+
+    if location is not None:
+        for task_id in G.keys():
+            try:
+                where = location[str(task_id)]
+            except KeyError:
+                correct = False
 
     return correct
 

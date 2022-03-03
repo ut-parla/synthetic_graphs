@@ -20,7 +20,9 @@ if __name__ == '__main__':
     data_sizes = G.pop(0)
     depend_dict = convert_to_dict(G)
 
-    result = verify(args.input, depend_dict)
+    G_time, G_loc = get_execution_info(args.input)
+
+    result = verify(args.input, depend_dict, location=G_loc)
 
     if result:
         print("Task Ordering: VALID")
