@@ -592,7 +592,7 @@ def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, c
                 old = None if not check else np.copy(block[0, 1])
                 block[0, 1] = -launch_id
                 if verbose:
-                    print(f"=Task {ids} :: Auto Move.. Data[{inout_data}] is on Device[{where}]. Block=[{block[0, 0]} | Value=[{block[0,1]}], <{old}>", flush=True)
+                    print(f"=Task {ids} :: Auto Move.. Data[{inout_data}] is on Device[{where}]. Block=[{block[0, 0]}] | Value=[{block[0,1]}], <{old}>", flush=True)
 
         start = time.perf_counter()
 
@@ -606,7 +606,11 @@ def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, c
 
 def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, verbose=False):
     ids = tuple(ids)
-    @spawn(task_space[ids], dependencies=deps, placement=place, vcus=1)
+
+    print("Spawning with VCUS", cu)
+    cu = 0.1
+
+    @spawn(task_space[ids], dependencies=deps, vcus=cu, placement=place, memory=2e9)
     def busy_sleep():
 
         #create named frame for profiler (Error: This doesn't work)
