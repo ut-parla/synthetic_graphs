@@ -43,6 +43,8 @@ __global__ void gpu_sleep_1(clock_t clock_count){
     gpu_sleep_1_bak(clock_count);
 }
 
+
+/*
 __device__ void gpu_sleep_2_bak(unsigned int sleep_cycles)
 {
     __nanosleep(sleep_cycles);
@@ -54,6 +56,7 @@ __global__ void gpu_sleep_2(unsigned int clock_count){
     __nanosleep(clock_count);
     //gpu_sleep_2_bak(clock_count);
 }
+*/
 
 void gpu_sleeper(const int device, const unsigned long t, intptr_t stream_ptr){
     cudaStream_t stream = reinterpret_cast<cudaStream_t>(stream_ptr);
