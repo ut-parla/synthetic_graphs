@@ -33,8 +33,8 @@ if __name__ == '__main__':
     data_dep, weight_dict, target_dict = data_dict
 
     movement_obs = load_movement(args.input, depend_dict, verify=True)
-    #verify_movement(movement_obs, depend_dict, data_dict)
-    print(movement_obs)
+    task_dep, read_dep, write_dep = depend_dict
+    verify_movement(movement_obs, depend_dict, data_dict)
 
 
 

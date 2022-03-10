@@ -129,16 +129,21 @@ def verify(file, G, location=None):
 
                     correct = all(check)
 
+    #make sure all tasks exist in the Parla output
     if location is not None:
+        #print(location.keys())
+        #print(G.keys())
+
         for task_id in G.keys():
             try:
                 where = location[str(task_id)]
             except KeyError:
+                #print(task_id)
                 correct = False
 
     return correct
 
-def load_movement(file, depend_dict, verify=False):
+def load_movement(file, depend_dict, verify=False, verbose=False):
 
     task_dep, read_dep, write_dep = depend_dict
 
@@ -185,11 +190,12 @@ def load_movement(file, depend_dict, verify=False):
             from_idx = old_index
             to_idx = current_index
 
-            #print(line)
             #print(is_movement, task_id, device_obs, data_idx, data_obs, to_idx, from_idx)
 
             if is_movement:
 
+
+                #Adjust idx for offset (to separate tasks from intitial data reads)
                 if from_idx is not None:
                     if from_idx > 0:
                         from_task_id = f"D{abs(from_idx)-1}"
@@ -207,10 +213,13 @@ def load_movement(file, depend_dict, verify=False):
                     to_task_id = None
 
 
-                observed_movement[to_task_id] = (data_idx, from_task_id)
+                observed_movement[to_task_id] = observed_movement.get(to_task_id, list())
+                observed_movement[to_task_id].append( (data_idx, from_task_id) )
 
-                #print("FROM TASK: ", from_task_id)
-                #print("TO TASK: ", to_task_id)
+                if verbose:
+                    print("FROM TASK: ", from_task_id)
+                    print("TO TASK: ", to_task_id)
+                    print("DATA ID: ", data_idx)
 
                 if data_obs is None or abs(data_obs)-1 != data_idx:
                     correct = False
@@ -221,15 +230,82 @@ def load_movement(file, depend_dict, verify=False):
     if correct and verify:
         print("Data Blocks: VALID")
 
+
+    #convert to dictionary of dictionaries to do lookup
+    for key in observed_movement.keys():
+        observed_movement[key] = dict(observed_movement[key])
+
+
     return observed_movement
 
 
-def verify_movement(observed_movement, depend_dicts, data_depends):
+def verify_movement(observed_movement, depend_dicts, data_depends, verbose=False):
     task_dep, read_dep, write_dep = depend_dicts
-    data_dep = data_depends
+    data_dep = data_depends[0]
 
-    for to_id, from_tuple in observed_movement:
-        data_idx, from_id = from_tuple
+    correct = False
+
+    #loop over all nodes with observed movement to them
+    for to_id in observed_movement.keys():
+
+        if verbose:
+            print("=======")
+            print("Checking data at Task", to_id)
+        data_at_nodes = observed_movement[to_id]
+
+        data_dependency_list = data_dep[to_id]
+
+        if verbose:
+            print("This has data dependencies: ", data_dependency_list)
+
+        #loop over all data at the current node
+        for data_idx in data_at_nodes.keys():
+            from_id = data_at_nodes[data_idx]
+
+            if verbose:
+                print("Checking data block: ", data_idx)
+
+            #Need to check:
+            #Does the source (from_id) or its ancestors have the destination (to_id) as a write dependency
+
+            #while not at starting data node
+            while "D" not in from_id:
+
+                
+                #check if from_task_id has data_idx as a write dependency
+                if verbose:
+                    print("Checking write dependencies of source Task", from_id)
+                write_list = write_dep[from_id]
+
+                if verbose:
+                    print("Dependencies are: ", write_list, " looking for a write to: ", data_idx)
+
+                #check if it is the most recent write
+                if (from_id in data_dependency_list) and (data_idx in write_list):
+                    correct = True
+                    if verbose:
+                        print(f"Correct. The source {from_id} is in the destination Tasks data dependencies.")
+                    break
+
+                #increment to parent of from_task_id's read on data_idx
+                parent_id = observed_movement[from_id][data_idx]
+                if verbose:
+                    print(f"Moving to parent. Data {data_idx} at {from_id} was last touched by {parent_id}")
+                from_id = parent_id
+                
+
+            if "D" in from_id and from_id in data_dependency_list:
+                correct = True
+
+            if verbose:
+                print("-------")
+
+
+    if correct:
+        print("Data Movement: VALID")
+
+    return correct
+
 
 
 
