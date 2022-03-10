@@ -67,6 +67,7 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
             if location:
                 G.nodes[source]['loc'] = location[str(source)]
                 G.nodes[target]['loc'] = location[str(target)]
+            
 
             if times:
                 G.nodes[source]['time'] = times[str(source)]
@@ -139,6 +140,14 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
     #nx.draw(G, with_labels=True, font_weight='bold')
     #plt.show()
 
+    colors = ['black', '#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7']
+
+    if location is not None:
+        for node in G:
+            device_id = int(G.nodes[node]['loc'])
+            c = colors[device_id+1]
+            G.nodes[node]['color'] = str(c)
+            G.nodes[node]['style'] = 'filled'
 
     if plot:
         pg = nx.drawing.nx_pydot.to_pydot(G)
