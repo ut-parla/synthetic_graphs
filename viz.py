@@ -167,8 +167,9 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
         critical_path = nx.dag_longest_path(G, weight=1)
         #print(critical_path)
         generations = nx.topological_generations(G)
-        gen_size = np.array([len(g) for g in generations])
 
+        generations = [g for g in generations]
+        gen_size = np.array([len(g) for g in generations])
         #TODO: Why is this broken for args.maximum? (undirected is not equivalent)
         #uG = G.to_undirected()
         #if args.maximum:
@@ -185,7 +186,7 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
         print(f"Generation Sizes. Min: {np.min(gen_size)}, Mean: {np.mean(gen_size)}, Max: {np.max(gen_size)}")
         #print(f"ERROR: BUG HERE. --> Approximate size of independent set: {width}")
 
-        return (len(critical_path), np.max(gen_size))
+        return (generations, len(critical_path), np.max(gen_size))
 
     return None
     #A = to_agraph(G)
@@ -243,8 +244,8 @@ if __name__ == '__main__':
     info = plot_graph_nx(depend_dict, data_dict, weights=weight_dict, data_task=(args.data_nodes,args.merge), location=G_loc, times=G_time)
 
     #Compute runtime estimates
-    if info is not None:
-        depth, width = info
+    if info is not None and input is None and (data == 0):
+        generations, depth, width = info
         task = G[0]
         task_info = task[1]
         compute_time = task_info[0]
@@ -262,6 +263,13 @@ if __name__ == '__main__':
         print("Average Task Size: ", task_time, "seconds ")
         print("Lower bound estimate: ", est, " seconds")
         print("Serial Time: ", serial, " seconds")
+
+        gen_time = 0
+        for level in generations:
+            gen_time += np.ceil(len(level)/p) * task_time
+        print("Time under generation schedule: ", gen_time, " seconds")
+
+
 
 
 
