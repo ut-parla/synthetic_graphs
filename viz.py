@@ -27,20 +27,55 @@ parser.add_argument('-input', metavar='input', type=str, help="Read Parla log to
 parser.add_argument('--maximum-set', dest='maximum', type=str2bool, help="Compute maximal independent set. WARNING NP-COMPLETE", default=False, nargs='?')
 args = parser.parse_args()
 
-def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights=None, data_task=(False, False), location=None, times=None):
+def check_movement(data_idx, to_id, from_id, location, movement=None):
+
+    if movement is not None:
+        #print(movement.keys())
+        #Get task id that last t1ouched the data this read from
+        from_id = movement[to_id][data_idx]
+        print("Data came from Task: ", from_id)
+
+    to_id = str(to_id)
+    from_id = str(from_id)
+
+
+    #print(to_id, from_id, location.keys())
+    if "D" in from_id and (location[to_id] == -1):
+        print("Initial Read from CPU TO CPU")
+        return (False, -1)
+    elif "D" in from_id:
+        print("Initial read from CPU to Device")
+        return (True, -1)
+    else:
+        print("Read: (from, to)", location[from_id], location[to_id])
+        return ((location[to_id] != location[from_id]), location[from_id])
+
+def sizeof_fmt(num, suffix="B"):
+    for unit in ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
+        if abs(num) < 1024.0:
+            return f"{num:3.1f}{unit}{suffix}"
+        num /= 1024.0
+    return f"{num:.1f}Yi{suffix}"
+
+def make_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights=None, data_task=(False, False), location=(None, None), times=None):
     G = nx.DiGraph()
 
+    location, movement = location
+
     data_dict, target_dict = data_dict
+
     dep_dict = depend_dict[0]
 
     skip_data_end = True
 
     data_task, merge = data_task
+    print("Show data tasks: ", data_task)
+    print("Merge data tasks: ", merge)
 
     show_weights = True
 
     if weights is None:
-        default_weight = 1
+        default_weight = 0
         show_weights = False
     else:
         default_weight = 0
@@ -64,21 +99,22 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
                 else:
                     G.add_edge(source, target, color='black', weight=default_weight)
 
-            if location:
+            if location is not None:
                 G.nodes[source]['loc'] = location[str(source)]
                 G.nodes[target]['loc'] = location[str(target)]
             
 
-            if times:
+            if times is not None:
                 G.nodes[source]['time'] = times[str(source)]
                 G.nodes[target]['time'] = times[str(target)]
 
     if args.data:
         for target, deps in data_dict.items():
             for source in deps:
-                edge_w = default_weight
-                edge_id = str(source)+"-"+str(target)
 
+                move_flag = True
+                edge_w = default_weight if move_flag else 0
+                edge_id = str(source)+"-"+str(target)
 
                 if data_task:
                     if merge:
@@ -100,15 +136,25 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
 
                         if location:
                             #TODO: Update this to be compatible with MSI
-                            G.nodes[edge_id]['loc'] = location[str(target)]
+                            try:
+                                G.nodes[temp_id]['loc'] = location[str(source)]
+                            except KeyError:
+                                G.nodes[temp_id]['loc'] = -1
 
                     else:
                         d_idx = 0
                         for d in target_dict[edge_id]:
-                            temp_id = edge_id+" Data ["+str(d)+"]"
+                            temp_id = edge_id+" - Data ["+str(d)+"]"
 
                             if weights is not None:
-                                edge_w = weights[edge_id][d_idx]
+
+                                if (location is not None) and (movement is not None):
+                                    move_flag, copy_from = check_movement(d_idx, target, source, location, movement)
+                                else:
+                                    move_flag = True
+                                    copy_from = source
+
+                                edge_w = weights[edge_id][d_idx] if move_flag else 0
 
                             #print("nm", source, temp_id, target, d)
                             if show_weights:
@@ -124,8 +170,11 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
                                 G.add_edge(temp_id, target, color='red', weight=edge_w)
 
                             if location:
-                                #TODO: Update this to be compatible with MSI
-                                G.nodes[temp_id]['loc'] = location[str(target)]
+                                try:
+                                    G.nodes[temp_id]['loc'] = copy_from
+                                except KeyError:
+                                    G.nodes[temp_id]['loc'] = -1
+
 
                         d_idx += 1
 
@@ -144,10 +193,19 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
 
     if location is not None:
         for node in G:
-            device_id = int(G.nodes[node]['loc'])
+            print(node)
+
+            try:
+                device_id = int(G.nodes[node]['loc'])
+            except KeyError:
+                device_id = -1
+
+
+            if device_id >= 0:
+                G.nodes[node]['style'] = 'filled'
+
             c = colors[device_id+1]
             G.nodes[node]['color'] = str(c)
-            G.nodes[node]['style'] = 'filled'
 
     if plot:
         pg = nx.drawing.nx_pydot.to_pydot(G)
@@ -163,32 +221,7 @@ def plot_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
 
         pg.write_png(args.output)
 
-    if plot_isolated:
-        critical_path = nx.dag_longest_path(G, weight=1)
-        #print(critical_path)
-        generations = nx.topological_generations(G)
-
-        generations = [g for g in generations]
-        gen_size = np.array([len(g) for g in generations])
-        #TODO: Why is this broken for args.maximum? (undirected is not equivalent)
-        #uG = G.to_undirected()
-        #if args.maximum:
-        #    width = nx.algorithms.approximation.maximum_independent_set(G)
-        #else:
-        #   width = nx.algorithms.mis.maximal_independent_set(uG)
-
-        #width = len(width)
-
-        print()
-        print("Graph analysis:")
-        print("--------------")
-        print(f"The longest path in the DAG is: {len(critical_path)}")
-        print(f"Generation Sizes. Min: {np.min(gen_size)}, Mean: {np.mean(gen_size)}, Max: {np.max(gen_size)}")
-        #print(f"ERROR: BUG HERE. --> Approximate size of independent set: {width}")
-
-        return (generations, len(critical_path), np.max(gen_size))
-
-    return None
+    return G
     #A = to_agraph(G)
     #A.layout('dot')
     #A.draw('output.png')
@@ -228,9 +261,12 @@ if __name__ == '__main__':
 
     if args.input is not None:
         G_time, G_loc = get_execution_info(args.input)
+        movement = load_movement(args.input, depend_dict)
+        d = get_dimension(args.input)
     else:
         G_time = None
         G_loc = None
+        d = 2
 
     #print(G_loc)
 
@@ -241,21 +277,51 @@ if __name__ == '__main__':
 
     data_dict, weight_dict, target_dict = data_dict
     data_dict = data_dict, target_dict
-    info = plot_graph_nx(depend_dict, data_dict, weights=weight_dict, data_task=(args.data_nodes,args.merge), location=G_loc, times=G_time)
+    nxG = make_graph_nx(depend_dict, data_dict, weights=weight_dict, data_task=(args.data_nodes,args.merge), location=(G_loc, movement), times=G_time)
 
-    #Compute runtime estimates
-    if info is not None and input is None and (data == 0):
-        generations, depth, width = info
-        task = G[0]
+
+    def analyze_graph(G, submit_graph, input_flag=False):
+
+        critical_path = nx.dag_longest_path(G, weight=1)
+
+        #print(critical_path)
+        generations = nx.topological_generations(G)
+
+        generations = [g for g in generations]
+        gen_size = np.array([len(g) for g in generations])
+        #TODO: Why is this broken for args.maximum? (undirected is not equivalent)
+        #uG = G.to_undirected()
+        #if args.maximum:
+        #    width = nx.algorithms.approximation.maximum_independent_set(G)
+        #else:
+        #   width = nx.algorithms.mis.maximal_independent_set(uG)
+
+        #width = len(width)
+
+        width = np.max(gen_size)
+
+        print()
+        print("Graph analysis:")
+        print("--------------")
+        print(f"The longest path in the DAG is: {len(critical_path)}")
+        print(f"Generation Sizes. Min: {np.min(gen_size)}, Mean: {np.mean(gen_size)}, Max: {np.max(gen_size)}")
+
+        if input_flag:
+            data_count = nxG.size(weight='weight') * d * 8
+            print("Total Data Movement: ", sizeof_fmt(data_count))
+
+
+        task = submit_graph[0]
         task_info = task[1]
         compute_time = task_info[0]
         gil_count = task_info[3]
         gil_time = task_info[4]
         task_time = compute_time + gil_count * gil_time
         task_time = task_time / 10**6
+        depth = len(critical_path)
 
-        p = args.p
-
+        p = args.p 
+        
         serial = task_time * len(G)
         est = max(serial/p, (depth*task_time))
         print("Assuming equal sized tasks and no data movement:")
@@ -270,6 +336,8 @@ if __name__ == '__main__':
         print("Time under generation schedule: ", gen_time, " seconds")
 
 
+
+    analyze_graph(nxG, G, (args.input is not None))
 
 
 

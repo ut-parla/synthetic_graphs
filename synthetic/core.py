@@ -38,7 +38,7 @@ def get_dimension(file):
             if is_dim and info:
                 #unpack tuple
                 d = eval(info)
-                d = d[0]
+                d = d
                 return d
 
 
