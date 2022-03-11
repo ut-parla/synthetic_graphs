@@ -660,7 +660,9 @@ def create_task_lazy(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu
 def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, array, data, verbose=False, check=False):
 
     ids = tuple(ids)
-    print(deps, IN, OUT, INOUT)
+
+    #DEBUG INFO: Check spawn data/dep arguments
+    #print(deps, IN, OUT, INOUT)
 
     @spawn(task_space[ids], placement=place, dependencies=deps, input=IN, output=OUT, inout=INOUT, vcus=cu)
     def busy_sleep():
@@ -733,7 +735,9 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False):
     for task in G:
         ids, info, dep, data = task
 
-        print("IN: ", data[0], "OUT: ", data[1], "INOUT: ", data[2])
+        #Check spawn data arguments
+        #print("IN: ", data[0], "OUT: ", data[1], "INOUT: ", data[2])
+
         #Generate data list
         INOUT = [] if data[2] is None else [array[f] for f in data[2]]
         IN = [] if data[0] is None else [array[f] for f in data[0]]
