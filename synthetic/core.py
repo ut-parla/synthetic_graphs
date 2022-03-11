@@ -16,7 +16,7 @@ except (ImportError, AttributeError):
     gpu = cpu
 
 
-from parla.tasks import get_current_devices
+from parla.task_runtime import get_current_devices
 from parla.tasks import spawn, TaskSpace
 
 from parla.device import Device
@@ -271,7 +271,7 @@ def verify_movement(observed_movement, depend_dicts, data_depends, verbose=False
             #while not at starting data node
             while "D" not in from_id:
 
-                
+
                 #check if from_task_id has data_idx as a write dependency
                 if verbose:
                     print("Checking write dependencies of source Task", from_id)
@@ -292,7 +292,7 @@ def verify_movement(observed_movement, depend_dicts, data_depends, verbose=False
                 if verbose:
                     print(f"Moving to parent. Data {data_idx} at {from_id} was last touched by {parent_id}")
                 from_id = parent_id
-                
+
 
             if "D" in from_id and from_id in data_dependency_list:
                 correct = True
@@ -654,6 +654,7 @@ def create_task_lazy(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu
 def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, array, data, verbose=False, check=False):
 
     ids = tuple(ids)
+    print(deps, IN, OUT, INOUT)
 
     @spawn(task_space[ids], placement=place, dependencies=deps, input=IN, output=OUT, inout=INOUT, vcus=cu)
     def busy_sleep():
@@ -670,13 +671,14 @@ def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, c
 
         if data[2] is not None:
             for inout_data in data[2]:
-                block = array[inout_data]
-                block = block.array
-                where = -1 if isinstance(block, np.ndarray) else block.device.id
-                old = None if not check else np.copy(block[0, 1])
-                block[0, 1] = -launch_id
-                if verbose:
-                    print(f"=Task {ids} :: Auto Move.. Data[{inout_data}] is on Device[{where}]. Block=[{block[0, 0]}] | Value=[{block[0,1]}], <{old}>", flush=True)
+                if data[0] is None or (inout_data not in data[0]):
+                    block = array[inout_data]
+                    block = block.array
+                    where = -1 if isinstance(block, np.ndarray) else block.device.id
+                    old = None if not check else np.copy(block[0, 1])
+                    block[0, 1] = -launch_id
+                    if verbose:
+                        print(f"=Task {ids} :: Auto Move.. Data[{inout_data}] is on Device[{where}]. Block=[{block[0, 0]}] | Value=[{block[0,1]}], <{old}>", flush=True)
 
         start = time.perf_counter()
 
@@ -725,10 +727,11 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False):
     for task in G:
         ids, info, dep, data = task
 
+        print("IN: ", data[0], "OUT: ", data[1], "INOUT: ", data[2])
         #Generate data list
-        INOUT = [] if data[0] is None else [array[f] for f in data[0]]
-        IN = [] if data[1] is None else [array[f] for f in data[1]]
-        OUT = [] if data[2] is None else [array[f] for f in data[2]]
+        INOUT = [] if data[2] is None else [array[f] for f in data[2]]
+        IN = [] if data[0] is None else [array[f] for f in data[0]]
+        OUT = [] if data[1] is None else [array[f] for f in data[1]]
 
         #Generate dep list
         deps = [] if dep[0] is None else [task_space[tuple(idx)] for idx in dep]
