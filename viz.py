@@ -5,6 +5,7 @@ import numpy as np
 import argparse
 
 from synthetic.core import *
+from synthetic.bandwidth import *
 
 import networkx as nx
 import pydot
@@ -33,7 +34,7 @@ def check_movement(data_idx, to_id, from_id, location, movement=None):
         #print(movement.keys())
         #Get task id that last t1ouched the data this read from
         from_id = movement[to_id][data_idx]
-        print("Data came from Task: ", from_id)
+        #print("Data came from Task: ", from_id)
 
     to_id = str(to_id)
     from_id = str(from_id)
@@ -41,13 +42,13 @@ def check_movement(data_idx, to_id, from_id, location, movement=None):
 
     #print(to_id, from_id, location.keys())
     if "D" in from_id and (location[to_id] == -1):
-        print("Initial Read from CPU TO CPU")
+        #print("Initial Read from CPU TO CPU")
         return (False, -1)
     elif "D" in from_id:
-        print("Initial read from CPU to Device")
+        #print("Initial read from CPU to Device")
         return (True, -1)
     else:
-        print("Read: (from, to)", location[from_id], location[to_id])
+        #print("Read: (from, to)", location[from_id], location[to_id])
         return ((location[to_id] != location[from_id]), location[from_id])
 
 def sizeof_fmt(num, suffix="B"):
@@ -193,7 +194,7 @@ def make_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
 
     if location is not None:
         for node in G:
-            print(node)
+            #print(node)
 
             try:
                 device_id = int(G.nodes[node]['loc'])
@@ -335,6 +336,40 @@ if __name__ == '__main__':
             gen_time += np.ceil(len(level)/p) * task_time
         print("Time under generation schedule: ", gen_time, " seconds")
 
+
+        print("========")
+        print('Performing bandwidth test...')
+        bandwidth_table = generate_bandwidth()
+        print("bandwidth test completed.")
+
+        path_time = 0
+        for i in range(len(critical_path)):
+            node = critical_path[i]
+            next_node = None
+            if i+1 < len(critical_path) - 1:
+                next_node = critical_path[i+1]
+
+            node_info = G.nodes[node]
+            #print(node, next_node)
+            if "Data" in str(node):
+                path_time += 0
+            else:
+                path_time += float(node_info['time'])
+
+            if next_node is not None:
+                next_node_info = G.nodes[next_node]
+                edge_info = G.get_edge_data(node, next_node)
+                entries = edge_info['weight']*d
+
+                from_dev = int(node_info['loc'])+1
+                to_dev = int(next_node_info['loc'])+1
+
+                b = bandwidth_table[from_dev, to_dev] 
+                path_time += entries / b 
+                #print(node, next_node, entries, b)
+            
+
+        print("Critical path time with observed execution and expected data movement times:", path_time)
 
 
     analyze_graph(nxG, G, (args.input is not None))
