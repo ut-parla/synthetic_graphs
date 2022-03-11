@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     movement_obs = load_movement(args.input, depend_dict, verify=True)
     task_dep, read_dep, write_dep = depend_dict
-    verify_movement(movement_obs, depend_dict, data_dict)
+    verify_movement(movement_obs, depend_dict, data_dict, verbose=False)
 
 
 

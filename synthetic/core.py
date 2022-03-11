@@ -291,14 +291,20 @@ def verify_movement(observed_movement, depend_dicts, data_depends, verbose=False
                 parent_id = observed_movement[from_id][data_idx]
                 if verbose:
                     print(f"Moving to parent. Data {data_idx} at {from_id} was last touched by {parent_id}")
-                from_id = parent_id
 
+                #TODO: Fix this output problem
+                if from_id == parent_id:
+                    break
+
+                from_id = parent_id
 
             if "D" in from_id and from_id in data_dependency_list:
                 correct = True
 
             if verbose:
                 print("-------")
+
+
 
 
     if correct:
