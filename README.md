@@ -19,6 +19,7 @@ Task graphs execute with optional data movement and burn time with user specifie
    - Visualize execution order and assigned mapping
    - Compute critical path time (using observed task times and bandwidth)
    - Compute total data movement cost 
+- IN PROGRESS: Add support for slicing
 
 ## Install
 
