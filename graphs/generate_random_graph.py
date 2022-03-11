@@ -131,7 +131,7 @@ with open(output, 'w') as graph:
                         dep_list.append((i-valid_levels, idx))
 
                     dep_count -= n_choice
-                
+
                 assert(dep_count == 0)
             elif i:
                 n_poss = args.width * valid_levels
@@ -151,9 +151,12 @@ with open(output, 'w') as graph:
             for dep in dep_list:
                 #get global index
                 global_index = dep[1]*args.partitions
-                
+
                 for k in range(args.partitions):
-                    read_list.append(global_index+k)
+                    if k == i % args.partitions:
+                        continue
+                    else:
+                        read_list.append(global_index+k)
 
             if i:
                 read_list = random.sample(read_list, n_reads)
@@ -164,12 +167,18 @@ with open(output, 'w') as graph:
             for k in range(args.partitions):
                 self_list.append(j*args.partitions+k)
 
-            read_list = list(set(read_list + self_list))
+            read_list = list(set(read_list))
 
             write_list = self_list
 
             n_writes = np.random.randint(args.min_write, args.max_write+1)
-            write_list = random.sample(write_list, n_writes)
+            write_list = [write_list[i%args.partitions]] #random.sample(write_list, n_writes)
+
+            if i >= args.partitions:
+                dep_list.append((i - args.partitions, j))
+            dep_list = list(set(dep_list))
+
+            read_list = list(set(read_list).difference(write_list))
 
             #build task_dep string
             task_dep = ' : '.join([ f"{dep[0]}, {dep[1]}" for dep in dep_list])

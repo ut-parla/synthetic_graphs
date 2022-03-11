@@ -15,11 +15,11 @@ Task graphs execute with optional data movement and burn time with user specifie
 - visualize test graphs dependencies (with or without data movement tasks)
 - analyze test graphs (average width and critical path length)
 - verify parla tasks and data movement executed in a valid ordering
-- IN PROGRESS: analyze Parla output and policy
+- Analyze Parla output and policy
    - Visualize execution order and assigned mapping
-   - Compute expected time (using observed task times and bandwidth)
+   - Compute critical path time (using observed task times and bandwidth)
    - Compute total data movement cost 
-- IN PROGRESS: Dynamic task context names for inspection with vizviewer
+- IN PROGRESS: Add support for slicing
 
 ## Install
 
