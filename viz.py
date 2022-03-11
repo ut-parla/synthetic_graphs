@@ -31,9 +31,12 @@ args = parser.parse_args()
 def check_movement(data_idx, to_id, from_id, location, movement=None):
 
     if movement is not None:
-        #print(movement.keys())
         #Get task id that last t1ouched the data this read from
-        from_id = movement[to_id][data_idx]
+        try:
+            from_id = movement[to_id][data_idx]
+        except KeyError:
+            print("Looking for", to_id, data_idx)
+            print(movement)
         #print("Data came from Task: ", from_id)
 
     to_id = str(to_id)
@@ -150,7 +153,9 @@ def make_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
                             if weights is not None:
 
                                 if (location is not None) and (movement is not None):
-                                    move_flag, copy_from = check_movement(d_idx, target, source, location, movement)
+                                    #print("Data IDX: ", )
+                                    move_flag, copy_from = check_movement(d, target, source, location, movement)
+                                    #print(target, source, move_flag)
                                 else:
                                     move_flag = True
                                     copy_from = source
@@ -265,6 +270,7 @@ if __name__ == '__main__':
         movement = load_movement(args.input, depend_dict)
         d = get_dimension(args.input)
     else:
+        movement = None
         G_time = None
         G_loc = None
         d = 2
@@ -337,39 +343,46 @@ if __name__ == '__main__':
         print("Time under generation schedule: ", gen_time, " seconds")
 
 
-        print("========")
-        print('Performing bandwidth test...')
-        bandwidth_table = generate_bandwidth()
-        print("bandwidth test completed.")
+        if args.input is not None:
+            print("========")
+            print('Performing bandwidth test...')
+            bandwidth_table = generate_bandwidth()
+            print("bandwidth test completed.")
 
-        path_time = 0
-        for i in range(len(critical_path)):
-            node = critical_path[i]
-            next_node = None
-            if i+1 < len(critical_path) - 1:
-                next_node = critical_path[i+1]
+            path_time = 0
+            for i in range(len(critical_path)):
+                node = critical_path[i]
+                next_node = None
+                if i+1 < len(critical_path) - 1:
+                    next_node = critical_path[i+1]
 
-            node_info = G.nodes[node]
-            #print(node, next_node)
-            if "Data" in str(node):
-                path_time += 0
-            else:
-                path_time += float(node_info['time'])
+                node_info = G.nodes[node]
+                #print(node, next_node)
+                if "Data" in str(node):
+                    path_time += 0
+                else:
+                    try:
+                        path_time += float(node_info['time'])
+                    except KeyError:
+                        path_time += 0
 
-            if next_node is not None:
-                next_node_info = G.nodes[next_node]
-                edge_info = G.get_edge_data(node, next_node)
-                entries = edge_info['weight']*d
+                if next_node is not None:
+                    next_node_info = G.nodes[next_node]
+                    edge_info = G.get_edge_data(node, next_node)
+                    entries = edge_info['weight']*d
+                    
+                    try:
+                        from_dev = int(node_info['loc'])+1
+                        to_dev = int(next_node_info['loc'])+1
+                    except KeyError:
+                        continue
 
-                from_dev = int(node_info['loc'])+1
-                to_dev = int(next_node_info['loc'])+1
+                    b = bandwidth_table[from_dev, to_dev] 
+                    path_time += entries / b 
+                    #print(node, next_node, entries, b)
+                
 
-                b = bandwidth_table[from_dev, to_dev] 
-                path_time += entries / b 
-                #print(node, next_node, entries, b)
-            
-
-        print("Critical path time with observed execution and expected data movement times:", path_time)
+            print("Critical path time with observed execution and expected data movement times:", path_time)
 
 
     analyze_graph(nxG, G, (args.input is not None))
