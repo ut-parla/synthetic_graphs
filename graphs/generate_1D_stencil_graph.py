@@ -133,11 +133,13 @@ with open(output, 'w') as graph:
 
 
             write_dep = ""
-            for k in range(0, depends):
+            #Note can only write to "center", cant update ghost points unless more dependencies are added (concurrent reads/writes aren't possible without coherency "versions")
+            #TODO: Change this back when we support versions
+            for k in range(0, 1):
                 write_dep += f"{(j)*depends + k}"
 
                 if k+1 < depends:
-                    write_dep += ", " 
+                    write_dep += ", "
 
             #print(read_dep)
 
