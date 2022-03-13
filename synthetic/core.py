@@ -136,9 +136,18 @@ def verify(file, G, location=None):
                 if is_started:
                     #Search for dependencies in is finished
                     deps = G[task_id]
-                    check = [dep in finished_tasks for dep in deps]
 
-                    correct = all(check)
+                    #print(task_id, deps, finished_tasks, len(deps), len(finished_tasks))
+
+                    check = [dep in finished_tasks for dep in deps]
+                    #print(check)
+
+                    check2 = (len(deps) <= len(finished_tasks))
+
+                    correct = all(check) and check2
+
+                    if not correct:
+                        break
 
     #make sure all tasks exist in the Parla output
     if location is not None:
@@ -460,6 +469,7 @@ def read_graph(filename):
             else:
                 task_deps = [None]
 
+            #print(task_ids, task_deps)
 
             if len(task) > 3:
                 #Section 3: Data Info
@@ -499,7 +509,7 @@ def convert_to_dict(G):
     for task in G:
         ids, info, dep, data = task
 
-        tuple_dep = [tuple(ids)] if dep[0] is None else [tuple(idx) for idx in dep]
+        tuple_dep = [] if dep[0] is None else [tuple(idx) for idx in dep]
         depend_dict[tuple(ids)] = tuple_dep
 
         list_in = [] if data[0] is None else [k for k in data[0]]
@@ -509,6 +519,7 @@ def convert_to_dict(G):
         read_dict[tuple(ids)] = list_in+list_inout
         write_dict[tuple(ids)] = list_out + list_inout
 
+    #print(depend_dict)
     return depend_dict, read_dict, write_dict
 
 def bfs(graph, node, target, writes):
