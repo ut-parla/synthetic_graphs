@@ -107,13 +107,17 @@ with open(output, 'w') as graph:
 
                 read_dep = " "
                 for k in range(branch):
-                    read_dep += f"{start_index + branch*j + k}"
+                    read_dep += f"{branch*j + k}"
                     if k+1 < branch:
                         read_dep += " , "
+
+                write_dep = f"{branch*j}"
             else:
                 read_dep = " "
 
-            graph.write(f"{level_count}, {j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {read_dep} : : {global_index} \n")
+                write_dep = f"{global_index}"
+
+            graph.write(f"{level_count}, {j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {read_dep} : : {write_dep} \n")
 
 
             global_index += 1
