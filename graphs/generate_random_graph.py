@@ -91,6 +91,9 @@ np.random.seed(args.seed)
 #All tasks in the chain need separate data
 n_partitions = width * args.partitions
 
+#NOTE: NEW CHANGE TO PARTITION SIZE (MAKE -N ALWAYS EQUAL TO DATA BLOCK SIZE)
+N = N * n_partitions
+
 with open(output, 'w') as graph:
 
     #setup data information
@@ -98,6 +101,7 @@ with open(output, 'w') as graph:
     #TODO: Change this to uneven sizes for "ghost points"?
 
     n_local = N//n_partitions
+    #print(N, n_partitions)
     for i in range(n_partitions):
         graph.write(f"{n_local}")
         if i+1 < n_partitions:
@@ -159,7 +163,11 @@ with open(output, 'w') as graph:
                         read_list.append(global_index+k)
 
             if i:
-                read_list = random.sample(read_list, n_reads)
+                #print(read_list, n_reads)
+                try:
+                    read_list = random.sample(read_list, n_reads)
+                except ValueError:
+                    read_list = read_list
 
             #chose write list
             #write to a random fraction of owned datapoints
