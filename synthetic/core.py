@@ -768,10 +768,10 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False):
 
         #Remove duplicates from in/out
         if data[0] is not None and data[2] is not None:
-            data[0] = np.asarray(list(set(data[0].difference(data[2]))))
+            data[0] = np.asarray(list(set(data[0]).difference(set(data[2]))))
 
         if data[1] is not None and data[2] is not None:
-            data[1] = np.asarray(list(set(data[1].difference(data[2]))))
+            data[1] = np.asarray(list(set(data[1]).difference(set(data[2]))))
 
         INOUT = [] if data[2] is None else [array[f] for f in data[2]]
         IN = [] if data[0] is None else [array[f] for f in data[0]]
