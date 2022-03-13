@@ -21,7 +21,7 @@ def makeExtension(extName):
         extName,
         [extPath],
         language='c++',
-        extra_compile_args=["-std=c++11","-Wno-sign-compare", "--expt-extended-lambda", "-Xcudafe","--diag_suppress=esa_on_defaulted_function_ignored", "-gencode arch=compute_70,code=sm_70"]
+        extra_compile_args=["-std=c++11","--expt-extended-lambda", "-Xcudafe","--diag_suppress=esa_on_defaulted_function_ignored"]
     )
 
 
@@ -29,9 +29,10 @@ extNames = scandir("sleep")
 extensions = [makeExtension(name) for name in extNames]
 
 setup(
+    setup_requires=['setuptools>=18.0', 'wheel', 'Cython'],
     name="sleep",
     packages=["sleep"],
-    ext_modules=extensions,
+    ext_modules=cythonize(extensions),
     package_data={
         '':['*.pxd']
     },

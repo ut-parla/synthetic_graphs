@@ -8,6 +8,16 @@ from sleep.core import *
 from parla import Parla
 from parla.cpu import cpu
 
+try:
+    from parla.cuda import summarize_memory, clean_memory
+except (ImportError, AttributeError):
+    def summarize_memory():
+        pass
+    def log_memory():
+        pass
+    def clean_memory():
+        pass
+
 import argparse
 
 from synthetic.core import *
@@ -91,10 +101,13 @@ def main():
             data_execution_times.append(data_elapsed)
             print(f"Outer Iteration: {outer} | Time to Reconfigure Data: ", data_elapsed, "seconds", flush=True)
 
-        #Note: This isn't really useful info but its there if you're curious
-        #if args.verbose:
-        #    print(f"Outer Iteration: {outer} | Time to Spawn Main Task: ", end_internal - start_internal, "seconds", flush=True)
+            #Note: This isn't really useful info but its there if you're curious
+            #if args.verbose:
+            #    print(f"Outer Iteration: {outer} | Time to Spawn Main Task: ", end_internal - start_internal, "seconds", flush=True)
 
+        summarize_memory()
+        #Reset memory counter on outer loop
+        clean_memory()
         print("--------------- \n")
 
 
@@ -108,6 +121,7 @@ def main():
     print(f"Graph Execution Time:: Average = {graph_mean} | Median = {graph_median}")
     print(f"Parla Total Time    :: Average = {parla_mean} | Median = {parla_median}")
 
+
     if args.reinit:
         data_mean = np.mean(np.array(data_execution_times))
         data_median = np.median(np.array(data_execution_times))
@@ -117,9 +131,10 @@ def main():
 
 if __name__ == '__main__':
     #Estimate GPU frequency for busy wait timing
-    #global cycles_per_second
+    #device_info = GPUInfo()
     #cycles_per_second = estimate_frequency(100, ticks=0.05*1910*10**6)
     #print(cycles_per_second)
+    #device_info.update(cycles_per_second)
 
     #Launch experiment
     main()

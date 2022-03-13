@@ -15,8 +15,19 @@ except (ImportError, AttributeError):
     cp = np
     gpu = cpu
 
+try:
+    from parla.cuda import summarize_memory, log_memory
+except (ImportError, AttributeError):
+    def summarize_memory():
+        pass
+    def log_memory():
+        pass
 
-from parla.task_runtime import get_current_devices
+try:
+    from parla.tasks import get_current_devices
+except (ImportError,AttributeError):
+    from parla.task_runtime import get_current_devices
+
 from parla.tasks import spawn, TaskSpace
 
 from parla.device import Device
@@ -328,10 +339,19 @@ def str2bool(v):
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
 
-#approximate average on frontera RTX
-cycles_per_second = 1919820866.3481758
 
-def estimate_frequency(n_samples= 10, ticks=cycles_per_second):
+class GPUInfo():
+
+    #approximate average on frontera RTX
+    cycles_per_second = 1919820866.3481758
+
+    def update(self, cycles):
+        self.cycles_per_second = cycles
+
+    def get(self):
+        return self.cycles_per_second
+
+def estimate_frequency(n_samples= 10, ticks=1900000000):
 
     stream = cp.cuda.get_current_stream()
     cycles = ticks
@@ -591,6 +611,9 @@ def waste_time_gpu(ids, weight, gil, verbose=False):
 
     gil_count, gil_time = gil
 
+    device_info = GPUInfo()
+    cycles_per_second = device_info.get()
+
     device_id = get_current_devices()[0].index
     stream = cp.cuda.get_current_stream()
     ticks = int((weight/(10**6))*cycles_per_second)
@@ -641,7 +664,7 @@ def create_task_lazy(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu
                     print(f"=Task {ids} moved Data[{inout_data}] from Device[{where}]. Block=[{arr[0, 0]}] | Value=[{arr[0, 1]}], <{old}>", flush=True)
 
         waste_time(ids, weight, gil, verbose)
-
+        log_memory()
         #Update location of data to this copy?
         #Should this be a copy back to where it was
         if data[1] is not None:
@@ -691,6 +714,7 @@ def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, c
         start = time.perf_counter()
 
         waste_time(ids, weight, gil, verbose)
+        log_memory()
 
         end = time.perf_counter()
 
@@ -712,6 +736,7 @@ def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, 
                 start = time.perf_counter()
 
                 waste_time(ids, weight, gil, verbose)
+                log_memory()
 
                 end = time.perf_counter()
                 print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
