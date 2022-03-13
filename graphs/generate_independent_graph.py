@@ -76,7 +76,7 @@ with open(output, 'w') as graph:
                     #All tasks read a different datablock
                     index = j
 
-                graph.write(f"{j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | | {index} \n")
+                graph.write(f"{j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | | {index} : : \n")
 
 
 
