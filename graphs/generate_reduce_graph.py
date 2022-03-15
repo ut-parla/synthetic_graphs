@@ -106,12 +106,12 @@ with open(output, 'w') as graph:
                 start_index = start_index // (branch -1)
 
                 read_dep = " "
-                for k in range(branch):
-                    read_dep += f"{branch*j + k}"
+                for k in [0, branch**(level_count-1)]:
+                    read_dep += f"{(branch**(level_count))*j+k}"
                     if k+1 < branch:
                         read_dep += " , "
 
-                write_dep = f"{branch*j}"
+                write_dep = f"{branch**(level_count)*j}"
             else:
                 read_dep = " "
 
