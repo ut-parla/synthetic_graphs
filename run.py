@@ -39,19 +39,41 @@ parla_execution_times = []
 args = parser.parse_args()
 
 
-def main_parla(task_space, iteration, G, array, verbose=False):
+def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=False):
 
-    dep = [task_space[iteration-1]] if iteration > 0 else []
+    #dep = [task_space[iteration-1]] if iteration > 0 else []
 
-    @spawn(task_space[iteration], dependencies=dep, placement=cpu)
+    @spawn(placement=cpu)
     async def main_task():
-        start_internal = time.perf_counter()
-        await create_tasks(G, array, args.data_move, verbose, args.check)
-        end_internal = time.perf_counter()
 
-        graph_elapsed = end_internal - start_internal
-        graph_execution_times.append(graph_elapsed)
-        print(f"Iteration {iteration} | Graph Execution Time: ", graph_elapsed, "seconds \n", flush=True)
+        start_data = time.perf_counter()
+        array = setup_data(data_config, args.d, data_move=args.data_move)
+        end_data = time.perf_counter()
+
+        data_elapsed = end_data - start_data
+        data_execution_times.append(data_elapsed)
+
+        for i in range(iteration):
+
+            if reinit and (i != 0):
+                start_data = time.perf_counter()
+                array = setup_data(data_config, args.d, data_move=args.data_move)
+                end_data = time.perf_counter()
+
+                data_elapsed = end_data - start_data
+                data_execution_times.append(data_elapsed)
+            #print(f"Outer Iteration: {outer} | Time to Reconfigure Data: ", data_elapsed, "seconds", flush=True)
+
+            start_internal = time.perf_counter()
+            await create_tasks(G, array, args.data_move, verbose, args.check)
+            end_internal = time.perf_counter()
+
+            graph_elapsed = end_internal - start_internal
+            graph_execution_times.append(graph_elapsed)
+
+            print(f"Iteration {i} | Graph Execution Time: ", graph_elapsed, "seconds \n", flush=True)
+
+
 
 
 def main():
@@ -79,15 +101,8 @@ def main():
 
         with Parla():
             for iteration in range(args.loop):
-
-                if args.reinit:
-                    start_data = time.perf_counter()
-                    array = setup_data(data_config, args.d, data_move=args.data_move)
-                    end_data = time.perf_counter()
-
-
                 start_internal = time.perf_counter()
-                main_parla(task_space, iteration, G, array, args.verbose)
+                main_parla(data_config, task_space, args.loop, G, args.verbose, reinit=args.reinit)
                 end_internal = time.perf_counter()
 
         end = time.perf_counter()
@@ -96,10 +111,6 @@ def main():
         parla_execution_times.append(parla_total_elapsed)
         print(f"Outer Iteration: {outer} | Total Elapsed: ", parla_total_elapsed, "seconds", flush=True)
 
-        if args.reinit:
-            data_elapsed = end_data - start_data
-            data_execution_times.append(data_elapsed)
-            print(f"Outer Iteration: {outer} | Time to Reconfigure Data: ", data_elapsed, "seconds", flush=True)
 
             #Note: This isn't really useful info but its there if you're curious
             #if args.verbose:
