@@ -62,7 +62,7 @@ parser.add_argument('-per_level', metavar='per_level', type=int, help='require t
 parser.add_argument('-back', metavar='back', type=int, help='how many levels back to link', default=1)
 parser.add_argument('-seed', metavar='seed', type=int, help='random seed', default=1)
 
-parser.add_argument('-partitions', metavar='partitions', help='max number of data partitions per task space', default=2)
+parser.add_argument('-partitions', metavar='partitions', help='max number of data partitions per task space', default=2, type=int)
 
 parser.add_argument('-min_read', metavar='min_read', type=int, help='how many data to read on (min)', default=1)
 parser.add_argument('-max_read', metavar='max_read', type=int, help='how many data to read on (max)', default=1)
@@ -100,93 +100,80 @@ with open(output, 'w') as graph:
     #assume equipartition
     #TODO: Change this to uneven sizes for "ghost points"?
 
+    read_dict = {}
+    write_dict = {}
+
     n_local = N//n_partitions
     #print(N, n_partitions)
     for i in range(n_partitions):
         graph.write(f"{n_local}")
+
+        read_dict[i] = list()
+        write_dict[i] = list()
         if i+1 < n_partitions:
             graph.write(", ")
 
     graph.write("\n")
 
+
+
     self_index = 0
     #setup task information
     for i in range(level):
         for j in range(width):
-
-            valid_levels = min(args.back, i)
-
-            # number of connections
-            n_dep = np.random.randint(args.min_depend, args.max_depend+1)
-            dep_count = n_dep
-
-            dep_list = []
-
-            #chose dependency connections
-            if args.per_level and i:
-                for k in range(valid_levels):
-
-                    n_choice = n_dep // level + n_dep % level
-                    #chose at least 1 from each level
-
-                    idx_list = np.random.choice(args.width, n_choice, replace=False)
-
-                    for idx in idx_list:
-                        dep_list.append((i-valid_levels, idx))
-
-                    dep_count -= n_choice
-
-                assert(dep_count == 0)
-            elif i:
-                n_poss = args.width * valid_levels
-                idx_list = np.random.choice(n_poss, n_dep, replace=False)
-
-
-                for idx in idx_list:
-                    k_l = idx//width
-                    k_o = idx % width
-
-                    dep_list.append((i - 1 - k_l, k_o))
-
-            #chose read list
-            #read from a random fraction of possible input
-            read_list = []
-            n_reads = np.random.randint(args.min_read, args.max_read+1)
-            for dep in dep_list:
-                #get global index
-                global_index = dep[1]*args.partitions
-
-                for k in range(args.partitions):
-                    if k == i % args.partitions:
-                        continue
-                    else:
-                        read_list.append(global_index+k)
-
-            if i:
-                #print(read_list, n_reads)
-                try:
-                    read_list = random.sample(read_list, n_reads)
-                except ValueError:
-                    read_list = read_list
+            
 
             #chose write list
             #write to a random fraction of owned datapoints
+            dep_list = []
             self_list = []
             for k in range(args.partitions):
                 self_list.append(j*args.partitions+k)
 
-            read_list = list(set(read_list))
 
             write_list = self_list
-
-            n_writes = np.random.randint(args.min_write, args.max_write+1)
             write_list = [write_list[i%args.partitions]] #random.sample(write_list, n_writes)
+            
 
             if i >= args.partitions:
                 dep_list.append((i - args.partitions, j))
-            dep_list = list(set(dep_list))
 
-            read_list = list(set(read_list).difference(write_list))
+
+            #Chose what data to read
+
+            # number of connections
+
+            read_list = []
+            n_read = np.random.randint(args.min_read, args.max_read+1)
+            all_data = np.arange(0, n_partitions, dtype=np.int32)
+
+            #remove invalid entries
+            mask = np.ones(all_data.shape, dtype=bool)
+            #print(n_partitions, all_data)
+            s = slice(i%args.partitions, n_partitions, args.partitions)
+            mask[s] = False
+            #print(mask)
+            all_data = all_data[mask]
+            #print(i, all_data)
+
+            read_idx = np.random.choice(all_data, n_read, replace=False)
+
+            for read_id in read_idx:
+                source_j = read_id // args.partitions
+                source_i = read_id % args.partitions
+                
+                current_source_i = i - i%source_i
+
+                #print(i, j, read_id, "SOURCE I: ", source_i, "LATEST SOURCE I: ", current_source_i, "SOURCE J: ", source_j)
+                #if i > current_source_i: 
+                #    dep_list.append((current_source_i, source_j))
+                read_list.append(read_id)
+
+
+
+            dep_list = list(set( [dep for dep in read_dict[write_list[0]]] + [y for x in read_list for y in write_dict[x]] ) ) 
+            read_list = list(set(read_list))
+            read_list = list(set(read_list).difference(set(write_list)))
 
             #build task_dep string
             task_dep = ' : '.join([ f"{dep[0]}, {dep[1]}" for dep in dep_list])
@@ -197,9 +184,14 @@ with open(output, 'w') as graph:
             #build task_write string
             task_write = ', '.join([f"{write}" for write in write_list])
 
+            read_dict[write_list[0]].append((i, j))
+            write_dict[write_list[0]].append((i, j))
 
+            for read_id in read_idx:
+                read_dict[read_id].append((i, j))
             self_index += 1
 
             graph.write(f"{i}, {j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {task_read} : : {task_write} \n")
 
+            #print(f"{i}, {j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {task_read} : : {task_write} \n")
 print(f"Wrote graph to {args.output}.")
