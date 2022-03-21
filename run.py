@@ -54,7 +54,7 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
         data_execution_times.append(data_elapsed)
 
         for i in range(iteration):
-
+            print("Starting Iteration 1", flush=True)
             if reinit and (i != 0):
                 start_data = time.perf_counter()
                 array = setup_data(data_config, args.d, data_move=args.data_move)
@@ -100,10 +100,9 @@ def main():
         start = time.perf_counter()
 
         with Parla():
-            for iteration in range(args.loop):
-                start_internal = time.perf_counter()
-                main_parla(data_config, task_space, args.loop, G, args.verbose, reinit=args.reinit)
-                end_internal = time.perf_counter()
+            start_internal = time.perf_counter()
+            main_parla(data_config, task_space, args.loop, G, args.verbose, reinit=args.reinit)
+            end_internal = time.perf_counter()
 
         end = time.perf_counter()
 

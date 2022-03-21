@@ -750,7 +750,8 @@ def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, 
                 log_memory()
 
                 end = time.perf_counter()
-                print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
+                if verbose:
+                    print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
             task.__name__ = name
             return task
 
@@ -765,6 +766,7 @@ def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, 
 
 def create_tasks(G, array, data_move=0, verbose=False, check=False):
 
+    start_creation = time.perf_counter()
     task_space = TaskSpace('TaskSpace')
 
     launch_id = 0
@@ -817,4 +819,6 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False):
 
         launch_id += 1
 
+    end_creation = time.perf_counter()
+    print("Time to create Tasks: ", end_creation - start_creation, flush=True)
     return task_space
