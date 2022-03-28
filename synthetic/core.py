@@ -397,6 +397,7 @@ def setup_data(data_config, d = 10, verbose=False, device_list=None, data_move=1
     count = 0
     for segment in data_config:
         array = np.zeros([segment, d], dtype=np.float32)+count+1
+        print("Size: ", array.nbytes)
         data.append(array)
         count += 1
 
