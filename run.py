@@ -89,7 +89,7 @@ def main():
 
     data_config = G.pop(0)
 
-    array = setup_data(data_config, args.d, data_move=args.data_move)
+    #array = setup_data(data_config, args.d, data_move=args.data_move)
 
 
     for outer in range(args.outerloop):
