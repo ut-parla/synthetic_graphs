@@ -36,7 +36,6 @@ args = parser.parse_args()
 
 output = args.output
 
-n_blocks = 8
 level = 1
 width = args.width
 length = 1
@@ -54,6 +53,8 @@ if overlap:
 else:
     n_partitions = width
     N = args.N*n_partitions
+
+n_blocks = n_partitions
 
 with open(output, 'w') as graph:
 
