@@ -37,6 +37,7 @@ parser.add_argument('-N', metavar='N', type=int, help='total width of data block
 parser.add_argument('-back', metavar='back', type=int, help='how many redundant dependencies to include', default=1)
 #parser.add_argument('-n_partitions', metavar='n_partitions', help='max number of partitions')
 
+parser.add_argument('-user', metavar='user', type=int, help='whether to specify optimal manual placment', default=0)
 args = parser.parse_args()
 N = args.N
 
@@ -94,6 +95,11 @@ with open(output, 'w') as graph:
                 dependency += " : "
 
         dependency = fstr(dependency, i=i)
+
+        if args.user:
+            device = 3 #gpu 0
+        else:
+            device = 1 #any gpu
 
         graph.write(f"{i} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {dependency} | : : {index} \n")
 

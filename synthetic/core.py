@@ -395,10 +395,14 @@ def setup_data(data_config, d = 10, verbose=False, device_list=None, data_move=1
 
     data = []
     count = 0
+    ngpus = cp.cuda.runtime.getDeviceCount()
+
     for segment in data_config:
-        array = np.zeros([segment, d], dtype=np.float32)+count+1
-        print("Size: ", array.nbytes)
-        data.append(array)
+        with cp.cuda.Device(count%ngpus) as device:
+            array = cp.zeros([segment, d], dtype=np.float32)+count+1
+            device.synchronize()
+            #print("Size: ", array.nbytes)
+            data.append(array)
         count += 1
 
     #If data move is 'Eager'
@@ -770,6 +774,8 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False):
     start_creation = time.perf_counter()
     task_space = TaskSpace('TaskSpace')
 
+    ngpus = cp.cuda.runtime.getDeviceCount()
+
     launch_id = 0
     for task in G:
         ids, info, dep, data = task
@@ -779,6 +785,7 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False):
 
 
         #Generate data list
+        #print(launch_id, len(data), data)
 
         #Remove duplicates from in/out
         if data[0] is not None and data[2] is not None:
@@ -786,6 +793,7 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False):
 
         if data[1] is not None and data[2] is not None:
             data[1] = np.asarray(list(set(data[1]).difference(set(data[2]))))
+
 
         INOUT = [] if data[2] is None else [array[f] for f in data[2]]
         IN = [] if data[0] is None else [array[f] for f in data[0]]
@@ -806,8 +814,10 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False):
             place = cpu
         elif info[2] == 1:
             place = gpu
-        else:
+        elif info[2] == 2:
             place = [cpu, gpu]
+        else:
+            place = gpu( (info[2]-3) % ngpus )
 
         #print(ids, deps, place, IN, OUT, INOUT, vcus, weight)
 
@@ -821,5 +831,5 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False):
         launch_id += 1
 
     end_creation = time.perf_counter()
-    print("Time to create Tasks: ", end_creation - start_creation, flush=True)
+    print("|| Task Creation Time : ", end_creation - start_creation, flush=True)
     return task_space

@@ -44,7 +44,7 @@ parser.add_argument('-N', metavar='N', type=int, help='total width of data block
 parser.add_argument('-branch', metavar='branch', type=int, help='the branching factor of the tree', default=2)
 parser.add_argument('-constant', metavar='constant', type=int, help='Keep the work per task constant (1) or doubled (0)')
 #parser.add_argument('-n_partitions', metavar='n_partitions', help='max number of partitions')
-
+parser.add_argument('-user', metavar='user', type=int, help='whether to specify optimal manual placment', default=0)
 args = parser.parse_args()
 N = args.N
 
@@ -88,9 +88,14 @@ with open(output, 'w') as graph:
 
     global_index = 0
     level_count = 0
+
+
     #setup task information
     for i in range(level, -1, -1):
-        for j in range(branch**i):
+        total_in_level = branch**i
+        segment = total_in_level / 4
+
+        for j in range(total_in_level):
 
             if level_count:
                 task_dep = " "
@@ -108,12 +113,12 @@ with open(output, 'w') as graph:
                 read_dep = " "
                 l = 0
                 targets = [branch**(level_count-1)]
-                for k in targets: 
+                for k in targets:
                     read_dep += f"{(branch**(level_count))*j+k}"
                     l += 1
                     if l < len(targets):
                         read_dep += " , "
-                    
+
 
                 write_dep = f"{branch**(level_count)*j}"
             else:
@@ -121,7 +126,12 @@ with open(output, 'w') as graph:
 
                 write_dep = f"{global_index}"
 
-            graph.write(f"{level_count}, {j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {task_dep} | {read_dep} : : {write_dep} \n")
+            if args.user:
+                device = int(3 + j // segment)          #split subtrees evenly
+            else:
+                device = 1                     #any gpu
+
+            graph.write(f"{level_count}, {j} | {weight}, {coloc}, {device}, {gil_count}, {gil_time} | {task_dep} | {read_dep} : : {write_dep} \n")
 
 
             global_index += 1

@@ -39,6 +39,8 @@ parla_execution_times = []
 args = parser.parse_args()
 
 
+n_gpus = cp.cuda.runtime.getDeviceCount()
+
 def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=False):
 
     #dep = [task_space[iteration-1]] if iteration > 0 else []
@@ -54,10 +56,26 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
         data_execution_times.append(data_elapsed)
 
         for i in range(iteration):
-            print("Starting Iteration 1", flush=True)
+            #print("Starting Iteration 1", flush=True)
+
+            data_elapsed = 0
             if reinit and (i != 0):
+
                 start_data = time.perf_counter()
-                array = setup_data(data_config, args.d, data_move=args.data_move)
+
+                if args.data_move == 2:
+                    rs = TaskSpace("Reset")
+                    for k in range(len(array)):
+                        data = array[k]
+                        @spawn(rs[k], placement=gpu(i%n_gpus), inout=[data])
+                        def reset():
+                            noop = 1
+                    await rs
+                elif args.data_move == 1:
+                    array = setup_data(data_config, args.d, data_move=args.data_move)
+                else:
+                    noop = 1
+
                 end_data = time.perf_counter()
 
                 data_elapsed = end_data - start_data
@@ -73,6 +91,9 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
 
             print(f"Iteration {i} | Graph Execution Time: ", graph_elapsed, "seconds \n", flush=True)
 
+            if reinit and (i!= 0):
+                noop = 1
+                print(f"Iteration {i} | Data Reset Time: ", data_elapsed, "seconds \n", flush=True)
 
 
 
@@ -122,8 +143,8 @@ def main():
 
 
     print("Summary: ")
-    graph_mean = np.mean(np.array(graph_execution_times))
-    graph_median = np.median(np.array(graph_execution_times))
+    graph_mean = np.mean(np.array(graph_execution_times)[1:])
+    graph_median = np.median(np.array(graph_execution_times)[1:])
 
     parla_mean = np.mean(np.array(parla_execution_times))
     parla_median = np.median(np.array(parla_execution_times))

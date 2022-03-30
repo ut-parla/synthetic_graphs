@@ -24,16 +24,19 @@ parser.add_argument('-overlap', metavar='overlap', type=int, help='type of data 
 parser.add_argument('-output', metavar='output', type=str, help='name of output file containing the graph', default="independent.gph")
 parser.add_argument('-weight', metavar='weight', type=int, help='time (in microseconds) that the computation of the task should take', default=50000)
 parser.add_argument('-coloc', metavar='coloc', type=int, help=' x tasks can run on a device concurrently', default=1)
-parser.add_argument('-location', metavar='location', type=int, help="valid runtime locations of tasks. options=(CPU=0, GPU=1, Both=3)", default=1)
+parser.add_argument('-location', metavar='location', type=int, help="valid runtime locations of tasks. options=(CPU=0, GPU=1, Both=2)", default=1)
 parser.add_argument('-gil_count', metavar='gil_count', type=int, help="number of (intentional) additional gil accesses in the task", default=1)
 parser.add_argument('-gil_time', metavar='gil_time', type=int, help="time (in microseconds) that the gil is held", default=200)
 parser.add_argument('-N', metavar='N', type=int, help='total width of data block', default=2**23)
+parser.add_argument('-user', metavar='user', type=int, help='whether to specify optimal manual placment', default=0)
+
 #parser.add_argument('-n_partitions', metavar='n_partitions', help='max number of partitions')
 
 args = parser.parse_args()
 
 output = args.output
 
+n_blocks = 9
 level = 1
 width = args.width
 length = 1
@@ -57,18 +60,19 @@ with open(output, 'w') as graph:
     #setup data information
     #assume equipartition
     n_local = N//n_partitions
-    for i in range(n_partitions):
+
+    for i in range(n_blocks):
         graph.write(f"{n_local}")
-        if i+1 < n_partitions:
+        if i+1 < n_blocks:
             graph.write(", ")
 
     graph.write("\n")
 
+    count = 0
     #setup task information
     for i in range(level):
         for j in range(width):
             for k in range(length):
-
                 if overlap == 1:
                     #All tasks read the same datablock
                     index = 0
@@ -76,7 +80,15 @@ with open(output, 'w') as graph:
                     #All tasks read a different datablock
                     index = j
 
-                graph.write(f"{j} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | | {index} : : \n")
+                if args.user:
+                    device = int(3 + count % 4)  #round robin between gpus
+                else:
+                    device = 1 #any gpu
+
+                data_block = count % n_blocks
+
+                graph.write(f"{j} | {weight}, {coloc}, {device}, {gil_count}, {gil_time} | | {data_block} : : \n")
+                count += 1
 
 
 
