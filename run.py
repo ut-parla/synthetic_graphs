@@ -31,6 +31,7 @@ parser.add_argument('-loop', metavar='loop', default=1, type=int, help='How many
 parser.add_argument('-outerloop', metavar='outerloop', default=1, type=int, help='How many times to repeat to whole experiment')
 parser.add_argument('-reinit', metavar='reinit', default=0, type=int, help='Reinitialize the data on CPU at each inner loop (0=False, 1=True)')
 parser.add_argument('--check_data', metavar='check_data', dest='check', nargs='?', const=True, type=str2bool, default=False, help='Activate data check mode (required for verifying movement output output)')
+parser.add_argument('-user', metavar='user', type=int, help='type of placement. options=(None=0, User=1)', default=0)
 
 data_execution_times = []
 graph_execution_times = []
@@ -83,7 +84,7 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
             #print(f"Outer Iteration: {outer} | Time to Reconfigure Data: ", data_elapsed, "seconds", flush=True)
 
             start_internal = time.perf_counter()
-            await create_tasks(G, array, args.data_move, verbose, args.check)
+            await create_tasks(G, array, args.data_move, verbose, args.check, args.user)
             end_internal = time.perf_counter()
 
             graph_elapsed = end_internal - start_internal

@@ -769,7 +769,7 @@ def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, 
 
 
 
-def create_tasks(G, array, data_move=0, verbose=False, check=False):
+def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0):
 
     start_creation = time.perf_counter()
     task_space = TaskSpace('TaskSpace')
@@ -817,7 +817,10 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False):
         elif info[2] == 2:
             place = [cpu, gpu]
         else:
-            place = gpu( (info[2]-3) % ngpus )
+            if user:
+                place = gpu( (info[2]-3) % ngpus )
+            else:
+                place = gpu
 
         #print(ids, deps, place, IN, OUT, INOUT, vcus, weight)
 
