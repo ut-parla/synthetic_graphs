@@ -74,15 +74,24 @@ with open(output, 'w') as graph:
     n_local = N//n_partitions
     level_count = 0
     count = 0
-    for i in range(level, 0, -1):
-        for j in range(branch**i):
+
+    if overlap == 0:
+        for i in range(level, 0, -1):
+            for j in range(branch**i):
+                if count > 0:
+                    graph.write(", ")
+                graph.write(f"{n_local}")
+                count += 1
+            level_count += 1
+            #if <some condition>:
+            #    n_local = n_local * branch
+    else:
+        for j in range(branch**level):
             if count > 0:
                 graph.write(", ")
             graph.write(f"{n_local}")
             count += 1
-        level_count += 1
-        #if <some condition>:
-        #    n_local = n_local * branch
+
 
     graph.write("\n")
 
