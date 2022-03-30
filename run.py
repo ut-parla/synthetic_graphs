@@ -87,6 +87,7 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
 
 
                 elif args.data_move == 1:
+                    del array
                     array = setup_data(data_config, args.d, data_move=args.data_move)
                 else:
                     noop = 1
@@ -158,8 +159,12 @@ def main():
 
 
     print("Summary: ")
-    graph_mean = np.mean(np.array(graph_execution_times)[1:])
-    graph_median = np.median(np.array(graph_execution_times)[1:])
+    if len(graph_execution_times) > 1:
+        start_index = 1
+    else:
+        start_index = 0
+    graph_mean = np.mean(np.array(graph_execution_times)[start_index:])
+    graph_median = np.median(np.array(graph_execution_times)[start_index:])
 
     parla_mean = np.mean(np.array(parla_execution_times))
     parla_median = np.median(np.array(parla_execution_times))

@@ -645,6 +645,7 @@ def waste_time_gpu(ids, weight, gil, verbose=False):
         #Optional Sync (Prevents overlap with GIL lock, if that behavior is wanted)
         #stream.synchronize()
 
+
         sleep_with_gil(gil_time)
 
 
