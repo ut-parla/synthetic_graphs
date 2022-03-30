@@ -36,7 +36,7 @@ args = parser.parse_args()
 
 output = args.output
 
-n_blocks = 9
+n_blocks = 8
 level = 1
 width = args.width
 length = 1
