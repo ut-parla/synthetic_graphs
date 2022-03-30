@@ -65,13 +65,27 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
                 start_data = time.perf_counter()
 
                 if args.data_move == 2:
+
+                    #Reset parray to modified on starting device
                     rs = TaskSpace("Reset")
                     for k in range(len(array)):
                         data = array[k]
-                        @spawn(rs[k], placement=gpu(i%n_gpus), inout=[data])
+                        @spawn(rs[k], placement=gpu(k%n_gpus), inout=[data])
                         def reset():
                             noop = 1
                     await rs
+
+
+                    #set to shared state
+                    ts = TaskSpace("Touch")
+                    for k in range(len(array)):
+                        data = array[k]
+                        @spawn(ts[k], placement=gpu(k%n_gpus), input=[data])
+                        def reset():
+                            noop = 1
+                    await ts
+
+
                 elif args.data_move == 1:
                     array = setup_data(data_config, args.d, data_move=args.data_move)
                 else:
