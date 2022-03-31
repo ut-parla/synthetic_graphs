@@ -101,7 +101,7 @@ with open(output, 'w') as graph:
         else:
             device = 1 #any gpu
 
-        graph.write(f"{i} | {weight}, {coloc}, {loc}, {gil_count}, {gil_time} | {dependency} | : : {index} \n")
+        graph.write(f"{i} | {weight}, {coloc}, {device}, {gil_count}, {gil_time} | {dependency} | : : {index} \n")
 
 
 
