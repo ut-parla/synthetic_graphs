@@ -84,7 +84,7 @@ with open(output, 'w') as graph:
                 if args.user:
                     device = int(3 + count % 4)  #round robin between gpus
                 else:
-                    device = 1 #any gpu
+                    device = 0 #any cpu
 
                 data_block = count % n_blocks
 

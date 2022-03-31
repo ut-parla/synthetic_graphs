@@ -395,14 +395,14 @@ def setup_data(data_config, d = 10, verbose=False, device_list=None, data_move=1
 
     data = []
     count = 0
-    ngpus = cp.cuda.runtime.getDeviceCount()
+    ngpus = 1 #cp.cuda.runtime.getDeviceCount()
 
     for segment in data_config:
-        with cp.cuda.Device(count%ngpus) as device:
-            array = cp.zeros([segment, d], dtype=np.float32)+count+1
-            device.synchronize()
-            #print("Size: ", array.nbytes)
-            data.append(array)
+        #with cp.cuda.Device(count%ngpus) as device:
+        array = cp.zeros([segment, d], dtype=np.float32)+count+1
+        #    device.synchronize()
+        #    #print("Size: ", array.nbytes)
+        data.append(array)
         count += 1
 
     #If data move is 'Eager'
@@ -618,7 +618,7 @@ def waste_time(ids, weight, gil, verbose=False):
         sleep_with_gil(gil_time)
 
 
-@waste_time.variant(gpu)
+#@waste_time.variant(gpu)
 def waste_time_gpu(ids, weight, gil, verbose=False):
     """
     Busy wait function for GPU.
@@ -631,7 +631,8 @@ def waste_time_gpu(ids, weight, gil, verbose=False):
     cycles_per_second = device_info.get()
 
     device_id = get_current_devices()[0].index
-    stream = cp.cuda.get_current_stream()
+    #print(device_id, flush=True)
+    #stream = cp.cuda.get_current_stream()
     ticks = int((weight/(10**6))*cycles_per_second)
 
     if verbose:
@@ -742,32 +743,17 @@ def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, c
 def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, weight, gil, verbose=False):
 
     ids = tuple(ids)
-
-    @spawn(task_space[ids], dependencies=deps, placement=place, vcus=cu)
+    #print("Device: ", cpu)
+    @spawn(task_space[ids], dependencies=deps, placement=cpu, vcus=cu)
     def busy_sleep():
+        start = time.perf_counter()
 
-        #create named frame for profiler (Error: This doesn't work)
-        def create_body(name):
-            def task(*args):
+        waste_time(ids, weight, gil, verbose)
+        log_memory()
 
-                start = time.perf_counter()
-
-                waste_time(ids, weight, gil, verbose)
-                log_memory()
-
-                end = time.perf_counter()
-                if verbose:
-                    print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
-            task.__name__ = name
-            return task
-
-        name = 'task_'+concat_tuple(ids)
-        task_body = create_body('{name}')
-
-
-        #run task body
-        task_body()
-
+        end = time.perf_counter()
+        if verbose:
+            print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
 
 
 def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0):
@@ -775,7 +761,7 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0):
     start_creation = time.perf_counter()
     task_space = TaskSpace('TaskSpace')
 
-    ngpus = cp.cuda.runtime.getDeviceCount()
+    ngpus = 1 #cp.cuda.runtime.getDeviceCount()
 
     launch_id = 0
     for task in G:
@@ -787,6 +773,8 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0):
 
         #Generate data list
         #print(launch_id, len(data), data)
+
+
 
         #Remove duplicates from in/out
         if data[0] is not None and data[2] is not None:
@@ -823,6 +811,7 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0):
             else:
                 place = gpu
 
+        place = cpu
         #print(ids, deps, place, IN, OUT, INOUT, vcus, weight)
 
         if data_move == 0:
