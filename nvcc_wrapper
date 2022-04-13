@@ -13,7 +13,7 @@
 # or g++ as their back-end compiler.  The defaults can be overwritten
 # by using the usual arguments (e.g., -arch=sm_30 -ccbin icpc).
 
-default_arch="sm_70"
+default_arch="sm_60"
 #default_arch="sm_50"
 
 #
@@ -59,7 +59,7 @@ object_files_xlinker=""
 shared_versioned_libraries_host=""
 shared_versioned_libraries=""
 
-# Does the User set the architecture 
+# Does the User set the architecture
 arch_set=0
 
 # Does the user overwrite the host compiler
@@ -78,7 +78,7 @@ host_only_args=""
 # Just run version on host compiler
 get_host_version=0
 
-# Enable workaround for CUDA 6.5 for pragma ident 
+# Enable workaround for CUDA 6.5 for pragma ident
 replace_pragma_ident=0
 
 # Mark first host compiler argument
@@ -300,7 +300,7 @@ do
     if [ $first_xcompiler_arg -eq 1 ]; then
       xcompiler_args=$1
       first_xcompiler_arg=0
-    else 
+    else
       xcompiler_args="$xcompiler_args,$1"
     fi
     ;;
