@@ -1,0 +1,19 @@
+#32 MB - Manual
+python run.py -graph prefetch.gph -d 2 -data_move 1
+
+#32 MB - Automatic
+python run.py -graph prefetch.gph -d 2 -data_move 2
+
+
+#64 MB - Manual
+python run.py -graph prefetch.gph -d 4 -data_move 1
+
+#64 MB - Automatic
+python run.py -graph prefetch.gph -d 4 -data_move 2
+
+
+#640 MB - Manual
+python run.py -graph prefetch.gph -d 40 -data_move 1
+
+#640 MB - Automatic
+python run.py -graph prefetch.gph -d 40 -data_move 2

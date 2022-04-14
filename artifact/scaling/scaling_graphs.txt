@@ -1,0 +1,4 @@
+python graphs/generate_serial_graph.py -overlap 1 -levels 150 -N 6250 -gil_count 1 -gil_time 100 -location 1 -weight 16000 -output inputs/serial_80%_gpu.gph
+python graphs/generate_independent_graph.py -overlap 0 -width 300 -N 6250 -gil_count 1 -gil_time 100 -location 1 -weight 16000 -output inputs/independent_80%_gpu.gph
+python graphs/generate_random_graph.py -levels 4 -width 30 -min_read 1 -max_read 1 -N 6250 -gil_count 1 -gil_time 100 -location 1 -weight 16000 -output inputs/random_80%_gpu.gph
+python graphs/generate_reduce_graph.py -overlap 1 -levels 8 -branch 2 -N 6250 -gil_count 1 -gil_time 100 -location 1 -weight 16000 -output inputs/reduce_80%_gpu.gph
