@@ -34,7 +34,11 @@ from parla.device import Device
 
 from parla.function_decorators import specialized
 
-from parla.parray import asarray_batch
+try:
+    from parla.parray import asarray_batch
+except (ImportError,AttributeError):
+    def asarray_batch(array):
+        return array
 
 
 def get_dimension(file):
