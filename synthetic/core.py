@@ -658,7 +658,7 @@ def create_task_lazy(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu
 
     ids = tuple(ids)
 
-    @spawn(task_space[ids], placement=place, dependencies=deps, vcus=cu)
+    @spawn(task_space[ids], placement=place, dependencies=deps, load=cu)
     def busy_sleep():
         start = time.perf_counter()
 
@@ -709,7 +709,7 @@ def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, c
     #DEBUG INFO: Check spawn data/dep arguments
     #print(deps, IN, OUT, INOUT)
 
-    @spawn(task_space[ids], placement=place, dependencies=deps, input=IN, output=OUT, inout=INOUT, vcus=cu)
+    @spawn(task_space[ids], placement=place, dependencies=deps, input=IN, output=OUT, inout=INOUT, load=cu)
     def busy_sleep():
 
         if data[0] is not None:
@@ -748,7 +748,7 @@ def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, 
 
     ids = tuple(ids)
     #print("Device: ", cpu)
-    @spawn(task_space[ids], dependencies=deps, placement=cpu, vcus=cu)
+    @spawn(task_space[ids], dependencies=deps, placement=cpu, load=cu)
     def busy_sleep():
         start = time.perf_counter()
 
@@ -760,7 +760,7 @@ def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, 
             print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
 
 
-def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0):
+def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0, ndevices=1):
 
     start_creation = time.perf_counter()
     task_space = TaskSpace('TaskSpace')
@@ -798,6 +798,7 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0):
         #Generate task weight
         weight = info[0]
         vcus = 1/info[1]
+        vcus = 1.0/ndevices
         gil_count = info[3]
         gil_time = info[4]
         gil = (gil_count, gil_time)
