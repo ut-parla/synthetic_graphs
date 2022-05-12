@@ -658,7 +658,7 @@ def create_task_lazy(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu
 
     ids = tuple(ids)
 
-    @spawn(task_space[ids], placement=place, dependencies=deps, load=cu)
+    @spawn(task_space[ids], placement=place, dependencies=deps, vcus=cu)
     def busy_sleep():
         start = time.perf_counter()
 
@@ -709,7 +709,7 @@ def create_task_eager(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, c
     #DEBUG INFO: Check spawn data/dep arguments
     #print(deps, IN, OUT, INOUT)
 
-    @spawn(task_space[ids], placement=place, dependencies=deps, input=IN, output=OUT, inout=INOUT, load=cu)
+    @spawn(task_space[ids], placement=place, dependencies=deps, input=IN, output=OUT, inout=INOUT, vcus=cu)
     def busy_sleep():
 
         if data[0] is not None:
@@ -748,7 +748,7 @@ def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, 
 
     ids = tuple(ids)
     #print("Device: ", cpu)
-    @spawn(task_space[ids], dependencies=deps, placement=cpu, load=cu)
+    @spawn(task_space[ids], dependencies=deps, placement=cpu, vcus=cu)
     def busy_sleep():
         start = time.perf_counter()
 
