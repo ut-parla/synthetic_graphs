@@ -19,7 +19,7 @@ parser = argparse.ArgumentParser(description='Plot graph file')
 parser.add_argument('-data', metavar='data', type=int, default=0, help="Bool: whether to include data dependencies in plot")
 parser.add_argument('-backend', metavar='backend', type=int, default=0, help='What plotting backed to use. networkx=0, pydot=1')
 parser.add_argument('-graph', metavar='graph', type=str, help='the input graph file to run', required=True, default='graph/independent.gph')
-parser.add_argument('-output', metavar='output', type=str, help='the output png file name', required=False, default='graph_output.png')
+parser.add_argument('-output', metavar='output', type=str, help='the output png file name', required=False, default='graph_output.pdf')
 parser.add_argument('-p', metavar='p', type=int, help='the number of devices to run', default=4)
 parser.add_argument('--no-plot', dest='plot', type=str2bool, nargs='?', default=False, help='Toggle generate plots (default=True)')
 parser.add_argument('--data-nodes', dest='data_nodes', type=str2bool, nargs='?', default=False, help='Toggle generate of data nodes (default=False)')
@@ -84,6 +84,8 @@ def make_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
     else:
         default_weight = 0
         show_weights = True
+
+    show_weights = False
 
     if not data_task:
         show_weights = False
@@ -192,40 +194,42 @@ def make_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
                         G.add_edge(source, target, color='red', weight=edge_w)
 
 
-    #nx.draw(G, with_labels=True, font_weight='bold')
-    #plt.show()
+    nx.draw(G, with_labels=False, font_weight='bold')
+    plt.show()
 
     colors = ['black', '#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7']
 
-    if location is not None:
+    if True or location is not None:
         for node in G:
-            #print(node)
 
-            try:
-                device_id = int(G.nodes[node]['loc'])
-            except KeyError:
-                device_id = -1
+            #try:
+            #    device_id = int(G.nodes[node]['loc'])
+            #except KeyError:
+            #    device_id = -1
 
 
-            if device_id >= 0:
-                G.nodes[node]['style'] = 'filled'
+            #if device_id >= 0:
+            G.nodes[node]['style'] = 'filled'
+            G.nodes[node]['label']=""
 
-            c = colors[device_id+1]
-            G.nodes[node]['color'] = str(c)
+            c = colors[1]
+            if "D" in node:
+                G.nodes[node]['color'] = str(c)
 
     if plot:
+        #nx.drawing.write_dot(G, 'graph.dot')
         pg = nx.drawing.nx_pydot.to_pydot(G)
 
-        png_str = pg.create_png(prog="dot")
-        sio = io.BytesIO()
-        sio.write(png_str)
-        sio.seek(0)
-        img = mpimg.imread(sio)
+        png_str = pg.create_pdf(prog="dot")
+        #sio = io.BytesIO()
+        #sio.write(png_str)
+        #sio.seek(0)
+        #img = mpimg.imread(sio)
 
-        implot = plt.imshow(img, aspect='equal')
-        plt.show()
+        #implot = plt.imshow(img, aspect='equal')
+        #plt.show()
 
-        pg.write_png(args.output)
+        pg.write_pdf(args.output)
 
     return G
     #A = to_agraph(G)
