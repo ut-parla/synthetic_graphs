@@ -36,6 +36,7 @@ parser.add_argument('-weight', metavar='weight', type=int, help='length of task 
 parser.add_argument('-threads', metavar='threads', type=int, help='Number of workers', default=None)
 parser.add_argument('-n', metavar='n', type=int, help='maximum number of tasks', default=None)
 parser.add_argument('-gweight', metavar='gweight', type=int, help="length of task gil time", default=None)
+
 data_execution_times = []
 graph_execution_times = []
 parla_execution_times = []
@@ -112,7 +113,7 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
             graph_execution_times.append(graph_elapsed)
 
             #print(f"Iteration {i} | Graph Execution Time: ", graph_elapsed, "seconds \n", flush=True)
-            print(f"{args.weight}, {args.threads}, {graph_elapsed}")
+            print(f"{args.weight}, {args.p}, {graph_elapsed}")
 
             #if reinit and (i!= 0):
             #    noop = 1
