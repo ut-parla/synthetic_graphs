@@ -1,0 +1,1150 @@
+which: no fi_info in (/scratch1/06081/wlruys/miniconda3/envs/rap/bin:/scratch1/06081/wlruys/miniconda3/condabin:/opt/apps/xalt/xalt/bin:/opt/apps/hwloc/1.11.12/bin:/opt/apps/pmix/3.1.4/bin:/opt/apps/cmake/3.20.3/bin:/opt/apps/autotools/1.2/bin:/opt/apps/git/2.24.1/bin:/opt/intel/compilers_and_libraries_2020.4.304/linux/mpi/intel64/bin:/opt/intel/compilers_and_libraries_2020.1.217/linux/bin/intel64:/opt/apps/gcc/8.3.0/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/opt/ddn/ime/bin:.:/home1/06081/wlruys/.fzf/bin)
+
+Currently Loaded Modules:
+  1) intel/19.1.1   4) autotools/1.2   7) hwloc/1.11.12
+  2) impi/19.0.9    5) cmake/3.20.3    8) xalt/2.10.34
+  3) git/2.24.1     6) pmix/3.1.4      9) TACC
+
+ 
+
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+2022-05-19 15:33:54,280 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-id1at8qg', purging
+2022-05-19 15:33:54,284 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_ksobxec', purging
+2022-05-19 15:33:54,288 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-g7d9g_4o', purging
+2022-05-19 15:33:54,292 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0e591urk', purging
+2022-05-19 15:33:54,297 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-i2o68_pq', purging
+2022-05-19 15:33:54,301 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-a72g3gn1', purging
+2022-05-19 15:33:54,305 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_g1m6fdb', purging
+2022-05-19 15:33:54,309 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-h8ogohvn', purging
+2022-05-19 15:33:54,313 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-wik_n5b4', purging
+2022-05-19 15:33:54,318 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-2jg72kw9', purging
+2022-05-19 15:33:54,322 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-q5e08jl_', purging
+2022-05-19 15:33:54,327 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-4exouctw', purging
+2022-05-19 15:33:54,331 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-powwctg0', purging
+2022-05-19 15:33:54,336 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-sszx71cz', purging
+2022-05-19 15:33:54,340 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-utv_w4ja', purging
+2022-05-19 15:33:54,344 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-fw0sscwo', purging
+2022-05-19 15:33:54,349 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-nvo_mqu0', purging
+2022-05-19 15:33:54,353 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-npc1nurv', purging
+2022-05-19 15:33:54,357 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-7vz9m447', purging
+2022-05-19 15:33:54,362 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0i9ubern', purging
+2022-05-19 15:33:54,366 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-kovb069a', purging
+2022-05-19 15:33:54,372 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-28upcw7z', purging
+2022-05-19 15:33:54,376 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jn159xyx', purging
+2022-05-19 15:33:54,379 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-8n6qkh_t', purging
+2022-05-19 15:33:54,383 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-98usp1ba', purging
+2022-05-19 15:33:54,388 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1syx9gqo', purging
+2022-05-19 15:33:54,393 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-42bv00ew', purging
+2022-05-19 15:33:54,398 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-rsp8imzt', purging
+2022-05-19 15:33:54,404 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-54iqw4zr', purging
+2022-05-19 15:33:54,408 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-m89ht_e6', purging
+2022-05-19 15:33:54,413 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-f4e3_9zk', purging
+2022-05-19 15:33:54,418 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qi8vg9u8', purging
+2022-05-19 15:33:54,422 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-nctbzomy', purging
+2022-05-19 15:33:54,425 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-e09ql3x8', purging
+2022-05-19 15:33:54,429 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0fpx1hkk', purging
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+2022-05-19 15:58:07,054 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-cjxv07vr', purging
+2022-05-19 15:58:07,058 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-wnkpcrxt', purging
+2022-05-19 15:58:07,063 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ukts8kb4', purging
+2022-05-19 15:58:07,068 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-h5rqo61w', purging
+2022-05-19 15:58:07,072 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-fc4fy9t1', purging
+2022-05-19 15:58:07,076 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-big8p70r', purging
+2022-05-19 15:58:07,081 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-bqj3_k8z', purging
+2022-05-19 15:58:07,084 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-srm_vpy2', purging
+2022-05-19 15:58:07,088 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-teu35hdj', purging
+2022-05-19 15:58:07,092 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-9qqgqrwj', purging
+2022-05-19 15:58:07,096 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-vlsthrub', purging
+2022-05-19 15:58:07,101 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-8yvubqpl', purging
+2022-05-19 15:58:07,104 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qlc1g9id', purging
+2022-05-19 15:58:07,108 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-wjvrmvdd', purging
+2022-05-19 15:58:07,112 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-a_ymbzgh', purging
+2022-05-19 15:58:07,116 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-yjrr2x48', purging
+2022-05-19 15:58:07,120 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_3zmg4_c', purging
+2022-05-19 15:58:07,123 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_q877vrl', purging
+2022-05-19 15:58:07,127 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-hxqgl2az', purging
+2022-05-19 15:58:07,130 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-n62e1wm9', purging
+2022-05-19 15:58:07,134 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-edc7bdh9', purging
+2022-05-19 15:58:07,138 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-tcamsazh', purging
+2022-05-19 15:58:07,141 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-uyhigvdw', purging
+2022-05-19 15:58:07,145 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-idgqxh0s', purging
+2022-05-19 15:58:07,149 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-yshfu2mf', purging
+2022-05-19 15:58:07,152 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0hrkoqw3', purging
+2022-05-19 15:58:07,156 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-2cu7ak15', purging
+2022-05-19 15:58:07,159 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-cuslymaf', purging
+2022-05-19 15:58:07,163 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ioyaakag', purging
+2022-05-19 15:58:07,168 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-npxsfzdd', purging
+2022-05-19 15:58:07,172 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-51yhpr_7', purging
+2022-05-19 15:58:07,175 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-r4t_ndw_', purging
+2022-05-19 15:58:07,179 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-99yeojsh', purging
+2022-05-19 15:58:07,184 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1kxflis0', purging
+2022-05-19 15:58:07,189 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-wcnhotqz', purging
+2022-05-19 15:58:07,193 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-79evb2vk', purging
+2022-05-19 15:58:07,197 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-z36ef5eb', purging
+2022-05-19 15:58:07,201 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-czl9mjgu', purging
+2022-05-19 15:58:07,207 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-y8s0s1nc', purging
+2022-05-19 15:58:07,210 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-o_f39auh', purging
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    assert exitcode is not None
+AssertionError
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    assert exitcode is not None
+AssertionError
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+2022-05-19 16:01:41,251 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-6kxp0bq3', purging
+2022-05-19 16:01:41,258 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-8545ybn4', purging
+2022-05-19 16:01:41,263 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-5acrte1x', purging
+2022-05-19 16:01:41,267 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-s3kmu3cn', purging
+2022-05-19 16:01:41,274 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ywtpfh89', purging
+2022-05-19 16:01:41,279 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-picrx0cr', purging
+2022-05-19 16:01:41,283 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-9lxm86cu', purging
+2022-05-19 16:01:41,288 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qu751mwq', purging
+2022-05-19 16:01:41,293 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-zqk0pm6h', purging
+2022-05-19 16:01:41,297 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-g2jtv58l', purging
+2022-05-19 16:01:41,302 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-3mal8xpp', purging
+2022-05-19 16:01:41,308 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-btedgbbc', purging
+2022-05-19 16:01:41,313 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-gkaeiwya', purging
+2022-05-19 16:01:41,318 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-x_z8v27n', purging
+2022-05-19 16:01:41,322 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-seimliu3', purging
+2022-05-19 16:01:41,326 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0c_rwcm9', purging
+2022-05-19 16:01:41,331 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-aea81q0g', purging
+2022-05-19 16:01:41,336 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-bj8qxnff', purging
+2022-05-19 16:01:41,341 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-r3sy51r5', purging
+2022-05-19 16:01:41,345 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-zpscpql4', purging
+2022-05-19 16:01:41,349 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-gtna6jm9', purging
+2022-05-19 16:01:41,355 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-2d9s7wuu', purging
+2022-05-19 16:01:41,366 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-4nhvi2l0', purging
+2022-05-19 16:01:41,372 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-puwhsfki', purging
+2022-05-19 16:01:41,378 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-66v_w04l', purging
+2022-05-19 16:01:41,382 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-zdxlrofv', purging
+2022-05-19 16:01:41,386 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-pg33yhjs', purging
+2022-05-19 16:01:41,391 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-3dxsxwyb', purging
+2022-05-19 16:01:41,395 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jbx8imn2', purging
+2022-05-19 16:01:41,399 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-d4b02fz8', purging
+2022-05-19 16:01:41,405 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-yfja_ug8', purging
+2022-05-19 16:01:41,413 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ij_83lh1', purging
+2022-05-19 16:01:41,418 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-zia3tibu', purging
+2022-05-19 16:01:41,422 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-s21aa_fo', purging
+2022-05-19 16:01:41,425 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-xt2cv39c', purging
+2022-05-19 16:01:41,430 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-w3n7ug89', purging
+2022-05-19 16:01:41,435 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-gltw9h9z', purging
+2022-05-19 16:01:41,452 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-pgdckanr', purging
+2022-05-19 16:01:41,457 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-fn8v7vga', purging
+2022-05-19 16:01:41,463 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ufsdr57o', purging
+2022-05-19 16:01:41,467 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-uzi9kzt0', purging
+2022-05-19 16:01:41,472 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-dgcayrs0', purging
+2022-05-19 16:01:41,477 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-b6bvk2um', purging
+2022-05-19 16:01:41,484 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-pqjuhjyd', purging
+2022-05-19 16:01:41,488 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-w_h06scq', purging
+2022-05-19 16:01:41,493 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-p45om8ut', purging
+2022-05-19 16:01:41,499 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-fhw029zh', purging
+2022-05-19 16:01:41,504 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-5nbcgbl9', purging
+2022-05-19 16:01:41,508 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-q74t7rsx', purging
+2022-05-19 16:01:41,514 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-llh3nypx', purging
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    assert exitcode is not None
+AssertionError
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    assert exitcode is not None
+AssertionError
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+2022-05-19 16:04:28,997 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-h98l0r3o', purging
+2022-05-19 16:04:29,000 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-uqng6xxd', purging
+2022-05-19 16:04:29,004 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-6gq7hx3f', purging
+2022-05-19 16:04:29,007 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-kfyhvm7m', purging
+2022-05-19 16:04:29,010 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-bs7kcri1', purging
+2022-05-19 16:04:29,014 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-kzhlq7y0', purging
+2022-05-19 16:04:29,017 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-dmldw9fd', purging
+2022-05-19 16:04:29,020 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qm3vz_oy', purging
+2022-05-19 16:04:29,024 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-q8q703q1', purging
+2022-05-19 16:04:29,027 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ll2sl2pt', purging
+2022-05-19 16:04:29,031 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-efno6y_9', purging
+2022-05-19 16:04:29,034 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-4ova7ke1', purging
+2022-05-19 16:04:29,037 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jc2lqdf3', purging
+2022-05-19 16:04:29,040 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-9a4yde7j', purging
+2022-05-19 16:04:29,044 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-8rffe8fo', purging
+2022-05-19 16:04:29,047 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1kgjez7b', purging
+2022-05-19 16:04:29,051 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qsm1hmpa', purging
+2022-05-19 16:04:29,054 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-051i94i6', purging
+2022-05-19 16:04:29,058 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-f84w59rt', purging
+2022-05-19 16:04:29,061 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-at4stzfj', purging
+2022-05-19 16:04:29,064 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0jp9pje3', purging
+2022-05-19 16:04:29,067 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-y605uisi', purging
+2022-05-19 16:04:29,070 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_9gqlnrr', purging
+2022-05-19 16:04:29,073 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-j83oeede', purging
+2022-05-19 16:04:29,076 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-it6f322z', purging
+2022-05-19 16:04:29,079 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-kxp1azxx', purging
+2022-05-19 16:04:29,082 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-f1zi6kh_', purging
+2022-05-19 16:04:29,085 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-v6nyyxc3', purging
+2022-05-19 16:04:29,088 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-uev8fug_', purging
+2022-05-19 16:04:29,091 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jbhxbhz7', purging
+2022-05-19 16:04:29,095 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-frsbxojg', purging
+2022-05-19 16:04:29,098 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0jr9ggi5', purging
+2022-05-19 16:04:29,101 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-c38tnu0v', purging
+2022-05-19 16:04:29,104 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-bz04q1fk', purging
+2022-05-19 16:04:29,107 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-28bd2s41', purging
+2022-05-19 16:04:29,110 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-u360r9ku', purging
+2022-05-19 16:04:29,113 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-3o8dbmis', purging
+2022-05-19 16:04:29,116 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-8kmaviq9', purging
+2022-05-19 16:04:29,119 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-y2kl5npw', purging
+2022-05-19 16:04:29,122 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-my46rw9c', purging
+2022-05-19 16:04:29,125 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-kfp0egyl', purging
+2022-05-19 16:04:29,128 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-sdijx93p', purging
+2022-05-19 16:04:29,131 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-y7blem9f', purging
+2022-05-19 16:04:29,134 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-2zx03c4f', purging
+2022-05-19 16:04:29,137 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ovhtsn1y', purging
+2022-05-19 16:04:29,141 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-a146emtj', purging
+2022-05-19 16:04:29,144 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-d5j4q7q1', purging
+2022-05-19 16:04:29,147 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-j6s6v6a3', purging
+2022-05-19 16:04:29,150 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1o0adpnp', purging
+2022-05-19 16:04:29,154 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-d8kqu2a8', purging
+2022-05-19 16:04:29,156 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0wcl5_rx', purging
+2022-05-19 16:04:29,160 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-53w1sp9e', purging
+2022-05-19 16:04:29,163 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-e78j4g0j', purging
+2022-05-19 16:04:29,166 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-pt62jfa5', purging
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+2022-05-19 16:39:13,753 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-woqw4jw4', purging
+2022-05-19 16:39:13,757 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-zo56ef6b', purging
+2022-05-19 16:39:13,760 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0lxz3two', purging
+2022-05-19 16:39:13,764 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-gli2lj2y', purging
+2022-05-19 16:39:13,767 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ualpylqo', purging
+2022-05-19 16:39:13,770 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ci558m5e', purging
+2022-05-19 16:39:13,773 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-396vx0_v', purging
+2022-05-19 16:39:13,777 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-uqnzeepg', purging
+2022-05-19 16:39:13,780 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-nse5y2qp', purging
+2022-05-19 16:39:13,783 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-gk7gjmaf', purging
+2022-05-19 16:39:13,786 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-tyx8rqv3', purging
+2022-05-19 16:39:13,789 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-83rtraga', purging
+2022-05-19 16:39:13,793 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-745ed7ru', purging
+2022-05-19 16:39:13,797 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-5lvbp5z5', purging
+2022-05-19 16:39:13,799 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-6prvmenk', purging
+2022-05-19 16:39:13,803 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jrxn_mzk', purging
+2022-05-19 16:39:13,806 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-9uo9tibg', purging
+2022-05-19 16:39:13,809 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-zlftto0r', purging
+2022-05-19 16:39:13,812 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-p7vy3ai0', purging
+2022-05-19 16:39:13,815 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_mx32b2n', purging
+2022-05-19 16:39:13,818 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1gnvs208', purging
+2022-05-19 16:39:13,821 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-unk1dp47', purging
+2022-05-19 16:39:13,824 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-3dwd2i4r', purging
+2022-05-19 16:39:13,827 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-cs_an7_b', purging
+2022-05-19 16:39:13,831 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0irm834n', purging
+2022-05-19 16:39:13,834 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qiiron_b', purging
+2022-05-19 16:39:13,837 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qghix_0m', purging
+2022-05-19 16:39:13,840 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-xqcr7puj', purging
+2022-05-19 16:39:13,844 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-pyxx0dyd', purging
+2022-05-19 16:39:13,847 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-slqpnjnj', purging
+2022-05-19 16:39:13,851 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-5mqjwmig', purging
+2022-05-19 16:39:13,854 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-xhr3qoy_', purging
+2022-05-19 16:39:13,857 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-i71m21tr', purging
+2022-05-19 16:39:13,860 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-x04ks0qv', purging
+2022-05-19 16:39:13,863 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-7s0cac0f', purging
+2022-05-19 16:39:13,867 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qeg4j4ra', purging
+2022-05-19 16:39:13,870 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-feh19fta', purging
+2022-05-19 16:39:13,873 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-fpymfg5e', purging
+2022-05-19 16:39:13,876 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-7qbdl2_i', purging
+2022-05-19 16:39:13,879 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-hz3rtdsh', purging
+2022-05-19 16:39:13,882 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-s95w0j_3', purging
+2022-05-19 16:39:13,886 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-rcc47dsw', purging
+2022-05-19 16:39:13,889 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-5xswdv97', purging
+2022-05-19 16:39:13,892 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-gpigaxjc', purging
+2022-05-19 16:39:13,896 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-fcbf2_qq', purging
+2022-05-19 16:39:13,899 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ydcrh9bs', purging
+2022-05-19 16:39:13,902 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-kp1t02l7', purging
+2022-05-19 16:39:13,905 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-25_al75p', purging
+2022-05-19 16:39:13,909 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-indb_mbz', purging
+2022-05-19 16:39:13,912 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-7a60pjtg', purging
+2022-05-19 16:39:13,915 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-yavilsu6', purging
+2022-05-19 16:39:13,918 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-7zwul2ti', purging
+2022-05-19 16:39:13,921 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-5kxogjbi', purging
+2022-05-19 16:39:13,924 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-tjrx8cp8', purging
+2022-05-19 16:39:13,928 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1yjuwn8_', purging
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+2022-05-19 17:06:06,662 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-vkgbtyla', purging
+2022-05-19 17:06:06,667 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-wdtc42xa', purging
+2022-05-19 17:06:06,672 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-iqx2u2lz', purging
+2022-05-19 17:06:06,675 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-mu3m5uk8', purging
+2022-05-19 17:06:06,679 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-d198609y', purging
+2022-05-19 17:06:06,682 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jwcx5m9h', purging
+2022-05-19 17:06:06,687 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-o3_72olh', purging
+2022-05-19 17:06:06,691 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-l9gi0phd', purging
+2022-05-19 17:06:06,694 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-brmqt0ce', purging
+2022-05-19 17:06:06,698 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-izpnee9o', purging
+2022-05-19 17:06:06,702 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-orssuli7', purging
+2022-05-19 17:06:06,705 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-kzh4o8fz', purging
+2022-05-19 17:06:06,709 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-hjwjihyg', purging
+2022-05-19 17:06:06,712 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-75_t5mb9', purging
+2022-05-19 17:06:06,716 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-crdl185x', purging
+2022-05-19 17:06:06,721 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0h3sjxfn', purging
+2022-05-19 17:06:06,724 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-x02tzbv1', purging
+2022-05-19 17:06:06,727 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-eo1mlb5y', purging
+2022-05-19 17:06:06,731 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-2mbaw4n2', purging
+2022-05-19 17:06:06,735 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-cza3r59z', purging
+2022-05-19 17:06:06,739 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-lbxvhgts', purging
+2022-05-19 17:06:06,744 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1_gfb1cg', purging
+2022-05-19 17:06:06,747 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-6ew7cvg8', purging
+2022-05-19 17:06:06,752 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-wqee3ee8', purging
+2022-05-19 17:06:06,755 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-m54kbpax', purging
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    assert exitcode is not None
+AssertionError
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    assert exitcode is not None
+AssertionError
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    assert exitcode is not None
+AssertionError
+    assert exitcode is not None
+AssertionError
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+2022-05-19 17:11:10,133 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-mef33_o7', purging
+2022-05-19 17:11:10,139 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jaipmddu', purging
+2022-05-19 17:11:10,145 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-n5e8k_7w', purging
+2022-05-19 17:11:10,150 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-pr5nvku0', purging
+2022-05-19 17:11:10,154 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-6122bofx', purging
+2022-05-19 17:11:10,159 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0504a9dg', purging
+2022-05-19 17:11:10,163 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-y397c5al', purging
+2022-05-19 17:11:10,168 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-rfta__ak', purging
+2022-05-19 17:11:10,172 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-iu6nglvs', purging
+2022-05-19 17:11:10,178 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qkygdqr8', purging
+2022-05-19 17:11:10,182 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-2dcng0kn', purging
+2022-05-19 17:11:10,187 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-yl2frvk9', purging
+2022-05-19 17:11:10,193 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-g3ljhdxf', purging
+2022-05-19 17:11:10,199 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-szs2lmmm', purging
+2022-05-19 17:11:10,204 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-kmxnus5e', purging
+2022-05-19 17:11:10,209 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-2xs9oija', purging
+2022-05-19 17:11:10,214 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-bhrxk6ur', purging
+2022-05-19 17:11:10,219 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-hyrurur3', purging
+2022-05-19 17:11:10,223 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ts81lzyh', purging
+2022-05-19 17:11:10,228 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-2o9863nu', purging
+2022-05-19 17:11:10,233 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0h97nw7h', purging
+2022-05-19 17:11:10,237 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-n1lqc4a1', purging
+2022-05-19 17:11:10,241 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-2a0j6hte', purging
+2022-05-19 17:11:10,244 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0_2dl6m4', purging
+2022-05-19 17:11:10,247 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jteom96q', purging
+2022-05-19 17:11:10,250 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-03avqefm', purging
+2022-05-19 17:11:10,253 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-xucwzkj5', purging
+2022-05-19 17:11:10,257 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-dwigvb5h', purging
+2022-05-19 17:11:10,260 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-x_x0zkdl', purging
+2022-05-19 17:11:10,263 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-4kl0b6s_', purging
+2022-05-19 17:11:10,267 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-m1o8fibr', purging
+2022-05-19 17:11:10,270 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-hbh3yue6', purging
+2022-05-19 17:11:10,274 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ziabpvk0', purging
+2022-05-19 17:11:10,280 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-nis129af', purging
+2022-05-19 17:11:10,284 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-km7nc2oa', purging
+2022-05-19 17:11:10,288 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-z87bx5hg', purging
+2022-05-19 17:11:10,293 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1ue34xb3', purging
+2022-05-19 17:11:10,298 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-f_dgybbv', purging
+2022-05-19 17:11:10,302 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-mzprpb9t', purging
+2022-05-19 17:11:10,306 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-mpvobfzi', purging
+2022-05-19 17:11:10,310 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-tx_9k02g', purging
+2022-05-19 17:11:10,313 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-8qka3u9m', purging
+2022-05-19 17:11:10,315 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-m6_5la_n', purging
+2022-05-19 17:11:10,318 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-i6ncytmq', purging
+2022-05-19 17:11:10,322 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-mmfjuz44', purging
+2022-05-19 17:11:10,325 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-4astz7es', purging
+2022-05-19 17:11:10,328 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-m4684p3o', purging
+2022-05-19 17:11:10,331 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-xcgonln4', purging
+2022-05-19 17:11:10,333 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-q8ro_q9y', purging
+2022-05-19 17:11:10,336 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-5w4v9eea', purging
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    assert exitcode is not None
+AssertionError
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    assert exitcode is not None
+AssertionError
+Fatal Python error: could not acquire lock for <_io.BufferedWriter name='<stderr>'> at interpreter shutdown, possibly due to daemon threads
+Python runtime state: finalizing (tstate=0x556e8857e090)
+
+Thread 0x00002b978dc0d700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b978d60a700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b978d208700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b978ce06700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b978cc05700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b978c803700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b978c602700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b970fe1e700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b970f81b700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b970f61a700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b970f218700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b970ee16700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b968ea14700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b968e00f700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 1202 in invoke_excepthook
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 934 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b968de0e700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b968ce06700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b968ca04700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b968c602700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b968c200700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b960e813700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b960e411700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b960e00f700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b960da0c700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b960d80b700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b960d208700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b960ce06700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b960cc05700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b960c602700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b960c401700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b95f7e25700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 302 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 170 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 201 in _watch_message_queue
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b95f779b700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 306 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 179 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/threadpoolexecutor.py", line 51 in _worker
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b95f759a700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 306 in wait
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/queue.py", line 179 in get
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/threadpoolexecutor.py", line 51 in _worker
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b95f7359700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/profile.py", line 275 in _watch
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Thread 0x00002b95f472a700 (most recent call first):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/psutil/_pslinux.py", line 1124 in read_procfs
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/psutil/_pslinux.py", line 1172 in disk_io_counters
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/psutil/__init__.py", line 2067 in disk_io_counters
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/system_monitor.py", line 115 in update
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/tornado/ioloop.py", line 905 in _run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/tornado/ioloop.py", line 741 in _run_callback
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/asyncio/events.py", line 81 in _run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/asyncio/base_events.py", line 1859 in _run_once
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/asyncio/base_events.py", line 570 in run_forever
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/tornado/platform/asyncio.py", line 199 in start
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/utils.py", line 456 in run_loop
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870 in run
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932 in _bootstrap_inner
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 890 in _bootstrap
+
+Current thread 0x00002b95d87b1000 (most recent call first):
+<no Python frame>
+2022-05-19 17:13:35,998 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-zioho2ku', purging
+2022-05-19 17:13:36,002 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-fnrqullt', purging
+2022-05-19 17:13:36,005 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ms0bff8y', purging
+2022-05-19 17:13:36,009 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-83r84r6p', purging
+2022-05-19 17:13:36,012 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-68_8kwuh', purging
+2022-05-19 17:13:36,015 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-f5ok6l0n', purging
+2022-05-19 17:13:36,019 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-d5owvnvy', purging
+2022-05-19 17:13:36,022 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-uwskjsw9', purging
+2022-05-19 17:13:36,025 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-60g9zh3k', purging
+2022-05-19 17:13:36,029 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-kprmd3o0', purging
+2022-05-19 17:13:36,032 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-mig0s9e7', purging
+2022-05-19 17:13:36,035 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-3s27wewf', purging
+2022-05-19 17:13:36,038 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-vr0s8ngz', purging
+2022-05-19 17:13:36,042 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-kryy9ge1', purging
+2022-05-19 17:13:36,045 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ij8z5u_v', purging
+2022-05-19 17:13:36,048 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-6bmae928', purging
+2022-05-19 17:13:36,052 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-k7kv1uft', purging
+2022-05-19 17:13:36,055 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-hsgl9x8t', purging
+2022-05-19 17:13:36,058 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-4dtx34rf', purging
+2022-05-19 17:13:36,061 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ky35funl', purging
+2022-05-19 17:13:36,064 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1xsrwscf', purging
+2022-05-19 17:13:36,067 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-abjyvefb', purging
+2022-05-19 17:13:36,071 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-uzl5a0wv', purging
+2022-05-19 17:13:36,074 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-3v55t4tx', purging
+2022-05-19 17:13:36,078 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-z3acciwk', purging
+2022-05-19 17:13:36,081 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-a3d49lfd', purging
+2022-05-19 17:13:36,084 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jv_jhy2_', purging
+2022-05-19 17:13:36,087 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-q5nq4hua', purging
+2022-05-19 17:13:36,091 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-syojj_1d', purging
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+2022-05-19 18:03:02,657 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qn03pang', purging
+2022-05-19 18:03:02,662 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_j1__2xh', purging
+2022-05-19 18:03:02,669 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-4lgkxihi', purging
+2022-05-19 18:03:02,673 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0gf30_b5', purging
+2022-05-19 18:03:02,678 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ynnry8tx', purging
+2022-05-19 18:03:02,682 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-mj4y6_o2', purging
+2022-05-19 18:03:02,686 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-rnklb_n2', purging
+2022-05-19 18:03:02,691 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-9i_5l636', purging
+2022-05-19 18:03:02,695 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-c5c6wg27', purging
+2022-05-19 18:03:02,699 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-6o503f4w', purging
+2022-05-19 18:03:02,704 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-7eudyvjk', purging
+2022-05-19 18:03:02,710 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-zva2e2gk', purging
+2022-05-19 18:03:02,714 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qnkzo3gl', purging
+2022-05-19 18:03:02,717 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-wbcw50b_', purging
+2022-05-19 18:03:02,722 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-5rhad_bm', purging
+2022-05-19 18:03:02,726 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-9l3668cq', purging
+2022-05-19 18:03:02,731 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-bvroy451', purging
+2022-05-19 18:03:02,737 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-c73byyx0', purging
+2022-05-19 18:03:02,742 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-hxy9tulz', purging
+2022-05-19 18:03:02,746 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-3d0f3jkz', purging
+2022-05-19 18:03:02,750 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1qtqpk1h', purging
+2022-05-19 18:03:02,754 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qq945kx0', purging
+2022-05-19 18:03:02,758 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jb10virq', purging
+2022-05-19 18:03:02,762 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ct4u8_ao', purging
+2022-05-19 18:03:02,766 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-29knownw', purging
+2022-05-19 18:03:02,771 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-hctmz1r8', purging
+2022-05-19 18:03:02,775 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-z2jd881o', purging
+2022-05-19 18:03:02,780 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-nv54vsh2', purging
+2022-05-19 18:03:02,785 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-5hpq6qtr', purging
+2022-05-19 18:03:02,790 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-xr7kkdtz', purging
+2022-05-19 18:03:02,794 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-c9636_73', purging
+2022-05-19 18:03:02,798 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-bcs54njc', purging
+2022-05-19 18:03:02,803 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-sm6j8rxz', purging
+2022-05-19 18:03:02,809 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-amrnrm72', purging
+2022-05-19 18:03:02,813 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-5xfv0v63', purging
+2022-05-19 18:40:07,251 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-vvi0kxh6', purging
+2022-05-19 18:40:07,257 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-3jnndiuh', purging
+2022-05-19 18:40:07,263 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-9xh06bfu', purging
+2022-05-19 18:40:07,268 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-a7hxi0ys', purging
+2022-05-19 18:40:07,272 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-fqt6rg84', purging
+2022-05-19 18:40:07,280 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qj614p45', purging
+2022-05-19 18:40:07,284 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-fomhvh60', purging
+2022-05-19 18:40:07,289 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-f_iy0wkp', purging
+2022-05-19 18:40:07,293 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_nctu5tv', purging
+2022-05-19 18:40:07,299 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-q68u3db6', purging
+2022-05-19 18:40:07,303 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1h9e89gn', purging
+2022-05-19 18:40:07,307 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-hu755y7k', purging
+2022-05-19 18:40:07,312 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-c2mzj011', purging
+2022-05-19 18:40:07,316 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-c71ckqtb', purging
+2022-05-19 18:40:07,320 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ynwux2ma', purging
+2022-05-19 18:40:07,325 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-awl9nal9', purging
+2022-05-19 18:40:07,329 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-iqnmmr4g', purging
+2022-05-19 18:40:07,334 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-d92ed4_f', purging
+2022-05-19 18:40:07,339 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1yr4k4n_', purging
+2022-05-19 18:40:07,344 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-57v440cn', purging
+2022-05-19 18:40:07,348 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-tuhxbnht', purging
+2022-05-19 18:40:07,352 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-963izh5z', purging
+2022-05-19 18:40:07,356 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-b5xisw2a', purging
+2022-05-19 18:40:07,361 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-gojr1vbe', purging
+2022-05-19 18:40:07,365 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ad4cfmit', purging
+2022-05-19 18:40:07,370 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-2z1_9639', purging
+2022-05-19 18:40:07,375 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-um8p2fon', purging
+2022-05-19 18:40:07,379 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-rzn826qh', purging
+2022-05-19 18:40:07,384 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-mrf2xf8t', purging
+2022-05-19 18:40:07,389 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qyyfq_o5', purging
+2022-05-19 18:40:07,395 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qruxxulv', purging
+2022-05-19 18:40:07,399 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-hmqatjm_', purging
+2022-05-19 18:40:07,404 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-208eweld', purging
+2022-05-19 18:40:07,409 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-3a3esqh2', purging
+2022-05-19 18:40:07,413 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qtshu7n_', purging
+2022-05-19 18:40:07,417 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-39y_v8g3', purging
+2022-05-19 18:40:07,421 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-14g0y5jk', purging
+2022-05-19 18:40:07,427 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-8jrqg66h', purging
+2022-05-19 18:40:07,432 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-847qh7fu', purging
+2022-05-19 18:40:07,437 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-e_xl248v', purging
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+2022-05-19 19:01:29,313 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-dt3dssh6', purging
+2022-05-19 19:01:29,318 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-q_fspzpi', purging
+2022-05-19 19:01:29,329 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-dnzoaca0', purging
+2022-05-19 19:01:29,333 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-tlu4bw2g', purging
+2022-05-19 19:01:29,340 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-xqj90dbo', purging
+2022-05-19 19:01:29,345 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-9ji1b50t', purging
+2022-05-19 19:01:29,349 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-4izcpl7d', purging
+2022-05-19 19:01:29,353 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-crdx5pz4', purging
+2022-05-19 19:01:29,357 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-pumcrtx2', purging
+2022-05-19 19:01:29,362 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qk92gi1o', purging
+2022-05-19 19:01:29,366 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-8gzbr40m', purging
+2022-05-19 19:01:29,371 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-i76xxdh9', purging
+2022-05-19 19:01:29,375 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-px1gia7o', purging
+2022-05-19 19:01:29,380 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-k0uh3n0y', purging
+2022-05-19 19:01:29,385 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-6ca16_y3', purging
+2022-05-19 19:01:29,389 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-175wu3xq', purging
+2022-05-19 19:01:29,393 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ydfwnbxp', purging
+2022-05-19 19:01:29,396 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-snn4u8qc', purging
+2022-05-19 19:01:29,400 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-spdfqayv', purging
+2022-05-19 19:01:29,405 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-gkrkrq6c', purging
+2022-05-19 19:01:29,408 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-h962wuf0', purging
+2022-05-19 19:01:29,413 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-v5jy9u5g', purging
+2022-05-19 19:01:29,416 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ri3v_r4v', purging
+2022-05-19 19:01:29,420 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-9xws8siz', purging
+2022-05-19 19:01:29,424 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-nk1z2it4', purging
+2022-05-19 19:01:29,429 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-moyeklp6', purging
+2022-05-19 19:01:29,433 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-w7swi9ut', purging
+2022-05-19 19:01:29,438 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-xazyvn00', purging
+2022-05-19 19:01:29,442 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ern3mwhs', purging
+2022-05-19 19:01:29,448 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-r86ddea1', purging
+2022-05-19 19:01:29,452 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-y1jptu31', purging
+2022-05-19 19:01:29,457 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-l5djmwv6', purging
+2022-05-19 19:01:29,461 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-pwv2yfo4', purging
+2022-05-19 19:01:29,466 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-a9ejqnjb', purging
+2022-05-19 19:01:29,470 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-lb3k11u7', purging
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    assert exitcode is not None
+AssertionError
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    assert exitcode is not None
+AssertionError
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    assert exitcode is not None
+AssertionError
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    assert exitcode is not None
+AssertionError
+2022-05-19 19:03:03,780 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-w8sjj2xm', purging
+2022-05-19 19:03:03,784 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-tmj4obsk', purging
+2022-05-19 19:03:03,789 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-por2sf0b', purging
+2022-05-19 19:03:03,796 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1kk4gsrg', purging
+2022-05-19 19:03:03,801 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-nr4zvru_', purging
+2022-05-19 19:03:03,806 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ythcs6y7', purging
+2022-05-19 19:03:03,810 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-p268wfy1', purging
+2022-05-19 19:03:03,814 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-djoejv04', purging
+2022-05-19 19:03:03,819 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-oozzfs6j', purging
+2022-05-19 19:03:03,823 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-8tca4g1p', purging
+2022-05-19 19:03:03,827 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-07w2ykel', purging
+2022-05-19 19:03:03,831 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_pe7au3_', purging
+2022-05-19 19:03:03,837 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-zthjwf7b', purging
+2022-05-19 19:03:03,841 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-5u4qw222', purging
+2022-05-19 19:03:03,845 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-bcz2s40f', purging
+2022-05-19 19:03:03,850 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jswxoiwk', purging
+2022-05-19 19:03:03,854 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-tgcr_vyk', purging
+2022-05-19 19:03:03,858 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-r8tr7v04', purging
+2022-05-19 19:03:03,863 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qhru3ltc', purging
+2022-05-19 19:03:03,868 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qcckgiwo', purging
+2022-05-19 19:03:03,874 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-4jt7r4nt', purging
+2022-05-19 19:03:03,878 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_52khpv0', purging
+2022-05-19 19:03:03,882 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-08mx8iej', purging
+2022-05-19 19:03:03,886 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ejpa0x31', purging
+2022-05-19 19:03:03,891 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ckfyqbzn', purging
+2022-05-19 19:03:03,896 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-vei_g5sz', purging
+2022-05-19 19:03:03,900 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-e5bc__5r', purging
+2022-05-19 19:03:03,905 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-v71oj0c3', purging
+2022-05-19 19:03:03,911 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-eymzgohs', purging
+2022-05-19 19:03:03,916 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-sbt_q42s', purging
+2022-05-19 19:03:03,922 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-52fsdts0', purging
+2022-05-19 19:03:03,926 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-mmbgkvdo', purging
+2022-05-19 19:03:03,932 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-fkszpgrf', purging
+2022-05-19 19:03:03,937 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-u3hxmbny', purging
+2022-05-19 19:03:03,941 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-lahazik6', purging
+2022-05-19 19:03:03,946 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-8wntn5zf', purging
+2022-05-19 19:03:03,950 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1p_cq4x4', purging
+2022-05-19 19:03:03,957 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jvrto2lf', purging
+2022-05-19 19:03:03,961 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-d5ctft43', purging
+2022-05-19 19:03:03,967 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-tgqf2lc2', purging
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+2022-05-19 19:36:15,167 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-gl93qc7t', purging
+2022-05-19 19:36:15,172 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-9qbpk5cl', purging
+2022-05-19 19:36:15,176 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-anebjge4', purging
+2022-05-19 19:36:15,181 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-8gu077pr', purging
+2022-05-19 19:36:15,185 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ymv0y7sz', purging
+2022-05-19 19:36:15,190 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-lc2iy_ut', purging
+2022-05-19 19:36:15,195 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-n0wnc5ri', purging
+2022-05-19 19:36:15,199 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ahbhbdxr', purging
+2022-05-19 19:36:15,204 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-xz7uzxf0', purging
+2022-05-19 19:36:15,210 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_iqrt3c9', purging
+2022-05-19 19:36:15,214 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-1lk3ovwm', purging
+2022-05-19 19:36:15,218 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-__wvk_59', purging
+2022-05-19 19:36:15,222 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0nldnur2', purging
+2022-05-19 19:36:15,227 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ge9r37uu', purging
+2022-05-19 19:36:15,231 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-3oadbv_3', purging
+2022-05-19 19:36:15,236 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-gonaovl4', purging
+2022-05-19 19:36:15,240 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-moijp9c2', purging
+2022-05-19 19:36:15,245 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-lr1ysbcn', purging
+2022-05-19 19:36:15,250 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-7esq2fm_', purging
+2022-05-19 19:36:15,255 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-fhq8ow46', purging
+2022-05-19 19:36:15,260 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-m5_vzuke', purging
+2022-05-19 19:36:15,264 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-3p7ovsiw', purging
+2022-05-19 19:36:15,269 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ihs9ujxd', purging
+2022-05-19 19:36:15,274 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-xb9qsr1f', purging
+2022-05-19 19:36:15,278 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-vqr0o4nk', purging
+2022-05-19 19:36:15,283 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_6e95f4l', purging
+2022-05-19 19:36:15,288 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-f02t2ppm', purging
+2022-05-19 19:36:15,292 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jfwc503s', purging
+2022-05-19 19:36:15,297 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jz34iapq', purging
+2022-05-19 19:36:15,302 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-9620e89l', purging
+2022-05-19 19:36:15,306 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-m20ae734', purging
+2022-05-19 19:36:15,311 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-55joj1k5', purging
+2022-05-19 19:36:15,316 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-d6dmkd98', purging
+2022-05-19 19:36:15,320 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_esfu16n', purging
+2022-05-19 19:36:15,325 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0fyn1x3e', purging
+2022-05-19 19:36:15,329 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-f2zuwx0k', purging
+2022-05-19 19:36:15,334 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-xrjawv1a', purging
+2022-05-19 19:36:15,338 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-uqd2q26v', purging
+2022-05-19 19:36:15,342 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-vw8a8x6t', purging
+2022-05-19 19:36:15,347 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jydpp1ix', purging
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    assert exitcode is not None
+AssertionError
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    assert exitcode is not None
+AssertionError
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    assert exitcode is not None
+AssertionError
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self.run()
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    self._target(*self._args, **self._kwargs)
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/site-packages/distributed/process.py", line 218, in _watch_process
+    assert exitcode is not None
+AssertionError
+    assert exitcode is not None
+AssertionError
+Exception in thread AsyncProcess Dask Worker process (from Nanny) watch process join:
+Traceback (most recent call last):
+  File "/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+2022-05-19 19:43:36,187 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-3q4bfra1', purging
+2022-05-19 19:43:36,191 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-bkklmbqk', purging
+2022-05-19 19:43:36,194 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-p9_v3mrm', purging
+2022-05-19 19:43:36,198 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-qti0eneb', purging
+2022-05-19 19:43:36,201 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-u6o5jtty', purging
+2022-05-19 19:43:36,205 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-92906jko', purging
+2022-05-19 19:43:36,209 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-st5_f6_q', purging
+2022-05-19 19:43:36,212 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_6avdin_', purging
+2022-05-19 19:43:36,216 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-zzouzcsi', purging
+2022-05-19 19:43:36,220 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-pt50h6b1', purging
+2022-05-19 19:43:36,223 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-bmg40dno', purging
+2022-05-19 19:43:36,227 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-gb_aowsh', purging
+2022-05-19 19:43:36,231 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-rbzcdfzt', purging
+2022-05-19 19:43:36,234 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-9te2mxb2', purging
+2022-05-19 19:43:36,238 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-fq3ugwbt', purging
+2022-05-19 19:43:36,242 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-b26npkla', purging
+2022-05-19 19:43:36,246 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ogye586q', purging
+2022-05-19 19:43:36,250 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-h3x0x33l', purging
+2022-05-19 19:43:36,253 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-e24p4yh6', purging
+2022-05-19 19:43:36,257 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-r2o4fc6b', purging
+2022-05-19 19:43:36,260 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-eexb6az6', purging
+2022-05-19 19:43:36,263 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-gjhque8c', purging
+2022-05-19 19:43:36,266 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-lbojr3sm', purging
+2022-05-19 19:43:36,270 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-jjmyzr3w', purging
+2022-05-19 19:43:36,273 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ndnt1swm', purging
+2022-05-19 19:43:36,278 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-9yqimsdw', purging
+2022-05-19 19:43:36,282 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-heicqmfs', purging
+2022-05-19 19:43:36,285 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-2g0hu24h', purging
+2022-05-19 19:43:36,288 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ava7hy6n', purging
+2022-05-19 19:43:36,292 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-2pidcot_', purging
+2022-05-19 19:43:36,296 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_tuqxk3v', purging
+2022-05-19 19:43:36,299 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-8bqaf7q7', purging
+2022-05-19 19:43:36,302 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-pnkdtl6h', purging
+2022-05-19 19:43:36,306 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-4kdmaslb', purging
+2022-05-19 19:43:36,309 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-0m8fwxkn', purging
+2022-05-19 19:43:36,313 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-2pk85g02', purging
+2022-05-19 19:43:36,317 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-s27alhec', purging
+2022-05-19 19:43:36,320 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-8ueamz8x', purging
+2022-05-19 19:43:36,323 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-x_qhv1i5', purging
+2022-05-19 19:43:36,327 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-z_97l1tv', purging
+2022-05-19 19:43:36,330 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-y70ri2_3', purging
+2022-05-19 19:43:36,333 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-22url29m', purging
+2022-05-19 19:43:36,337 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-cwopqdk0', purging
+2022-05-19 19:43:36,340 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-obqkf7gr', purging
+2022-05-19 19:43:36,343 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-moi9vqe3', purging
+2022-05-19 19:43:36,346 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-z18tbfwt', purging
+2022-05-19 19:43:36,349 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-le1xsgvx', purging
+2022-05-19 19:43:36,353 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ev14r75c', purging
+2022-05-19 19:43:36,356 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_e9qnn45', purging
+2022-05-19 19:43:36,359 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-ozwsiz74', purging
+2022-05-19 19:43:36,362 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-h34h_mvw', purging
+2022-05-19 19:43:36,365 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-_4par02p', purging
+2022-05-19 19:43:36,368 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-xk3yv8ge', purging
+2022-05-19 19:43:36,371 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-urzw7po8', purging
+2022-05-19 19:43:36,375 - distributed.diskutils - INFO - Found stale lock file and directory '/work2/06081/wlruys/frontera/overhead_test/dask_process_5k/dask-worker-space/worker-rp0832nd', purging
+slurmstepd: error: *** JOB 4390191 ON c210-008 CANCELLED AT 2022-05-19T20:04:38 DUE TO TIME LIMIT ***
+/scratch1/06081/wlruys/miniconda3/envs/rap/lib/python3.8/multiprocessing/resource_tracker.py:216: UserWarning: resource_tracker: There appear to be 18 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

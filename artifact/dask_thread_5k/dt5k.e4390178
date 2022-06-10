@@ -1,0 +1,9 @@
+which: no fi_info in (/scratch1/06081/wlruys/miniconda3/envs/rap/bin:/scratch1/06081/wlruys/miniconda3/condabin:/opt/apps/xalt/xalt/bin:/opt/apps/hwloc/1.11.12/bin:/opt/apps/pmix/3.1.4/bin:/opt/apps/cmake/3.20.3/bin:/opt/apps/autotools/1.2/bin:/opt/apps/git/2.24.1/bin:/opt/intel/compilers_and_libraries_2020.4.304/linux/mpi/intel64/bin:/opt/intel/compilers_and_libraries_2020.1.217/linux/bin/intel64:/opt/apps/gcc/8.3.0/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/opt/ddn/ime/bin:.:/home1/06081/wlruys/.fzf/bin)
+
+Currently Loaded Modules:
+  1) intel/19.1.1   4) autotools/1.2   7) hwloc/1.11.12
+  2) impi/19.0.9    5) cmake/3.20.3    8) xalt/2.10.34
+  3) git/2.24.1     6) pmix/3.1.4      9) TACC
+
+ 
+
