@@ -106,7 +106,7 @@ def make_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
             if location is not None:
                 G.nodes[source]['loc'] = location[str(source)]
                 G.nodes[target]['loc'] = location[str(target)]
-            
+
 
             if times is not None:
                 G.nodes[source]['time'] = times[str(source)]
@@ -205,7 +205,6 @@ def make_graph_nx(depend_dict, data_dict, plot_isolated=True, plot=True, weights
                 device_id = int(G.nodes[node]['loc'])
             except KeyError:
                 device_id = -1
-
 
             if device_id >= 0:
                 G.nodes[node]['style'] = 'filled'
@@ -327,8 +326,8 @@ if __name__ == '__main__':
         task_time = task_time / 10**6
         depth = len(critical_path)
 
-        p = args.p 
-        
+        p = args.p
+
         serial = task_time * len(G)
         est = max(serial/p, (depth*task_time))
         print("Assuming equal sized tasks and no data movement:")
@@ -370,17 +369,17 @@ if __name__ == '__main__':
                     next_node_info = G.nodes[next_node]
                     edge_info = G.get_edge_data(node, next_node)
                     entries = edge_info['weight']*d
-                    
+
                     try:
                         from_dev = int(node_info['loc'])+1
                         to_dev = int(next_node_info['loc'])+1
                     except KeyError:
                         continue
 
-                    b = bandwidth_table[from_dev, to_dev] 
-                    path_time += entries / b 
+                    b = bandwidth_table[from_dev, to_dev]
+                    path_time += entries / b
                     #print(node, next_node, entries, b)
-                
+
 
             print("Critical path time with observed execution and expected data movement times:", path_time)
 
