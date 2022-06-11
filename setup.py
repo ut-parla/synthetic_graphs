@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 from setuptools.extension import Extension
 import os
 
-os.environ["CC"] = 'nvcc_wrapper'
-os.environ["CXX"] = 'nvcc_wrapper'
+#os.environ["CC"] = 'nvcc_wrapper'
+#os.environ["CXX"] = 'nvcc_wrapper'
 
 def scandir(dir, files=[]):
     for file in os.listdir(dir):
@@ -21,7 +21,8 @@ def makeExtension(extName):
         extName,
         [extPath],
         language='c++',
-        extra_compile_args=["-std=c++11","--expt-extended-lambda", "-Xcudafe","--diag_suppress=esa_on_defaulted_function_ignored"]
+        extra_compile_args=["-std=c++11"]
+ #       extra_compile_args=["-std=c++11","--expt-extended-lambda", "-Xcudafe","--diag_suppress=esa_on_defaulted_function_ignored"]
     )
 
 

@@ -31,4 +31,5 @@ def gpu_sleep(dev, t, stream):
     cdef unsigned long c_t = t
     cdef intptr_t c_stream = stream.ptr
     with nogil:
-        gpu_sleeper(c_dev, c_t, c_stream)
+        busy_sleep(c_t)
+        #gpu_sleeper(c_dev, c_t, c_stream)

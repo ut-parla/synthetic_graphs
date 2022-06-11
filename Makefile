@@ -2,7 +2,7 @@
 
 
 all:
-	python setup.py build_ext install
+	python setup.py build_ext install --prefix=$WORK/sleep
 
 clean:
 	rm -rf build
