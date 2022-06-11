@@ -2,7 +2,7 @@ import time
 import re
 
 import numpy as np
-from sleep.core import *
+#from sleep.core import *
 
 from parla import Parla
 from parla.cpu import cpu
@@ -40,6 +40,25 @@ except (ImportError,AttributeError):
     def asarray_batch(array):
         return array
 
+def bsleep(interval):
+    start = time.perf_counter()
+    count = 0
+    interval = interval/ (1000*1000)
+    while True:
+        count += 1
+        end = time.perf_counter()
+        if ((end-start)) >(interval):
+            break
+
+def sleep_with_gil(interval):
+    start = time.perf_counter()
+    count = 0
+    interval = interval / (1000*1000)
+    while True:
+        count += 1
+        end = time.perf_counter()
+        if ((end-start)) >(interval):
+            break
 
 def get_dimension(file):
     with open(file, mode='r') as f:
@@ -760,7 +779,7 @@ def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, 
             print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
 
 
-def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0, ndevices=1):
+def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0, ndevices=None, ttime=None, limit=None, gtime=None):
 
     start_creation = time.perf_counter()
     task_space = TaskSpace('TaskSpace')
@@ -768,9 +787,17 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0, ndev
     ngpus = 1 #cp.cuda.runtime.getDeviceCount()
 
     launch_id = 0
+
+    if limit is None:
+        limit = len(G)
+
+    count = 0
     for task in G:
         ids, info, dep, data = task
 
+        count += 1
+        if count > limit:
+            break
         #Check spawn data arguments
         #print("IN: ", data[0], "OUT: ", data[1], "INOUT: ", data[2])
 
@@ -797,10 +824,20 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0, ndev
 
         #Generate task weight
         weight = info[0]
+        if ttime is not None:
+            weight = ttime
+
         vcus = 1/info[1]
-        vcus = 1.0/ndevices
+        if ndevices is not None:
+            vcus = 1.0/ndevices
+
         gil_count = info[3]
         gil_time = info[4]
+
+        if gtime is not None:
+            gil_time = gtime
+            gil_count = 1
+
         gil = (gil_count, gil_time)
 
         #Generate placement list
@@ -829,5 +866,5 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0, ndev
         launch_id += 1
 
     end_creation = time.perf_counter()
-    print("|| Task Creation Time : ", end_creation - start_creation, flush=True)
+    #print("|| Task Creation Time : ", end_creation - start_creation, flush=True)
     return task_space
