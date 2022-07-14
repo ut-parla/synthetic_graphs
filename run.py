@@ -113,7 +113,7 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
             graph_execution_times.append(graph_elapsed)
 
             #print(f"Iteration {i} | Graph Execution Time: ", graph_elapsed, "seconds \n", flush=True)
-            print(f"{args.weight}, {args.p}, {graph_elapsed}")
+            print(f"{args.weight}, {args.threads}, {graph_elapsed}")
 
             #if reinit and (i!= 0):
             #    noop = 1
