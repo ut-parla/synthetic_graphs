@@ -112,8 +112,8 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
             graph_elapsed = end_internal - start_internal
             graph_execution_times.append(graph_elapsed)
 
-            #print(f"Iteration {i} | Graph Execution Time: ", graph_elapsed, "seconds \n", flush=True)
-            print(f"{args.weight}, {args.threads}, {graph_elapsed}")
+            print(f"Iteration {i} | Time: {graph_elapsed}", flush=True)
+            #print(f"{args.weight}, {args.threads}, {graph_elapsed}")
 
             #if reinit and (i!= 0):
             #    noop = 1
@@ -177,14 +177,14 @@ def main():
     parla_mean = np.mean(np.array(parla_execution_times))
     parla_median = np.median(np.array(parla_execution_times))
 
-    #print(f"Graph Execution Time:: Average = {graph_mean} | Median = {graph_median}")
-    #print(f"Parla Total Time    :: Average = {parla_mean} | Median = {parla_median}")
+    print(f"Graph Execution Time:: Average = {graph_mean} | Median = {graph_median}")
+    print(f"Parla Total Time    :: Average = {parla_mean} | Median = {parla_median}")
 
 
     if args.reinit:
         data_mean = np.mean(np.array(data_execution_times))
         data_median = np.median(np.array(data_execution_times))
-        #print(f"----Data ReInit Time:: Average = {data_mean} | Median = {data_median}")
+        print(f"----Data ReInit Time:: Average = {data_mean} | Median = {data_median}")
         #print("Note: Data ReInit Time is included in Parla Total Time (subtract out as necessary)")
 
 
