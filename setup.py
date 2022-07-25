@@ -21,7 +21,8 @@ def makeExtension(extName):
         extName,
         [extPath],
         language='c++',
-        extra_compile_args=["-std=c++11"]
+        extra_compile_args=["-std=c++11", "-fopenmp", "-lpthread", "-lgomp",
+        "-lm"]
  #       extra_compile_args=["-std=c++11","--expt-extended-lambda", "-Xcudafe","--diag_suppress=esa_on_defaulted_function_ignored"]
     )
 
