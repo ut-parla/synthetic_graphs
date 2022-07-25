@@ -2698,7 +2698,6 @@ hyper, hyper_dual = make_networkx_datagraph(task_list, (runtime_dict, dependency
 # plot_graph(graph_full)
 plot_hypergraph(hyper_dual)
 
-
 # Create devices
 gpu0 = SyntheticDevice(
     "gpu0", 0, {"memory": parse_size("16 GB"), "acus": Fraction(1)})
@@ -2713,19 +2712,19 @@ cpu = SyntheticDevice(
 
 # Create device topology
 topology = SyntheticTopology("Top1", [gpu0, gpu1, gpu2, gpu3, cpu])
-bw = 100
 
+bw = 100
 topology.add_connection(gpu0, gpu1, symmetric=True)
 topology.add_connection(gpu2, gpu3, symmetric=True)
 
-topology.add_bandwidth(gpu0, gpu1, bw, reverse=bw)
+topology.add_bandwidth(gpu0, gpu1, 2*bw, reverse=bw)
 topology.add_bandwidth(gpu0, gpu2, bw, reverse=bw)
 topology.add_bandwidth(gpu0, gpu3, bw, reverse=bw)
 
 topology.add_bandwidth(gpu1, gpu2, bw, reverse=bw)
 topology.add_bandwidth(gpu1, gpu3, bw, reverse=bw)
 
-topology.add_bandwidth(gpu2, gpu3, bw, reverse=bw)
+topology.add_bandwidth(gpu2, gpu3, 2*bw, reverse=bw)
 
 # Self copy (not used)
 topology.add_bandwidth(gpu3, gpu3, bw, reverse=bw)
@@ -2772,13 +2771,13 @@ scheduler.run()
 t = time.perf_counter() - t
 print("Sim Time: ", t)
 
-#point = state.get_state_at_time(0.5)
-#plot_graph(graph_full, state.active_state, task_device_color_map)
+# point = state.get_state_at_time(0.5)
+# plot_graph(graph_full, state.active_state, task_device_color_map)
 
-#make_image_folder("reduce_graphs", state)
-#make_image_folder_time(scheduler.time, 0.04166, "reduce_graphs_time", state)
+# make_image_folder("reduce_graphs", state)
+# make_image_folder_time(scheduler.time, 0.04166, "reduce_graphs_time", state)
 
 plot_memory(devices, state)
 plot_active_tasks(devices, state, "all_useful")
-#plot_transfers_data(data[0], devices, state)
-#make_interactive(scheduler.time, state)
+# plot_transfers_data(data[0], devices, state)
+# make_interactive(scheduler.time, state)
