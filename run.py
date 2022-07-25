@@ -3,7 +3,7 @@ import time
 import copy
 
 import numpy as np
-from sleep.core import *
+#from sleep.core import *
 
 from parla import Parla
 from parla.cpu import cpu
@@ -32,6 +32,10 @@ parser.add_argument('-outerloop', metavar='outerloop', default=1, type=int, help
 parser.add_argument('-reinit', metavar='reinit', default=0, type=int, help='Reinitialize the data on CPU at each inner loop (0=False, 1=True)')
 parser.add_argument('--check_data', metavar='check_data', dest='check', nargs='?', const=True, type=str2bool, default=False, help='Activate data check mode (required for verifying movement output output)')
 parser.add_argument('-user', metavar='user', type=int, help='type of placement. options=(None=0, User=1)', default=0)
+parser.add_argument('-weight', metavar='weight', type=int, help='length of task compute time', default=None)
+parser.add_argument('-threads', metavar='threads', type=int, help='Number of workers', default=None)
+parser.add_argument('-n', metavar='n', type=int, help='maximum number of tasks', default=None)
+parser.add_argument('-gweight', metavar='gweight', type=int, help="length of task gil time", default=None)
 
 data_execution_times = []
 graph_execution_times = []
@@ -40,7 +44,7 @@ parla_execution_times = []
 args = parser.parse_args()
 
 
-n_gpus = cp.cuda.runtime.getDeviceCount()
+n_gpus = 1 #cp.cuda.runtime.getDeviceCount()
 
 def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=False):
 
@@ -55,6 +59,9 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
 
         data_elapsed = end_data - start_data
         data_execution_times.append(data_elapsed)
+
+        device_id = get_current_devices()[0].index
+        #print("Running on device", device_id, flush=True)
 
         for i in range(iteration):
             #print("Starting Iteration 1", flush=True)
@@ -99,27 +106,28 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
             #print(f"Outer Iteration: {outer} | Time to Reconfigure Data: ", data_elapsed, "seconds", flush=True)
 
             start_internal = time.perf_counter()
-            await create_tasks(G, array, args.data_move, verbose, args.check, args.user)
+            await create_tasks(G, array, args.data_move, verbose, args.check, args.user, ndevices=args.threads, ttime=args.weight, limit=args.n, gtime=args.gweight)
             end_internal = time.perf_counter()
 
             graph_elapsed = end_internal - start_internal
             graph_execution_times.append(graph_elapsed)
 
-            print(f"Iteration {i} | Graph Execution Time: ", graph_elapsed, "seconds \n", flush=True)
+            print(f"Iteration {i} | Time: {graph_elapsed}", flush=True)
+            #print(f"{args.weight}, {args.threads}, {graph_elapsed}")
 
-            if reinit and (i!= 0):
-                noop = 1
-                print(f"Iteration {i} | Data Reset Time: ", data_elapsed, "seconds \n", flush=True)
+            #if reinit and (i!= 0):
+            #    noop = 1
+            #    print(f"Iteration {i} | Data Reset Time: ", data_elapsed, "seconds \n", flush=True)
 
 
 
 def main():
 
-    if args.data_move:
-        print(f"move=({args.data_move})")
-
-    if args.verbose:
-        print(f"dim=({args.d})")
+    #if args.data_move:
+    #    print(f"move=({args.data_move})")
+    #
+    #if args.verbose:
+    #    print(f"dim=({args.d})")
 
 
     G = read_graph(args.graph)
@@ -145,7 +153,7 @@ def main():
 
         parla_total_elapsed = end - start
         parla_execution_times.append(parla_total_elapsed)
-        print(f"Outer Iteration: {outer} | Total Elapsed: ", parla_total_elapsed, "seconds", flush=True)
+        #print(f"Outer Iteration: {outer} | Total Elapsed: ", parla_total_elapsed, "seconds", flush=True)
 
 
             #Note: This isn't really useful info but its there if you're curious
@@ -155,10 +163,10 @@ def main():
         summarize_memory()
         #Reset memory counter on outer loop
         clean_memory()
-        print("--------------- \n")
+        #print("--------------- \n")
 
 
-    print("Summary: ")
+    #print("Summary: ")
     if len(graph_execution_times) > 1:
         start_index = 1
     else:
@@ -177,7 +185,7 @@ def main():
         data_mean = np.mean(np.array(data_execution_times))
         data_median = np.median(np.array(data_execution_times))
         print(f"----Data ReInit Time:: Average = {data_mean} | Median = {data_median}")
-        print("Note: Data ReInit Time is included in Parla Total Time (subtract out as necessary)")
+        #print("Note: Data ReInit Time is included in Parla Total Time (subtract out as necessary)")
 
 
 if __name__ == '__main__':
