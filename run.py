@@ -18,6 +18,12 @@ except (ImportError, AttributeError):
     def clean_memory():
         pass
 
+
+try:
+    import cupy as cp
+except ImportError:
+    cp = None
+
 import argparse
 
 from synthetic.core import *
@@ -43,8 +49,10 @@ parla_execution_times = []
 
 args = parser.parse_args()
 
-
-n_gpus = 1 #cp.cuda.runtime.getDeviceCount()
+if cp is not None:
+    n_gpus = cp.cuda.runtime.getDeviceCount()
+else:
+    n_gpus = 0
 
 def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=False):
 
