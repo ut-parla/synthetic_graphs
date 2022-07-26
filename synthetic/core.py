@@ -832,7 +832,6 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0, ndev
         if ndevices is not None:
             vcus = 1.0/ndevices
 
-        print(vcus)
         gil_count = info[3]
         gil_time = info[4]
 
