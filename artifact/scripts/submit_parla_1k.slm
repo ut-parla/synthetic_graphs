@@ -37,7 +37,7 @@ do
             if (( $(echo "$last > $first" |bc -l) )); then
                 break
             fi
-            
+
         done
     done
 done

@@ -9,6 +9,7 @@
 #SBATCH -t 05:00:00        # Run time (hh:mm:ss)
 #SBATCH -A ASC21002        # Project/Allocation name (req'd if you have more than 1)
 
+#REPLACE WITH YOUR CONDA ENV
 source /scratch1/06081/wlruys/miniconda3/etc/profile.d/conda.sh
 conda activate rap
 
@@ -37,7 +38,7 @@ do
                 if (( $(echo "$last > $first" |bc -l) )); then
                     break
                 fi
-                
+
             done
         done
     done
