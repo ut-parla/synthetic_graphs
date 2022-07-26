@@ -2,7 +2,7 @@ import time
 import re
 
 import numpy as np
-#from sleep.core import *
+from sleep.core import *
 
 from parla import Parla
 from parla.cpu import cpu
@@ -39,7 +39,7 @@ try:
 except (ImportError,AttributeError):
     def asarray_batch(array):
         return array
-
+"""
 def bsleep(interval):
     start = time.perf_counter()
     count = 0
@@ -49,6 +49,7 @@ def bsleep(interval):
         end = time.perf_counter()
         if ((end-start)) >(interval):
             break
+"""
 
 def sleep_with_gil(interval):
     start = time.perf_counter()
@@ -831,6 +832,7 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0, ndev
         if ndevices is not None:
             vcus = 1.0/ndevices
 
+        print(vcus)
         gil_count = info[3]
         gil_time = info[4]
 
