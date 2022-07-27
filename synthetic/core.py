@@ -34,8 +34,34 @@ from parla.device import Device
 
 from parla.function_decorators import specialized
 
-from parla.parray import asarray_batch
 
+try:
+    from parla.parray import asarray_batch
+except (ImportError,AttributeError):
+    def asarray_batch(array):
+        return array
+
+"""
+def bsleep(interval):
+    start = time.perf_counter()
+    count = 0
+    interval = interval/ (1000*1000)
+    while True:
+        count += 1
+        end = time.perf_counter()
+        if ((end-start)) >(interval):
+            break
+"""
+
+def sleep_with_gil(interval):
+    start = time.perf_counter()
+    count = 0
+    interval = interval / (1000*1000)
+    while True:
+        count += 1
+        end = time.perf_counter()
+        if ((end-start)) >(interval):
+            break
 
 def get_dimension(file):
     with open(file, mode='r') as f:
@@ -387,7 +413,7 @@ def estimate_frequency(n_samples= 10, ticks=1900000000):
     print("Estimated GPU Frequency: Mean: ", estimated_speed, ", Median: ", median_speed, flush=True)
     return estimated_speed
 
-def setup_data(data_config, d = 10, verbose=False, device_list=None, data_move=1):
+def setup_data(data_config, d = 10, verbose=False, device_list=None,data_move=1, use_gpu=True):
     """
     Setup data into blocks of data specified by the graph config.
     At the moment all data will be initialized on the CPU.
@@ -395,20 +421,25 @@ def setup_data(data_config, d = 10, verbose=False, device_list=None, data_move=1
 
     data = []
     count = 0
-    ngpus = cp.cuda.runtime.getDeviceCount()
 
-    for segment in data_config:
-        with cp.cuda.Device(count%ngpus) as device:
-            array = cp.zeros([segment, d], dtype=np.float32)+count+1
-            device.synchronize()
-            #print("Size: ", array.nbytes)
+    if use_gpu:
+        ngpus = cp.cuda.runtime.getDeviceCount()
+        for segment in data_config:
+            with cp.cuda.Device(count%ngpus) as device:
+                array = cp.zeros([segment, d], dtype=np.float32)+count+1
+                device.synchronize()
+                #print("Size: ", array.nbytes)
+                data.append(array)
+            count += 1
+    else:
+        for segment in data_config:
+            array = np.zeros([segment, d], dtype=np.float32)+count+1
             data.append(array)
-        count += 1
+            count += 1
 
     #If data move is 'Eager'
     if data_move == 2:
         data = asarray_batch(data)
-
     return data
 
 def read_graph(filename):
@@ -745,37 +776,28 @@ def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, 
 
     @spawn(task_space[ids], dependencies=deps, placement=place, vcus=cu)
     def busy_sleep():
+        start = time.perf_counter()
 
-        #create named frame for profiler (Error: This doesn't work)
-        def create_body(name):
-            def task(*args):
+        waste_time(ids, weight, gil, verbose)
+        log_memory()
 
-                start = time.perf_counter()
-
-                waste_time(ids, weight, gil, verbose)
-                log_memory()
-
-                end = time.perf_counter()
-                if verbose:
-                    print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
-            task.__name__ = name
-            return task
-
-        name = 'task_'+concat_tuple(ids)
-        task_body = create_body('{name}')
-
-
-        #run task body
-        task_body()
+        end = time.perf_counter()
+        if verbose:
+            print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
 
 
 
-def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0):
+def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0,
+                 ndevices=None, ttime=None, limit=None, gtime=None,
+                 use_gpu=True):
 
     start_creation = time.perf_counter()
     task_space = TaskSpace('TaskSpace')
 
-    ngpus = cp.cuda.runtime.getDeviceCount()
+    if use_gpu:
+        ngpus = cp.cuda.runtime.getDeviceCount()
+    else:
+        ngpus = 0
 
     launch_id = 0
     for task in G:
@@ -805,23 +827,38 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0):
 
         #Generate task weight
         weight = info[0]
+        if ttime is not None:
+            weight = ttime
+
         vcus = 1/info[1]
+        if ndevices is not None:
+            vcus = 1.0/ndevices
+
         gil_count = info[3]
         gil_time = info[4]
+
+        if gtime is not None:
+            gil_time = gtime
+            gil_count = 1
+
         gil = (gil_count, gil_time)
 
         #Generate placement list
         if info[2] == 0:
             place = cpu
-        elif info[2] == 1:
-            place = gpu
-        elif info[2] == 2:
-            place = [cpu, gpu]
-        else:
-            if user:
-                place = gpu( (info[2]-3) % ngpus )
-            else:
+
+        if use_gpu:
+            if info[2] == 1:
                 place = gpu
+            elif info[2] == 2:
+                place = [cpu, gpu]
+            else:
+                if user:
+                    place = gpu( (info[2]-3) % ngpus )
+                else:
+                    place = gpu
+        else:
+            place = cpu
 
         #print(ids, deps, place, IN, OUT, INOUT, vcus, weight)
 
@@ -835,5 +872,5 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0):
         launch_id += 1
 
     end_creation = time.perf_counter()
-    print("|| Task Creation Time : ", end_creation - start_creation, flush=True)
+    #print("|| Task Creation Time : ", end_creation - start_creation, flush=True)
     return task_space
