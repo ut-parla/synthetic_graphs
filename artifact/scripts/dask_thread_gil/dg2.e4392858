@@ -1,0 +1,9 @@
+
+Currently Loaded Modules:
+  1) intel/19.1.1   4) autotools/1.2   7) hwloc/1.11.12
+  2) impi/19.0.9    5) cmake/3.20.3    8) xalt/2.10.34
+  3) git/2.24.1     6) pmix/3.1.4      9) TACC
+
+ 
+
+slurmstepd: error: *** JOB 4392858 ON c207-028 CANCELLED AT 2022-05-20T01:29:05 ***
