@@ -42,7 +42,7 @@ parser.add_argument('-weight', metavar='weight', type=int, help='length of task 
 parser.add_argument('-threads', metavar='threads', type=int, help='Number of workers', default=None)
 parser.add_argument('-n', metavar='n', type=int, help='maximum number of tasks', default=None)
 parser.add_argument('-gweight', metavar='gweight', type=int, help="length of task gil time", default=None)
-
+parser.add_argument('-use_gpu', metavar='use_gpu', type=int, help="Use any GPUs?", default=1)
 data_execution_times = []
 graph_execution_times = []
 parla_execution_times = []
@@ -61,7 +61,8 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
     async def main_task():
 
         start_data = time.perf_counter()
-        array = setup_data(data_config, args.d, data_move=args.data_move)
+        array = setup_data(data_config, args.d, data_move=args.data_move,
+                           use_gpu=args.use_gpu)
         end_data = time.perf_counter()
 
         data_elapsed = end_data - start_data
@@ -102,7 +103,8 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
 
                 elif True: #args.data_move == 1:
                     del array
-                    array = setup_data(data_config, args.d, data_move=args.data_move)
+                    array = setup_data(data_config, args.d,
+                                       data_move=args.data_move, use_gpu=args.use_gpu)
                 else:
                     noop = 1
 
@@ -113,7 +115,10 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
             #print(f"Outer Iteration: {outer} | Time to Reconfigure Data: ", data_elapsed, "seconds", flush=True)
 
             start_internal = time.perf_counter()
-            await create_tasks(G, array, args.data_move, verbose, args.check, args.user, ndevices=args.threads, ttime=args.weight, limit=args.n, gtime=args.gweight)
+            await create_tasks(G, array, args.data_move, verbose, args.check,
+                               args.user, ndevices=args.threads,
+                               ttime=args.weight, limit=args.n,
+                               gtime=args.gweight, use_gpu=args.use_gpu)
             end_internal = time.perf_counter()
 
             graph_elapsed = end_internal - start_internal
