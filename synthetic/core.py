@@ -440,6 +440,8 @@ def setup_data(data_config, d = 10, verbose=False, device_list=None,data_move=1,
     #If data move is 'Eager'
     if data_move == 2:
         data = asarray_batch(data)
+
+
     return data
 
 def read_graph(filename):

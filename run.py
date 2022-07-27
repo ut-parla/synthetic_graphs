@@ -55,7 +55,6 @@ else:
     n_gpus = 0
 
 def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=False):
-
     #dep = [task_space[iteration-1]] if iteration > 0 else []
 
     @spawn(placement=cpu)
@@ -79,7 +78,7 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
 
                 start_data = time.perf_counter()
 
-                if args.data_move == 2:
+                if False:
 
                     #Reset parray to modified on starting device
                     rs = TaskSpace("Reset")
@@ -101,7 +100,7 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
                     await ts
 
 
-                elif args.data_move == 1:
+                elif True: #args.data_move == 1:
                     del array
                     array = setup_data(data_config, args.d, data_move=args.data_move)
                 else:
