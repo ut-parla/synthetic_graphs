@@ -54,7 +54,8 @@ else:
     n_partitions = width
     N = args.N*n_partitions
 
-n_blocks = n_partitions
+n_blocks = 64
+#n_blocks = n_partitions
 
 with open(output, 'w') as graph:
 
