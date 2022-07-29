@@ -86,10 +86,16 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
                     rs = TaskSpace("Reset")
                     for k in range(len(array)):
                         data = array[k]
-                        @spawn(rs[k], placement=gpu(k%n_gpus), inout=[data])
-                        def reset():
-                            noop = 1
-                    await rs
+                        if k == 0:
+                            @spawn(rs[k], dependencies=[], placement=gpu(k%n_gpus), inout=[data])
+                            def reset():
+                                noop = 1
+                        else:
+                            @spawn(rs[k], dependencies=[rs[k-1]], placement=gpu(k%n_gpus), inout=[data])
+                            def reset():
+                                noop = 1
+
+                    await rs[k]
 
                     #set to shared state
                     #ts = TaskSpace("Touch")
