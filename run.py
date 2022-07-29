@@ -79,7 +79,7 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
 
                 start_data = time.perf_counter()
 
-                if False:
+                if args.data_move == 2 and reinit==2:
 
                     #Reset parray to modified on starting device
                     rs = TaskSpace("Reset")
@@ -100,8 +100,7 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
                             noop = 1
                     await ts
 
-
-                elif True: #args.data_move == 1:
+                elif args.data_move == 1 or reinit==1:
                     del array
                     array = setup_data(data_config, args.d,
                                        data_move=args.data_move, use_gpu=args.use_gpu)
