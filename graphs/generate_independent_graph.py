@@ -51,10 +51,10 @@ if overlap:
     n_partitions = 1
     N = args.N//width
 else:
-    n_partitions = width
+    n_partitions = 64
     N = args.N*n_partitions
 
-n_blocks = 64
+n_blocks = n_partitions
 #n_blocks = n_partitions
 
 with open(output, 'w') as graph:
