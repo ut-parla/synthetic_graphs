@@ -420,13 +420,51 @@ def task_device_color_map(state):
     return colors[state.device+1]
 
 
-def plot_graph(graph, state=None, color_map=None, output="graph.png"):
+def plot_graph(graph, state=None, color_map=None, output="graph.png",
+               data_dict=None):
     import networkx as nx
+
+    if data_dict is not None:
+        read_dict, write_dict, dependency_dict = data_dict
 
     if (state is not None) and (color_map is not None):
         for node in graph.nodes():
             graph.nodes[node]['style'] = 'filled'
             graph.nodes[node]['color'] = color_map(state[node])
+
+    if data_dict is not None:
+        for node in graph.nodes():
+            print("HERE")
+            out_edges = graph_full.out_edges(nbunch=[node])
+            print(out_edges)
+            for edge in out_edges:
+                if ("M" not in edge[1]) and ("M" not in edge[0]):
+                    depenendices = dependency_dict[edge[1]]
+                    read_list_target = read_dict[edge[1]]
+                    read_list_source = read_dict[edge[0]]
+                    write_list_target = write_dict[edge[1]]
+                    write_list_source = write_dict[edge[0]]
+
+                    flag = 0
+                    for read_target in read_list_target:
+                        if read_target in write_list_source:
+                            print("RED")
+                            graph.edges[edge]['color'] = 'red'
+                            graph.edges[edge]['style'] = 'dashed'
+                            flag = 1
+                            break
+
+                    if flag == 1:
+                        break
+
+                    for read_target in read_list_target:
+                        if read_target in read_list_source:
+                            print("GREEN")
+                            graph.edges[edge]['color'] = 'green'
+                            graph.edges[edge]['style'] = 'dashed'
+                            flag = 1
+                            break
+
 
     pg = nx.drawing.nx_pydot.to_pydot(graph)
     png_str = pg.create_png(prog='dot')
@@ -761,6 +799,7 @@ class Data:
         # Decrement used counter
         for device in device_list:
             if device.name in self.locations:
+                print("Unlocking data: ", self.name, device_list)
                 self.locations[device.name].used -= 1
                 assert(self.locations[device.name].used >= 0)
             else:
@@ -771,6 +810,7 @@ class Data:
         # Increment used counter
         for device in device_list:
             if device.name in self.locations:
+                print("Locking data: ", self.name, device_list)
                 self.locations[device.name].used += 1
                 assert(self.locations[device.name].used >= 0)
             else:
@@ -838,7 +878,21 @@ class Data:
         # Decrease prefetch count
         # self.use(task, device_list, is_movement)
 
+        #Check if data is already being used on device.
+
         if not is_movement:
+
+            for device in device_list:
+                if(self.locations[device.name].used > 1):
+                    print(self.name, self.locations)
+                    assert(False)
+
+            for device_name in self.locations.keys():
+                if SyntheticDevice.devicespace[device_name] not in device_list:
+                    if(self.locations[device_name].used > 0):
+                        print(self.name, self.locations)
+                        assert(False)
+
             # Mark stale
             device_name_list = [d.name for d in device_list]
             for device_name in self.locations.keys():
@@ -1905,7 +1959,9 @@ class SyntheticTask:
 
     def lock_data(self):
         # print("Locking Data for Task:", self.name)
-        for data in self.read_data:
+
+        joint_data = (set(self.read_data) | set(self.write_data))
+        for data in joint_data:
             to_lock = []
 
             device_target = self.data_targets[data.name]
@@ -1919,24 +1975,12 @@ class SyntheticTask:
 
             data.lock(to_lock)
 
-        for data in self.write_data:
-
-            to_lock = []
-
-            device_target = self.data_targets[data.name]
-            to_lock.append(device_target)
-
-            if self.data_sources:
-                device_source = self.data_sources[data.name]
-                assert(device_source is not None)
-                if not (device_source == device_target):
-                    to_lock.append(device_source)
-
-            data.lock(to_lock)
 
     def unlock_data(self):
 
-        for data in self.read_data:
+        joint_data = (set(self.read_data) | set(self.write_data))
+
+        for data in joint_data:
             to_unlock = []
 
             device_target = self.data_targets[data.name]
@@ -1950,6 +1994,7 @@ class SyntheticTask:
 
             data.unlock(to_unlock)
 
+        """
         for data in self.write_data:
 
             to_unlock = []
@@ -1964,6 +2009,7 @@ class SyntheticTask:
                     to_unlock.append(device_source)
 
             data.unlock(to_unlock)
+        """
 
     # def __del__(self):
     #    del SyntheticTask.taskspace[self.name]
@@ -2233,7 +2279,7 @@ class SyntheticSchedule:
             for task in Assign2(device.planned_compute_tasks, device.planned_movement_tasks, self.resource_pool):
 
                 if task:
-                    print("Assigning Task:", task.name)
+                    print("Assigning Task:", task.name, task.dependencies)
 
                     # data0 = task.read_data[0]
                     # print(data0)
@@ -2428,13 +2474,16 @@ def parse_size(size):
 
 
 def get_trivial_mapping(task_handles):
+    import random
     mapping = dict()
 
     for task_name in task_handles.keys():
         task_handle = task_handles[task_name]
         valid_devices = task_handle.get_valid_devices()
+        print(valid_devices)
         valid_devices.sort()
-        mapping[task_name] = valid_devices[0]
+        #mapping[task_name] = valid_devices[0]
+        mapping[task_name] = random.choice(valid_devices)
 
     return mapping
 
@@ -2672,6 +2721,8 @@ data_config, task_list = read_graphx("reduce.gph")
 runtime_dict, dependency_dict, write_dict, read_dict, count_dict = convert_to_dictionary(
     task_list)
 
+print(dependency_dict)
+
 task_dictionaries = (runtime_dict, dependency_dict,
                      write_dict, read_dict, count_dict)
 
@@ -2695,8 +2746,8 @@ hyper, hyper_dual = make_networkx_datagraph(task_list, (runtime_dict, dependency
                                                         count_dict), data_config, (data_tasks, data_task_dict, task_to_movement_dict))
 
 
-# plot_graph(graph_full)
-plot_hypergraph(hyper_dual)
+plot_graph(graph_full, data_dict=(read_dict, write_dict, dependency_dict))
+#plot_hypergraph(hyper_dual)
 
 # Create devices
 gpu0 = SyntheticDevice(
@@ -2746,7 +2797,7 @@ devices = scheduler.devices
 device_map = form_device_map(devices)
 data_map = initialize_data(data_config, device_map)
 data = list(data_map.values())
-state = State(graph_full, level=1)
+state = State(graph_full, level=0)
 
 task_handles = initialize_task_handles(graph_full, task_dictionaries,
                                        movement_dictionaries, device_map, data_map)
@@ -2770,7 +2821,8 @@ t = time.perf_counter()
 scheduler.run()
 t = time.perf_counter() - t
 print("Sim Time: ", t)
-
+import sys
+sys.exit(0)
 # point = state.get_state_at_time(0.5)
 # plot_graph(graph_full, state.active_state, task_device_color_map)
 
