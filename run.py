@@ -81,6 +81,7 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
 
                 if args.data_move == 2 and reinit==2:
 
+                    print("Resetting Data through PArray movement")
                     #Reset parray to modified on starting device
                     rs = TaskSpace("Reset")
                     for k in range(len(array)):
@@ -90,17 +91,17 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
                             noop = 1
                     await rs
 
-
                     #set to shared state
-                    ts = TaskSpace("Touch")
-                    for k in range(len(array)):
-                        data = array[k]
-                        @spawn(ts[k], placement=gpu(k%n_gpus), input=[data])
-                        def reset():
-                            noop = 1
-                    await ts
+                    #ts = TaskSpace("Touch")
+                    #for k in range(len(array)):
+                    #    data = array[k]
+                    #    @spawn(ts[k], placement=gpu(k%n_gpus), input=[data])
+                    #    def reset():
+                    #        noop = 1
+                    #await ts
 
                 elif args.data_move == 1 or reinit==1:
+                    print("Resetting by creating new PArrays")
                     del array
                     array = setup_data(data_config, args.d,
                                        data_move=args.data_move, use_gpu=args.use_gpu)
@@ -113,6 +114,14 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
                 data_execution_times.append(data_elapsed)
             #print(f"Outer Iteration: {outer} | Time to Reconfigure Data: ", data_elapsed, "seconds", flush=True)
 
+            #for l in range(len(array)):
+            #    states = array[l]._coherence._local_states
+            #    for device, val in states.items():
+            #        if val == 2:
+            #            array[l]._coherence._local_states[device] = 1
+            #
+            #    print(array[l]._coherence._local_states)
+            print("----")
             start_internal = time.perf_counter()
             await create_tasks(G, array, args.data_move, verbose, args.check,
                                args.user, ndevices=args.threads,
