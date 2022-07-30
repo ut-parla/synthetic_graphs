@@ -173,5 +173,4 @@ Lower bound estimate:  0.502  seconds
 Expected Serial Time:  0.502  seconds   
 ```
 
-
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6941883.svg)](https://doi.org/10.5281/zenodo.6941883)
