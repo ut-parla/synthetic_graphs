@@ -24,8 +24,14 @@ Task graphs execute with optional data movement and burn time with user specifie
 ## Install
 
 You must compile the Cython `sleep` module which requires Cython & CUDA and must be set to an architecture newer than Pascal. 
+
 ```
-[This allows one to potentially use the __nanosleep routine, which is currently unused in this implementation but might be more accurate for a future version] 
+#While in this directory:
+#Put nvcc_wrapper on the PATH
+export PATH=$(pwd):$PATH
+
+#Build
+python setup.py install <the usual options> #(or just pip install .)
 ```
 
 The architecture is currently hardcoded in `setup.py` for Frontera's RTX nodes (`sm_70`), but this can be changed on `L24`. 
