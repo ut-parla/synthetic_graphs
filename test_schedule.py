@@ -434,9 +434,7 @@ def plot_graph(graph, state=None, color_map=None, output="graph.png",
 
     if data_dict is not None:
         for node in graph.nodes():
-            print("HERE")
             out_edges = graph_full.out_edges(nbunch=[node])
-            print(out_edges)
             for edge in out_edges:
                 if ("M" not in edge[1]) and ("M" not in edge[0]):
                     depenendices = dependency_dict[edge[1]]
@@ -448,7 +446,6 @@ def plot_graph(graph, state=None, color_map=None, output="graph.png",
                     flag = 0
                     for read_target in read_list_target:
                         if read_target in write_list_source:
-                            print("RED")
                             graph.edges[edge]['color'] = 'red'
                             graph.edges[edge]['style'] = 'dashed'
                             flag = 1
@@ -459,7 +456,7 @@ def plot_graph(graph, state=None, color_map=None, output="graph.png",
 
                     for read_target in read_list_target:
                         if read_target in read_list_source:
-                            print("GREEN")
+                            #print("GREEN")
                             graph.edges[edge]['color'] = 'green'
                             graph.edges[edge]['style'] = 'dashed'
                             flag = 1
@@ -542,6 +539,7 @@ class CanAssign(object):
                 break
 
 
+
 class Assign2(object):
     def __init__(self, q1, q2, pool):
         self.q1 = q1
@@ -549,10 +547,6 @@ class Assign2(object):
         self.pool = pool
         self.state = 0
         self.fail_count = 0
-
-    def create_eviction_task(self, parent_task):
-        # TODO implement this
-        pass
 
     def __iter__(self):
         while True:
@@ -595,12 +589,15 @@ class Assign2(object):
 
                 # Does the task fit in memory
                 if not self.q.queue[0].check_resources(self.pool):
-                    # print("Assignment Failed: Task does not fit in memory")
-                    self.fail_count += 1
-                    if self.fail_count > 1:
-                        self.fail_count = 0
-                        break
-                    continue
+                    if not self.q.queue[0].check_resources(self.pool, eviction=True):
+                        # print("Assignment Failed: Task does not fit in memory")
+                        self.fail_count += 1
+                        if self.fail_count > 1:
+                            self.fail_count = 0
+                            break
+                        continue
+                    else:
+                        self.q.queue[0].make_space()
 
                 # If compute task, check if there is enough data to evict to make room for new task
                 # TODO implement this
@@ -631,6 +628,9 @@ class DataStatus:
         # Tasks that are removing this data (e.g. evicting from this device)
         self.eviction_tasks = []
 
+        # heuristics for eviction
+        self.info = dict()
+
     def __str__(self):
         return f"Data State :: stale: {self.stale} | used: {self.used} | prefetch: {self.prefetched} | in_progress: {self.in_progress}"
 
@@ -657,7 +657,7 @@ class Data:
         # Must be set before use.
         Data.dataspace[self.name] = self
 
-        # heuristics for eviction
+        # misc heuristics
         self.info = dict()
 
         self.transfers = dict()
@@ -799,7 +799,7 @@ class Data:
         # Decrement used counter
         for device in device_list:
             if device.name in self.locations:
-                print("Unlocking data: ", self.name, device_list)
+                #print("Unlocking data: ", self.name, device_list)
                 self.locations[device.name].used -= 1
                 assert(self.locations[device.name].used >= 0)
             else:
@@ -810,7 +810,7 @@ class Data:
         # Increment used counter
         for device in device_list:
             if device.name in self.locations:
-                print("Locking data: ", self.name, device_list)
+                #print("Locking data: ", self.name, device_list)
                 self.locations[device.name].used += 1
                 assert(self.locations[device.name].used >= 0)
             else:
@@ -884,13 +884,13 @@ class Data:
 
             for device in device_list:
                 if(self.locations[device.name].used > 1):
-                    print(self.name, self.locations)
+                    #print(self.name, self.locations)
                     assert(False)
 
             for device_name in self.locations.keys():
                 if SyntheticDevice.devicespace[device_name] not in device_list:
                     if(self.locations[device_name].used > 0):
-                        print(self.name, self.locations)
+                        #print(self.name, self.locations)
                         assert(False)
 
             # Mark stale
@@ -1221,7 +1221,7 @@ class ResourcePool:
         self.max_pool = copy.deepcopy(self.pool)
         self.max_connections = copy.deepcopy(self.connections)
 
-    def check_device_resources(self, device, requested_resources):
+    def check_device_resources(self, device, requested_resources, eviction=False):
         # print(device, requested_resources, self.pool)
         if device.name not in self.pool:
             return False
@@ -1229,20 +1229,21 @@ class ResourcePool:
             if resource not in self.pool[device.name]:
                 return False
             if resource == "memory":
-                # print("Checking memory")
-                # print(self.pool[device.name][resource],
-                #      device.persistent_memory, amount)
-                if (self.pool[device.name][resource] - device.persistent_memory) < amount:
-                    return False
+                if not eviction:
+                    if (self.pool[device.name][resource] - device.persistent_memory) < amount:
+                        return False
+                else:
+                    if (self.pool[device.name][resource] - device.non_evictable_memory()) < amount:
+                        return False
             else:
                 if self.pool[device.name][resource] < amount:
                     return False
         return True
 
-    def check_resources(self, requested_resources):
+    def check_resources(self, requested_resources, eviction=False):
         for device_name, resources in requested_resources.items():
             device = SyntheticDevice.devicespace[device_name]
-            if not self.check_device_resources(device, resources):
+            if not self.check_device_resources(device, resources, eviction):
                 return False
         return True
 
@@ -1294,9 +1295,33 @@ class ResourcePool:
 
 class EvictionPolicy:
 
-    def apply(self, datapool, active_tasks, planned_tasks):
+    def apply(self, data, datapool, active_tasks, planned_tasks):
         # Assign or update priority to every item in datapool
         pass
+
+    def get(self, data, device):
+        # Return the priority of the data on the device
+        return 0
+
+class EvictionPolicyLRU(EvictionPolicy):
+
+    def apply(self, data, device, datapool, active_tasks, planned_tasks):
+        # Assign or update priority to every item in datapool
+        for item in datapool:
+
+            if "priority" not in item.locations[device.name].info:
+                item.locations[device.name].info["priority"] = 0
+
+            if item == data:
+                continue
+            else:
+                item.locations[device.name].info["priority"] += 1
+
+
+    def get(self, data, device):
+        # Return the priority of the data on the device
+        priority = data.locations[device.name].info["priority"]
+        return priority
 
 
 class DataPool:
@@ -1324,22 +1349,24 @@ class DataPool:
 
     def add_data(self, data):
 
+        # Update priority of all data on the device
+        self.policy.apply(data, self.pool, None, None)
+
+        # Sort the data list by priority on this device (highest priority first)
+        self.pool.sort(key=lambda x: self.policy.get(x), reverse=True)
+
         # check if data is already in pool
         if data in self.pool:
             return
 
         # if space on device is available, add to list and consume resources
+        #NOTE: This is checked before add_data is called.
         self.pool.append(data)
 
         self.update_memory()
 
-        # Rank by priority
-        # self.policy.apply(self.pool, None, None)
-        # self.pool.sort(key=lambda x: getattr(
-        #    x.locations[self.device], "priority"))
-
     def evict(self):
-        return self.pool.pop()
+        return self.pool.pop(0)
 
     def __contains__(self, item):
         return item in self.pool
@@ -1413,6 +1440,15 @@ class DataPool:
             if data.locations[self.device.name].used:
                 continue
             size += data.size
+        return size
+
+    def non_evictable_memory(self, include_prefetched=False):
+        size = 0
+        for data in self.pool:
+            if data.locations[self.device].prefetched and include_prefetched:
+                size += data.size
+            if data.locations[self.device.name].used:
+                size += data.size
         return size
 
 
@@ -1876,7 +1912,7 @@ class SyntheticTask:
 
         return success_flag
 
-    def check_resources(self, pool):
+    def check_resources(self, pool, eviction=False):
         # Check if all resources and communication links are available to run the task
         # Check if all data is located at the correct location to run the task (if not movement)
         success_flag = True
@@ -1886,12 +1922,14 @@ class SyntheticTask:
 
             for data in self.read_data:
                 device_target = self.data_targets[data.name]
-                success_flag = success_flag and device_target.check_fit(data)
+                success_flag = success_flag and device_target.check_fit(data,
+                                                                        eviction)
 
             # NOTE: This should be empty
             for data in self.write_data:
                 device_target = self.data_targets[data.name]
-                success_flag = success_flag and device_target.check_fit(data)
+                success_flag = success_flag and device_target.check_fit(data,
+                                                                        eviction)
 
         if not success_flag:
             return False
@@ -1912,7 +1950,7 @@ class SyntheticTask:
 
         # Make sure enough resources on the device are available to run the task
         if success_flag:
-            return pool.check_resources(self.resources)
+            return pool.check_resources(self.resources, eviction)
         else:
             return False
 
@@ -2098,7 +2136,7 @@ class TaskHandle:
         task_time = compute_time + gil_time*gil_count
 
         resources = {device.name: {"memory": memory, "acus": acus}}
-        duration = task_time
+        duration = task_time / 10**6
 
         dependencies = self.dependency
         dependants = self.dependants
@@ -2387,8 +2425,8 @@ class SyntheticSchedule:
             # print(i, "| Push")
             # print(gpu0.active_data.pool[0])
 
-            for device in self.devices:
-                print(device)
+            #for device in self.devices:
+            #    print(device)
 
             print("-----------")
 
@@ -2480,7 +2518,6 @@ def get_trivial_mapping(task_handles):
     for task_name in task_handles.keys():
         task_handle = task_handles[task_name]
         valid_devices = task_handle.get_valid_devices()
-        print(valid_devices)
         valid_devices.sort()
         #mapping[task_name] = valid_devices[0]
         mapping[task_name] = random.choice(valid_devices)
@@ -2721,7 +2758,6 @@ data_config, task_list = read_graphx("reduce.gph")
 runtime_dict, dependency_dict, write_dict, read_dict, count_dict = convert_to_dictionary(
     task_list)
 
-print(dependency_dict)
 
 task_dictionaries = (runtime_dict, dependency_dict,
                      write_dict, read_dict, count_dict)
@@ -2764,18 +2800,18 @@ cpu = SyntheticDevice(
 # Create device topology
 topology = SyntheticTopology("Top1", [gpu0, gpu1, gpu2, gpu3, cpu])
 
-bw = 100
+bw = parse_size("8 GB")
 topology.add_connection(gpu0, gpu1, symmetric=True)
 topology.add_connection(gpu2, gpu3, symmetric=True)
 
-topology.add_bandwidth(gpu0, gpu1, 2*bw, reverse=bw)
+topology.add_bandwidth(gpu0, gpu1, bw, reverse=bw)
 topology.add_bandwidth(gpu0, gpu2, bw, reverse=bw)
 topology.add_bandwidth(gpu0, gpu3, bw, reverse=bw)
 
 topology.add_bandwidth(gpu1, gpu2, bw, reverse=bw)
 topology.add_bandwidth(gpu1, gpu3, bw, reverse=bw)
 
-topology.add_bandwidth(gpu2, gpu3, 2*bw, reverse=bw)
+topology.add_bandwidth(gpu2, gpu3, bw, reverse=bw)
 
 # Self copy (not used)
 topology.add_bandwidth(gpu3, gpu3, bw, reverse=bw)
@@ -2814,12 +2850,11 @@ scheduler.adjust_references(tasks)
 scheduler.set_state(state)
 scheduler.set_data(list(data_map.values()))
 
-for d in data:
-    print(d)
 
 t = time.perf_counter()
 scheduler.run()
 t = time.perf_counter() - t
+print("Scheduler Time: ", scheduler.time)
 print("Sim Time: ", t)
 import sys
 sys.exit(0)

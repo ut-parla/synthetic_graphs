@@ -1,3 +1,14 @@
+
+# SCHEDULER TODOs
+
+- Eviction
+    - Need to decide when it happens (only for compute tasks??, how to avoid
+      deadlock)
+    - If it happens for data movement tasks, how do we prevent trashing.
+
+
+
+# OLD TODOs (Some of these are done. Need to go back and check)
 - Add memory parameter to task launches based on used data
 - Fix concurrent read/writes in 1D Stencil
 - Use bandwidth estimate to configure and estimate data transfer costs in microseconds
