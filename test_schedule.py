@@ -954,14 +954,62 @@ class Data:
     #    del Data.dataspace[self.name]
 
 
+
 class BandwidthHandle(object):
 
+    def make_data(source, size):
+        if source.idx >=0:
+            with cupy.cuda.Device(source.idx) as device:
+                data = cp.ones(size, dtype=cp.float32)
+                device.synchronize()
+        else:
+            data = np.ones(size, dtype=np.float32)
+        return data
+
     def copy(self, arr, source, destination):
-        pass
+        #Assume device.idx >= 0 means the device is a GPU.
+        #Assume device.idx < 0 means the device is a CPU.
+        if source.idx >= 0 and destination.idx < 0:
+            #Copy GPU to CPU
+            with cp.cuda.Deice(destination.idx):
+                with cp.cuda.Stream(non_blocking=True) as stream:
+                    membuffer = cp.asnumpy(arr, stream=stream)
+                    stream.synchronize()
+            return membuffer
+        elif source.idx < 0 and destination.idx >= 0:
+            #Copy CPU to GPU
+            with cp.cuda.Device(destination.idx):
+                with cupy.cuda.Stream(non_blocking=True) as stream:
+                    membuffer = cp.empty(arr.shape, dtype=arr.dtype)
+                    membuffer.set(arr, stream=stream)
+                    stream.synchronize()
+            return membuffer
+        elif source.idx >= 0 and destination.idx >= 0:
+            #Copy GPU to GPU
+            with cp.cuda.Device(destination.idx):
+                with cupy.cuda.Stream(non_blocking=True) as stream:
+                    membuffer = cp.empty(arr.shape, dtype=arr.dtype)
+                    membuffer.data.copy_from_device_async(array.data, array.nbytes, stream=stream)
+                    stream.synchronize()
+            return membuffer
+        elif source.idx < 0 and destination.idx < 0:
+            #Copy CPU to CPU
+            return np.copy(arr)
+        else:
+            raise Exception("I'm not sure how you got here. But we don't support this device combination")
 
     @staticmethod
     def estimate(self, source, destination, size=10**6, samples=20):
-        return 0.0
+        times= []
+        for i in range(samples):
+            array = self.make_data(source, size)
+            start = time.perf_counter()
+            self.copy(array, source, destination)
+            end = time.perf_counter()
+            times.append(end-start)
+
+        times = np.asarray(times)
+        return np.means(times)
 
 
 class SyntheticTopology(object):
