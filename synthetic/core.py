@@ -36,9 +36,14 @@ from parla.function_decorators import specialized
 
 
 try:
-    from parla.parray import asarray_batch
+    from parla.parray import asarray
+    def make_parrays(array, names=None):
+        l = list()
+        for count, arr in enumerate(array):
+            l.append(asarray(arr, name=names[count]))
+        return l
 except (ImportError,AttributeError):
-    def asarray_batch(array):
+    def make_parrays(array, names=None):
         return array
 
 """
@@ -419,6 +424,9 @@ def setup_data(data_config, d = 10, verbose=False, device_list=None,data_move=1,
     At the moment all data will be initialized on the CPU.
     """
 
+    import string
+    names = list(string.ascii_lowercase)
+
     data = []
     count = 0
 
@@ -439,7 +447,7 @@ def setup_data(data_config, d = 10, verbose=False, device_list=None,data_move=1,
 
     #If data move is 'Eager'
     if data_move == 2:
-        data = asarray_batch(data)
+        data = make_parrays(data, names=names)
 
 
     return data
@@ -676,7 +684,7 @@ def waste_time_gpu(ids, weight, gil, verbose=False):
         gpu_sleep(device_id, ticks, stream)
 
         #Optional Sync (Prevents overlap with GIL lock, if that behavior is wanted)
-        #stream.synchronize()
+        stream.synchronize()
 
 
         sleep_with_gil(gil_time)
@@ -794,7 +802,7 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0,
                  use_gpu=True):
 
     start_creation = time.perf_counter()
-    task_space = TaskSpace('TaskSpace')
+    task_space = TaskSpace('Graph')
 
     if use_gpu:
         ngpus = cp.cuda.runtime.getDeviceCount()
@@ -836,6 +844,7 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0,
         if ndevices is not None:
             vcus = 1.0/ndevices
 
+        vcus = 1
         gil_count = info[3]
         gil_time = info[4]
 
