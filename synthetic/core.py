@@ -853,7 +853,7 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0, ndev
             else:
                 place = gpu
 
-        place = cpu
+        #place = cpu
         #print(ids, deps, place, IN, OUT, INOUT, vcus, weight)
 
         if data_move == 0:
