@@ -1,6 +1,13 @@
+#ifndef CYTHON_SLEEP_H
+#define CYTHON_SLEEP_H
+
 #include<unistd.h>
 #include<time.h>
 #include<chrono>
+
+#ifdef NVTX_ENABLE
+#include<nvtx3/nvtx3.hpp>
+#endif
 
 using namespace std;
 using namespace chrono;
@@ -16,7 +23,11 @@ void busy_sleep(const unsigned milli){
 */
 
 void busy_sleep(const unsigned micro){
-    //int count = 0;
+
+    #ifdef NVTX_ENABLE
+    nvtx3::scoped_range r{"Internal Sleep"};
+    #endif
+
     auto block = chrono::microseconds(micro);
     auto time_start = chrono::high_resolution_clock::now();
 
@@ -29,10 +40,11 @@ void busy_sleep(const unsigned micro){
         elapsed = chrono::duration_cast<chrono::microseconds>(now - time_start);
     }
     while(elapsed.count() < micro);
-    //return count;
 }
 
 
 void sleeper(const unsigned int t){
     sleep(t);
 }
+
+#endif

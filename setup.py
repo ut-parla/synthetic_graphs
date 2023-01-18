@@ -6,6 +6,13 @@ import os
 os.environ["CC"] = 'nvcc_wrapper'
 os.environ["CXX"] = 'nvcc_wrapper'
 
+nvtx_include = os.getenv("NVTX_INCLUDE", None)
+
+nvtx_flag = False
+if nvtx_include is not None:
+    nvtx_flag = True
+
+
 def scandir(dir, files=[]):
     for file in os.listdir(dir):
         path = os.path.join(dir, file)
@@ -15,13 +22,23 @@ def scandir(dir, files=[]):
             scandir(path, files)
     return files
 
+compile_args =["-std=c++11","--expt-extended-lambda", "-Xcudafe","--diag_suppress=esa_on_defaulted_function_ignored", "-ldl", "-fno-stack-protector"]
+
+if nvtx_flag:
+    include_dirs = [nvtx_include]
+    compile_args += ["-DNVTX_ENABLE"]
+    print("BUILDING WITH NVTX SUPPORT")
+else:
+    include_dirs = []
+
 def makeExtension(extName):
     extPath = extName.replace(".", os.path.sep)+".pyx"
     return Extension(
         extName,
         [extPath],
         language='c++',
-        extra_compile_args=["-std=c++11","--expt-extended-lambda", "-Xcudafe","--diag_suppress=esa_on_defaulted_function_ignored"]
+        include_dirs=include_dirs,
+        extra_compile_args=compile_args
     )
 
 
