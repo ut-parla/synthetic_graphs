@@ -1,8 +1,11 @@
 import time
 import re
+import math
 
 import numpy as np
 from sleep.core import *
+
+import nvtx
 
 from parla import Parla
 from parla.cpu import cpu
@@ -383,7 +386,9 @@ def str2bool(v):
 class GPUInfo():
 
     #approximate average on frontera RTX
-    cycles_per_second = 1919820866.3481758
+#cycles_per_second = 1919820866.3481758
+    cycles_per_second = 867404498.3008006
+#cycles_per_second = 47994628114801.04
 
     def update(self, cycles):
         self.cycles_per_second = cycles
@@ -659,6 +664,7 @@ def waste_time(ids, weight, gil, verbose=False):
         sleep_with_gil(gil_time)
 
 
+@nvtx.annotate("waste time", color="red")
 @waste_time.variant(gpu)
 def waste_time_gpu(ids, weight, gil, verbose=False):
     """
@@ -670,6 +676,7 @@ def waste_time_gpu(ids, weight, gil, verbose=False):
 
     device_info = GPUInfo()
     cycles_per_second = device_info.get()
+#cycles_per_second = 47994628114801.04
 
     device_id = get_current_devices()[0].index
     stream = cp.cuda.get_current_stream()
@@ -785,6 +792,7 @@ def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, 
     ids = tuple(ids)
 
     @spawn(task_space[ids], dependencies=deps, placement=place, vcus=cu)
+    @nvtx.annotate("busy sleep", color="red")
     def busy_sleep():
         start = time.perf_counter()
 
@@ -795,9 +803,23 @@ def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, 
         if verbose:
             print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
 
+def gen_random(beg, end, num_no, target_mean, target_med):
+    half1_no = int(num_no / 2)
+    half2_no = int(num_no / 2 + (num_no % 2))
+    arr1 = np.random.randint(beg, target_med, half1_no - 1)
+    arr2 = np.random.randint(target_med, end, half2_no - 1)
+    mid = [target_med, target_med]
+    i = (np.sum(arr1 + arr2) + mid[0] + mid[1] - (target_mean * num_no)) / end
+    decm, intg = math.modf(i)
+    args = np.argsort(arr2)
+    arr2[args[-(target_mean + 1):-1]] -= int(intg)
+    arr2[args[-1]] -= int(np.round(decm * target_mean))
+    return np.concatenate((arr1, mid, arr2))
 
+def gen_random_normal(num_no, target_mean, target_var):
+    return np.random.normal(target_mean, target_var, num_no)
 
-def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0,
+def create_tasks(G, array, first_taskspace, data_move=0, verbose=False, check=False, user=0,
                  ndevices=None, ttime=None, limit=None, gtime=None,
                  use_gpu=True):
 
@@ -810,6 +832,10 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0,
         ngpus = 0
 
     launch_id = 0
+    generated_randints = gen_random(int(G[0][1][0]-100000), G[0][1][0]+100000, len(G), G[0][1][0], G[0][1][0]) 
+#generated_randints = gen_random_normal(len(G), G[0][1][0], G[0][1][0]) 
+    print("Generated random int:", generated_randints)
+#print("Sum:", np.sum(generated_randints), " Len:",len(generated_randints))
     for task in G:
         ids, info, dep, data = task
 
@@ -834,9 +860,12 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0,
 
         #Generate dep list
         deps = [] if dep[0] is None else [task_space[tuple(idx)] for idx in dep]
+        deps.append(first_taskspace)
 
         #Generate task weight
-        weight = info[0]
+#weight = info[0]
+        weight = generated_randints[ids[0]]
+#print(ids[0], " > ", weight)
         if ttime is not None:
             weight = ttime
 
@@ -844,7 +873,7 @@ def create_tasks(G, array, data_move=0, verbose=False, check=False, user=0,
         if ndevices is not None:
             vcus = 1.0/ndevices
 
-        vcus = 1
+#vcus = 1
         gil_count = info[3]
         gil_time = info[4]
 

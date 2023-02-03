@@ -1,5 +1,7 @@
 import time
 
+import nvtx
+
 import copy
 
 import numpy as np
@@ -7,6 +9,8 @@ import numpy as np
 
 from parla import Parla
 from parla.cpu import cpu
+
+from parla.RL.util import ReplayMemory
 
 try:
     from parla.cuda import summarize_memory, clean_memory
@@ -43,6 +47,7 @@ parser.add_argument('-threads', metavar='threads', type=int, help='Number of wor
 parser.add_argument('-n', metavar='n', type=int, help='maximum number of tasks', default=None)
 parser.add_argument('-gweight', metavar='gweight', type=int, help="length of task gil time", default=None)
 parser.add_argument('-use_gpu', metavar='use_gpu', type=int, help="Use any GPUs?", default=1)
+parser.add_argument('-training', metavar='training', type=int, help="Enable training mode?", default=0)
 data_execution_times = []
 graph_execution_times = []
 parla_execution_times = []
@@ -54,6 +59,12 @@ if cp is not None:
 else:
     n_gpus = 0
 
+first_taskspace = TaskSpace("Demarcation_First")
+last_taskspace = TaskSpace("Demarcation_Last")
+
+replay_memory = ReplayMemory(10000)
+
+@nvtx.annotate("main_parla", color="blue")
 def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=False):
     #dep = [task_space[iteration-1]] if iteration > 0 else []
 
@@ -127,18 +138,27 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
             #            array[l]._coherence._local_states[device] = 1
             #
             #    print(array[l]._coherence._local_states)
-            print("----")
+            # TODO(hc): print("----")
             start_internal = time.perf_counter()
-            await create_tasks(G, array, args.data_move, verbose, args.check,
+            # TODO(hc): print("internal:", start_internal)
+
+            @spawn(first_taskspace)
+            def first_task():
+                pass
+            await create_tasks(G, array, first_taskspace, args.data_move, verbose, args.check,
                                args.user, ndevices=args.threads,
                                ttime=args.weight, limit=args.n,
                                gtime=args.gweight, use_gpu=args.use_gpu)
-            end_internal = time.perf_counter()
+            @spawn(last_taskspace)
+            def last_task():
+                pass
+            await last_taskspace
 
+            end_internal = time.perf_counter()
             graph_elapsed = end_internal - start_internal
             graph_execution_times.append(graph_elapsed)
 
-            print(f"Iteration {i} | Time: {graph_elapsed}", flush=True)
+            # TODO(hc): print(f"Iteration {i} | Time: {graph_elapsed}", flush=True)
             #print(f"{args.weight}, {args.threads}, {graph_elapsed}")
 
             #if reinit and (i!= 0):
@@ -162,6 +182,7 @@ def main():
 
     #array = setup_data(data_config, args.d, data_move=args.data_move)
 
+    exec_mode = "test" if args.training == 0 else "training"
 
     for outer in range(args.outerloop):
 
@@ -170,7 +191,7 @@ def main():
         #NOTE: INCLUDES DATA SETUP TIME IF ARGS.REINIT=TRUE
         start = time.perf_counter()
 
-        with Parla():
+        with Parla(replay_memory, exec_mode, outer):
             start_internal = time.perf_counter()
             main_parla(data_config, task_space, args.loop, G, args.verbose, reinit=args.reinit)
             end_internal = time.perf_counter()
@@ -203,8 +224,8 @@ def main():
     parla_mean = np.mean(np.array(parla_execution_times))
     parla_median = np.median(np.array(parla_execution_times))
 
-    print(f"Graph Execution Time:: Average = {graph_mean} | Median = {graph_median}")
-    print(f"Parla Total Time    :: Average = {parla_mean} | Median = {parla_median}")
+    # TODO(hc): print(f"Graph Execution Time:: Average = {graph_mean} | Median = {graph_median}")
+    # TODO(hc): print(f"Parla Total Time    :: Average = {parla_mean} | Median = {parla_median}")
 
 
     if args.reinit:
@@ -215,11 +236,13 @@ def main():
 
 
 if __name__ == '__main__':
+    """
     #Estimate GPU frequency for busy wait timing
-    #device_info = GPUInfo()
-    #cycles_per_second = estimate_frequency(100, ticks=0.05*1910*10**6)
-    #print(cycles_per_second)
-    #device_info.update(cycles_per_second)
+    device_info = GPUInfo()
+    cycles_per_second = estimate_frequency(100, ticks=0.05*1910*10**6)
+    print("Cycle per second:", cycles_per_second, flush=True)
+    device_info.update(cycles_per_second)
+    """
 
     #Launch experiment
     main()
