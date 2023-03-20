@@ -1,7 +1,5 @@
 import time
 
-import nvtx
-
 import copy
 
 import numpy as np
@@ -48,6 +46,11 @@ parser.add_argument('-n', metavar='n', type=int, help='maximum number of tasks',
 parser.add_argument('-gweight', metavar='gweight', type=int, help="length of task gil time", default=None)
 parser.add_argument('-use_gpu', metavar='use_gpu', type=int, help="Use any GPUs?", default=1)
 parser.add_argument('-training', metavar='training', type=int, help="Enable training mode?", default=0)
+parser.add_argument('-random_type', type=int,
+                    help="Use random generator for execution time: disable: 0, general: 1, gaussian distribution: 2, poisson distribution: 3", default=0)
+parser.add_argument('-variance', type=int, help="", default=0)
+parser.add_argument('-shuffling', type=int, help="1 if shuffling is enabled", default=0)
+
 data_execution_times = []
 graph_execution_times = []
 parla_execution_times = []
@@ -64,8 +67,7 @@ last_taskspace = TaskSpace("Demarcation_Last")
 
 replay_memory = ReplayMemory(10000)
 
-@nvtx.annotate("main_parla", color="blue")
-def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=False):
+def main_parla(it, exec_mode, random_type, variance, shuffling, data_config, task_space, iteration, G, verbose=False, reinit=False):
     #dep = [task_space[iteration-1]] if iteration > 0 else []
 
     @spawn(placement=cpu)
@@ -145,9 +147,9 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
             @spawn(first_taskspace)
             def first_task():
                 pass
-            await create_tasks(G, array, first_taskspace, args.data_move, verbose, args.check,
-                               args.user, ndevices=args.threads,
-                               ttime=args.weight, limit=args.n,
+            await create_tasks(G, array, first_taskspace, exec_mode, it, args.data_move, verbose, args.check,
+                               args.user, random_type, variance, shuffling,
+                               ndevices=args.threads, ttime=args.weight, limit=args.n,
                                gtime=args.gweight, use_gpu=args.use_gpu)
             @spawn(last_taskspace)
             def last_task():
@@ -182,7 +184,13 @@ def main():
 
     #array = setup_data(data_config, args.d, data_move=args.data_move)
 
-    exec_mode = "test" if args.training == 0 else "training"
+    exec_mode = "test" if args.training == 0 else "training" if args.training == 1 else "disabled"
+    random_type = args.random_type 
+    variance = args.variance
+    shuffling = args.shuffling
+    print("exec mode:", exec_mode, " random type:", random_type, " variance:", variance, " shuffling:", shuffling)
+
+    print("Exec mode:", exec_mode, flush=True)
 
     for outer in range(args.outerloop):
 
@@ -193,7 +201,7 @@ def main():
 
         with Parla(replay_memory, exec_mode, outer):
             start_internal = time.perf_counter()
-            main_parla(data_config, task_space, args.loop, G, args.verbose, reinit=args.reinit)
+            main_parla(outer, exec_mode, random_type, variance, shuffling, data_config, task_space, args.loop, G, args.verbose, reinit=args.reinit)
             end_internal = time.perf_counter()
 
         end = time.perf_counter()

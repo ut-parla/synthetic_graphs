@@ -1,11 +1,10 @@
 import time
 import re
 import math
+import random
 
 import numpy as np
 from sleep.core import *
-
-import nvtx
 
 from parla import Parla
 from parla.cpu import cpu
@@ -357,19 +356,10 @@ def verify_movement(observed_movement, depend_dicts, data_depends, verbose=False
 
             if verbose:
                 print("-------")
-
-
-
-
     if correct:
         print("Data Movement: VALID")
 
     return correct
-
-
-
-
-
 
 def str2bool(v):
     if isinstance(v, bool):
@@ -664,7 +654,6 @@ def waste_time(ids, weight, gil, verbose=False):
         sleep_with_gil(gil_time)
 
 
-@nvtx.annotate("waste time", color="red")
 @waste_time.variant(gpu)
 def waste_time_gpu(ids, weight, gil, verbose=False):
     """
@@ -792,7 +781,6 @@ def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, 
     ids = tuple(ids)
 
     @spawn(task_space[ids], dependencies=deps, placement=place, vcus=cu)
-    @nvtx.annotate("busy sleep", color="red")
     def busy_sleep():
         start = time.perf_counter()
 
@@ -804,8 +792,10 @@ def create_task_no(launch_id, task_space, ids, deps, place, IN, OUT, INOUT, cu, 
             print(f"-Task {ids} elapsed: [{end - start}] seconds", flush=True)
 
 def gen_random(beg, end, num_no, target_mean, target_med):
-    half1_no = int(num_no / 2)
+    print("beg:", beg, " end:", end, " num_no:", num_no, " mean:", target_mean, " med:", target_med, flush=True)
+    half1_no = int(num_no / 2 + (num_no % 2))
     half2_no = int(num_no / 2 + (num_no % 2))
+    print("half1:", half1_no, " half2:", half2_no)
     arr1 = np.random.randint(beg, target_med, half1_no - 1)
     arr2 = np.random.randint(target_med, end, half2_no - 1)
     mid = [target_med, target_med]
@@ -816,12 +806,35 @@ def gen_random(beg, end, num_no, target_mean, target_med):
     arr2[args[-1]] -= int(np.round(decm * target_mean))
     return np.concatenate((arr1, mid, arr2))
 
-def gen_random_normal(num_no, target_mean, target_var):
-    return np.random.normal(target_mean, target_var, num_no)
+def gen_random_poisson(target_mean, num_no):
+    generated_random_vals = np.random.poisson(lam=target_mean, size=num_no*10)
+    return random.sample(list(generated_random_vals), num_no)
 
-def create_tasks(G, array, first_taskspace, data_move=0, verbose=False, check=False, user=0,
-                 ndevices=None, ttime=None, limit=None, gtime=None,
-                 use_gpu=True):
+def gen_random_normal(num_no, target_mean, target_var):
+    print("Normalization:", target_mean, " target var:", target_var, " size:", num_no*10, flush=True)
+    generated_random_vals = np.random.normal(loc=target_mean, scale=target_var, \
+                                             size=num_no*10)
+    generated_random_vals = random.sample(list(generated_random_vals), num_no)
+    # Convert negative values to positive values.
+    # It breaks normal distribution, but is necessary for task execution.
+    for i in range(len(generated_random_vals)):
+        generated_random_vals[i] = abs(generated_random_vals[i]) 
+    return generated_random_vals
+
+def store_generated_random_val(generated_random_vals, it):
+    fname = "generated_randomint." + str(it) + ".out"
+    with open(fname, "w") as fp:
+        for i in range(0, len(generated_random_vals)):
+            fp.write(str(generated_random_vals[i])+"\n")
+
+def load_generated_random_val(it):
+    fname = "generated_randomint." + str(it) + ".out"
+    with open(fname, "r") as fp:
+        return [float(line.rstrip('\n')) for line in fp]
+
+def create_tasks(G, array, first_taskspace, exec_mode, it, data_move=0, verbose=False, check=False, user=0,
+                 random_type=0, variance=0, shuffling=0, ndevices=None, ttime=None, limit=None,
+                 gtime=None, use_gpu=True):
 
     start_creation = time.perf_counter()
     task_space = TaskSpace('Graph')
@@ -832,12 +845,28 @@ def create_tasks(G, array, first_taskspace, data_move=0, verbose=False, check=Fa
         ngpus = 0
 
     launch_id = 0
-    generated_randints = gen_random(int(G[0][1][0]-100000), G[0][1][0]+100000, len(G), G[0][1][0], G[0][1][0]) 
-#generated_randints = gen_random_normal(len(G), G[0][1][0], G[0][1][0]) 
-    print("Generated random int:", generated_randints)
+    if exec_mode != "disabled":
+      if random_type == 1: # normal random generator.
+          print("Normal random generator..", flush=True)
+          generated_randints = gen_random(int(G[0][1][0]-200000), G[0][1][0]+200000, len(G), G[0][1][0], G[0][1][0]) 
+      elif random_type == 2: # gaussian random distribution.
+          print("Gaussian random generator..: variance:", variance, flush=True)
+          generated_randints = gen_random_normal(len(G), G[0][1][0], variance) 
+      elif random_type == 3:
+          print("Poisson random generator..", flush=True)
+          generated_randints = gen_random_poisson(int(G[0][1][0]), len(G))
+      if random_type > 0 and exec_mode == "test":
+          store_generated_random_val(generated_randints, it)
+    elif random_type > 0:
+        print("Load generated random value:", str(it))
+        generated_randints = load_generated_random_val(it)
 #print("Sum:", np.sum(generated_randints), " Len:",len(generated_randints))
+    if shuffling == 1:
+        print("shuffling is enabled", flush=True)
+        random.shuffle(G)
     for task in G:
         ids, info, dep, data = task
+#print(ids, flush=True)
 
         #Check spawn data arguments
         #print("IN: ", data[0], "OUT: ", data[1], "INOUT: ", data[2])
@@ -863,8 +892,10 @@ def create_tasks(G, array, first_taskspace, data_move=0, verbose=False, check=Fa
         deps.append(first_taskspace)
 
         #Generate task weight
-#weight = info[0]
-        weight = generated_randints[ids[0]]
+        if random_type > 0:
+            weight = generated_randints[ids[0]]
+        else:
+            weight = info[0]
 #print(ids[0], " > ", weight)
         if ttime is not None:
             weight = ttime
