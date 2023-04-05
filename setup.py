@@ -13,7 +13,7 @@ def main():
         cmake_args.append(f"-DCONDA_PREFIX={env_conda}")
 
     # Find all python modules in the src directory
-    package_list = find_namespace_packages(where='src/')
+    package_list = find_namespace_packages(where='.')
     print("Found packages:", package_list)
 
     # Define the python modules to be built
@@ -21,7 +21,7 @@ def main():
         name="sleep",
         version="0.0.0",
         description="Python Wrapper for BusySleep",
-        packages=["wrapper"],
+        packages=["sleep"],
         package_dir={"sleep": "sleep"},
         python_requires=">=3.8",
         cmake_args=cmake_args
