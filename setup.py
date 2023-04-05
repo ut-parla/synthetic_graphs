@@ -13,8 +13,8 @@ def main():
         cmake_args.append(f"-DCONDA_PREFIX={env_conda}")
 
     # Find all python modules in the src directory
-    package_list = find_namespace_packages(where='.')
-    print("Found packages:", package_list)
+    # package_list = find_namespace_packages(where='sleep')
+    # print("Found packages:", package_list)
 
     # Define the python modules to be built
     skbuild.setup(

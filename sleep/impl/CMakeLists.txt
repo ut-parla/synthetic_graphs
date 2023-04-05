@@ -1,5 +1,6 @@
 enable_language(CUDA)
 find_package(CUDAToolkit REQUIRED)
+add_definitions(-DENABLE_CUDA)
 
 message(STATUS "CUDAToolkit_LIBRARY_DIR: " ${CUDAToolkit_LIBRARY_DIR})
 
@@ -10,6 +11,14 @@ add_library(busysleep STATIC ${IMPL_SRC})
 
 set_target_properties(busysleep PROPERTIES PUBLIC_HEADER "${IMPL_HDR}")
 set_target_properties(busysleep PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
+
+set(GPU_ARCH $ENV{CUDA_ARCH})
+    if(GPU_ARCH)
+        set_target_properties(backend PROPERTIES CUDA_ARCHITECTURES ${GPU_ARCH})
+    else()
+        set_target_properties(backend PROPERTIES CUDA_ARCHITECTURES OFF)
+    endif()
 
 target_include_directories(busysleep PUBLIC ${CUDAToolkit_LIBRARY_DIR})
 target_include_directories(busysleep PUBLIC ${CUDAToolkit_LIBRARY_ROOT})
