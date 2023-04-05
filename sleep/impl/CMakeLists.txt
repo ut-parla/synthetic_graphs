@@ -15,9 +15,9 @@ set_target_properties(busysleep PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 set(GPU_ARCH $ENV{CUDA_ARCH})
     if(GPU_ARCH)
-        set_target_properties(backend PROPERTIES CUDA_ARCHITECTURES ${GPU_ARCH})
+        set_target_properties(busysleep PROPERTIES CUDA_ARCHITECTURES ${GPU_ARCH})
     else()
-        set_target_properties(backend PROPERTIES CUDA_ARCHITECTURES OFF)
+        set_target_properties(busysleep PROPERTIES CUDA_ARCHITECTURES OFF)
     endif()
 
 target_include_directories(busysleep PUBLIC ${CUDAToolkit_LIBRARY_DIR})
