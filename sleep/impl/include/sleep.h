@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CYTHON_SLEEP_H
 #define CYTHON_SLEEP_H
 
