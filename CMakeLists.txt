@@ -20,7 +20,7 @@ message(STATUS "Numpy Include: ${NUMPY_INCLUDE}")
 message(STATUS "Numpy Include Directories : ${Python3_NumPy_INCLUDE_DIRS}")
 
 #Compile C++ Implementation Source
-add_subdirectory(sleep/impl)
+add_subdirectory(sleep_src/impl)
 
 #Compute Cython Wrapper
-add_subdirectory(sleep)
+add_subdirectory(sleep_src)

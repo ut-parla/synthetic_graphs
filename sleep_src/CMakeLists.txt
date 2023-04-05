@@ -18,7 +18,7 @@ target_link_libraries(core busysleep)
 
 target_link_libraries(core CUDA::cudart)
 
-target_include_directories(core PUBLIC ${PROJECT_SOURCE_DIR}/sleep/impl/)
+target_include_directories(core PUBLIC ${PROJECT_SOURCE_DIR}/sleep_src/impl/)
 target_include_directories(core PUBLIC ${NumPy_INCLUDE_DIRS})
 target_include_directories(core PUBLIC ${PYTHON_INCLUDE_DIRS})
 target_include_directories(core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

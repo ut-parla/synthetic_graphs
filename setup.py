@@ -1,11 +1,8 @@
 import os
 import skbuild
 
-from setuptools import find_namespace_packages
-
 
 def main():
-
     # Optional: Set the CONDA_PREFIX environment variable to the path of your conda environment
     # Useful if CMAKE can't find the conda environment
     cmake_args = []
@@ -22,9 +19,9 @@ def main():
         version="0.0.0",
         description="Python Wrapper for BusySleep",
         packages=["sleep"],
-        package_dir={"sleep": "sleep"},
+        package_dir={"sleep": "sleep_src"},
         python_requires=">=3.8",
-        cmake_args=cmake_args
+        cmake_args=cmake_args,
     )
 
 
