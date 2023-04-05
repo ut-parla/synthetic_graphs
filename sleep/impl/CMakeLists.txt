@@ -7,7 +7,7 @@ message(STATUS "CUDAToolkit_LIBRARY_DIR: " ${CUDAToolkit_LIBRARY_DIR})
 file(GLOB IMPL_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.cu")
 file(GLOB IMPL_HDR ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp)
 
-add_library(busysleep STATIC ${IMPL_SRC})
+add_library(busysleep SHARED ${IMPL_SRC})
 
 set_target_properties(busysleep PROPERTIES PUBLIC_HEADER "${IMPL_HDR}")
 set_target_properties(busysleep PROPERTIES POSITION_INDEPENDENT_CODE ON)
