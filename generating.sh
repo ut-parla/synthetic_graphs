@@ -1,8 +1,12 @@
-#GRAPH_GENERATORS=( "generate_serial_graph.py" "generate_independent_graph.py" 
-#                   "generate_reduce_graph.py" )
-#GRAPH_TYPES_STR=( "serial" "independent" "reduce" )
-GRAPH_GENERATORS=( "generate_reduce_graph.py" )
-GRAPH_TYPES_STR=( "reduce" )
+GRAPH_GENERATORS=( "generate_serial_graph.py" "generate_independent_graph.py" 
+                   "generate_reduce_graph.py" )
+GRAPH_TYPES_STR=( "serial" "independent" "reduce" )
+#GRAPH_GENERATORS=( "generate_reduce_graph.py" )
+#GRAPH_TYPES_STR=( "reduce" )
+
+#GRAPH_GENERATORS=( "generate_serial_graph.py" "generate_independent_graph.py" )
+#GRAPH_TYPES_STR=( "serial" "independent" )
+
 
 #NUM_TASKS_SET=( 300 500 1000 2000 )
 NUM_TASKS_SET=( 300 )
@@ -22,7 +26,7 @@ USER_CHOSEN_PLACEMENT_SET=( "0" "1" )
 GIL_COUNT=1
 GIL_TIME=0
 
-DATA_MOVE_MODES=( 1 2 3 )
+DATA_MOVE_MODES=( 0 1 2 )
 
 GRAPH_DIR="graphs"
 
@@ -61,7 +65,7 @@ for gen_idx in "${!GRAPH_GENERATORS[@]}"; do
                   if [[ ${user_chosen_placement} == 1 ]]; then
                     user_chosen_bool="True"
                   fi
-                  results_line="old_parla,reduction,2-"${level}","$((num_gpu+1))","${user_chosen_bool}","${fd_data_knob}","$((data_move_mode-1))","$mean_time
+                  results_line="old_parla,reduction,2-"${level}","$((num_gpu+1))","${user_chosen_bool}","${fd_data_knob}","${data_move_mode}","$mean_time
                   echo $results_line
                   echo $results_line >> $OUTPUT_DIR/result.log
                 done
@@ -93,7 +97,7 @@ for gen_idx in "${!GRAPH_GENERATORS[@]}"; do
                   if [[ ${user_chosen_placement} == 1 ]]; then
                     user_chosen_bool="True"
                   fi
-                  results_line="old_parla,"${GRAPH_TYPE}","${num_task}","$((num_gpu+1))","${user_chosen_bool}","${fd_data_knob}","$((data_move_mode-1))","$mean_time
+                  results_line="old_parla,"${GRAPH_TYPE}","${num_task}","$((num_gpu+1))","${user_chosen_bool}","${fd_data_knob}","${data_move_mode}","$mean_time
                   echo $results_line
                   echo $results_line >> $OUTPUT_DIR/result.log
                 done
