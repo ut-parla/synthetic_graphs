@@ -6,7 +6,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#ifdef NVTX_ENABLE
+#ifdef SLEEP_ENABLE_NVTX
 #include <nvtx3/nvtx3.hpp>
 #endif
 
@@ -15,7 +15,7 @@ using namespace chrono;
 
 void busy_sleep(const unsigned micro) {
 
-#ifdef NVTX_ENABLE
+#ifdef SLEEP_ENABLE_NVTX
   nvtx3::scoped_range r{"Internal Sleep"};
 #endif
 

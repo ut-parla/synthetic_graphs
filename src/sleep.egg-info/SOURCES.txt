@@ -1,0 +1,11 @@
+README.md
+setup.py
+_skbuild/linux-x86_64-3.11/cmake-install/lib/libbusysleep.so
+_skbuild/linux-x86_64-3.11/cmake-install/lib/python3.11/site-packages/sleep/__init__.py
+_skbuild/linux-x86_64-3.11/cmake-install/lib/python3.11/site-packages/sleep/core.cpython-311-x86_64-linux-gnu.so
+_skbuild/linux-x86_64-3.11/cmake-install/src/sleep/__init__.py
+src/sleep.egg-info/PKG-INFO
+src/sleep.egg-info/SOURCES.txt
+src/sleep.egg-info/dependency_links.txt
+src/sleep.egg-info/not-zip-safe
+src/sleep.egg-info/top_level.txt
