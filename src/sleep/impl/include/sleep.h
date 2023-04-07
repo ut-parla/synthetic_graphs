@@ -16,7 +16,7 @@ using namespace chrono;
 void busy_sleep(const unsigned micro) {
 
 #ifdef SLEEP_ENABLE_NVTX
-  nvtx3::scoped_range r{"Internal Sleep"};
+  nvtx3::scoped_range r{"busy_sleep"};
 #endif
 
   auto block = chrono::microseconds(micro);
