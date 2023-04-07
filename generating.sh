@@ -50,7 +50,7 @@ for gen_idx in "${!GRAPH_GENERATORS[@]}"; do
                 for data_move_mode in "${DATA_MOVE_MODES[@]}"; do
                   FLAGS=" -weight "${computation_time}" -gil_count "$GIL_COUNT" -gil_time "$GIL_TIME" -user "$user_chosen_placement" -location 1"
                   FLAGS+=" -overlap 1 -level "${level}" -branch 2 "
-                  output_prefix="${GRAPH_TYPE}_${fd_data_knob}_${sd_data_knob}_${computation_time}_${user_chosen_placement}_${level}_$((num_gpus+1))_$((data_move_mode-1))"
+                  output_prefix="${GRAPH_TYPE}_${fd_data_knob}_${sd_data_knob}_${computation_time}_${user_chosen_placement}_${level}_$((num_gpus+1))_${data_move_mode}"
                   graph_generation_commands="python ${GRAPH_DIR}/${GRAPH_GENERATORS[$gen_idx]} "${FLAGS}" -output ${GRAPH_INPUT_DIR}/${output_prefix}.gph"
                   commands="python run.py -graph ${GRAPH_INPUT_DIR}/${output_prefix}.gph "
                   commands+=" -d "${sd_data_knob}" -data_move "${data_move_mode}" -user "${user_chosen_placement}" -weight "${computation_time}
@@ -81,7 +81,7 @@ for gen_idx in "${!GRAPH_GENERATORS[@]}"; do
                   elif [[ ${GRAPH_TYPE} == *"serial"* ]]; then
                     FLAGS+=" -overlap 1 -levels "${num_task}
                   fi
-                  output_prefix="${GRAPH_TYPE}_${fd_data_knob}_${sd_data_knob}_${computation_time}_${user_chosen_placement}_${num_task}_$((num_gpus+1))_$((data_move_mode-1)).out"
+                  output_prefix="${GRAPH_TYPE}_${fd_data_knob}_${sd_data_knob}_${computation_time}_${user_chosen_placement}_${num_task}_$((num_gpus+1))_${data_move_mode}.out"
                   graph_generation_commands="python ${GRAPH_DIR}/${GRAPH_GENERATORS[$gen_idx]} "${FLAGS}" -output ${GRAPH_INPUT_DIR}/${output_prefix}.gph"
                   commands="python run.py -graph ${GRAPH_INPUT_DIR}/${output_prefix}.gph "
                   commands+=" -d "${sd_data_knob}" -data_move "${data_move_mode}" -user "${user_chosen_placement}" -weight "${computation_time}
