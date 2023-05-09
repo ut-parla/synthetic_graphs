@@ -1,72 +1,29 @@
-from Cython.Build import cythonize
-from setuptools import setup, find_packages
-from setuptools.extension import Extension
 import os
+import skbuild
 
 
-cuda_flag = os.getenv("ENABLE_CUDA", None)
-nvtx_include = os.getenv("NVTX_INCLUDE", None)
+def main():
+    # Optional: Set the CONDA_PREFIX environment variable to the path of your conda environment
+    # Useful if CMAKE can't find the conda environment
+    cmake_args = []
+    if env_conda := os.getenv("CONDA_PREFIX"):
+        cmake_args.append(f"-DCONDA_PREFIX={env_conda}")
 
-nvtx_flag = False
+    # Find all python modules in the src directory
+    # package_list = find_namespace_packages(where='sleep')
+    # print("Found packages:", package_list)
 
-if nvtx_include is not None:
-    nvtx_flag = True
-    os.environ["CC"] = 'nvcc_wrapper'
-    os.environ["CXX"] = 'nvcc_wrapper'
-
-if cuda_flag is not None:
-    cuda_flag = True
-else:
-    cuda_flag = False
-
-
-def scandir(dir, files=[]):
-    for file in os.listdir(dir):
-        path = os.path.join(dir, file)
-        if os.path.isfile(path) and path.endswith(".pyx"):
-            files.append(path.replace(os.path.sep, ".")[:-4])
-        elif os.path.isdir(path):
-            scandir(path, files)
-    return files
-
-compile_args =["-std=c++11","-ldl", "-fno-stack-protector"]
-
-if nvtx_flag:
-    include_dirs = [nvtx_include]
-    compile_args += ["-DNVTX_ENABLE"]
-    print("BUILDING WITH NVTX SUPPORT")
-else:
-    include_dirs = []
-
-if cuda_flag:
-    compile_args += ["-DCUDA_ENABLE"]
-    compile_args += ["--expt-extended-lambda", "-Xcudafe","--diag_suppress=esa_on_defaulted_function_ignored"]
-
-def makeExtension(extName):
-    extPath = extName.replace(".", os.path.sep)+".pyx"
-    return Extension(
-        extName,
-        [extPath],
-        language='c++',
-        include_dirs=include_dirs,
-        extra_compile_args=compile_args
+    # Define the python modules to be built
+    skbuild.setup(
+        name="sleep",
+        version="0.0.0",
+        description="Python Wrapper for BusySleep",
+        packages=["sleep"],
+        package_dir={"sleep": "sleep_src"},
+        python_requires=">=3.8",
+        cmake_args=cmake_args,
     )
 
 
-extNames = scandir("sleep")
-extensions = [makeExtension(name) for name in extNames]
-
-setup(
-    setup_requires=['setuptools>=18.0', 'wheel', 'Cython'],
-    name="sleep",
-    packages=["sleep"],
-    ext_modules=cythonize(extensions),
-    package_data={
-        '':['*.pxd']
-    },
-    zip_safe=False,
-    include_package_data=True,
-    )
-
-
-
+if __name__ == "__main__":
+    main()

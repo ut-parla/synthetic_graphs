@@ -40,7 +40,7 @@ try:
     def make_parrays(array, names=None):
         l = list()
         for count, arr in enumerate(array):
-            l.append(asarray(arr, name=names[count]))
+            l.append(asarray(arr))
         return l
 except (ImportError,AttributeError):
     def make_parrays(array, names=None):

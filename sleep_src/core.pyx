@@ -1,4 +1,4 @@
-from sleep.core cimport sleeper, busy_sleep
+from sleep_src.core cimport sleeper, busy_sleep
 from libc.stdint cimport intptr_t
 import time 
 
