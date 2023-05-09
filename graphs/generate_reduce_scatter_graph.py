@@ -29,7 +29,7 @@ def fstr(template, **kwargs):
 
 parser = argparse.ArgumentParser(description='Create inverted tree [reduction] graph')
 parser.add_argument('-levels', metavar='width', type=int, help='how many levels in the reduction tree', default=4)
-parser.add_argument('-overlap', metavar='overlap', type=int, help='type of data read. e.g are the buffers shared. options = (False=0, True=1)', default=0)
+parser.add_argument('-overlap', metavar='overlap', type=int, help='type of data read. e.g are the buffers shared. options = (False=0, True=1)', default=1)
 parser.add_argument('-output', metavar='output', type=str, help='name of output file containing the graph', default="reduce.gph")
 parser.add_argument('-weight', metavar='weight', type=int, help='time (in microseconds) that the computation of the task should take', default=50000)
 parser.add_argument('-coloc', metavar='coloc', type=int, help=' x tasks can run on a device concurrently', default=1)
@@ -37,7 +37,7 @@ parser.add_argument('-location', metavar='location', type=int, help="valid runti
 parser.add_argument('-gil_count', metavar='gil_count', type=int, help="number of (intentional) additional gil accesses in the task", default=1)
 parser.add_argument('-gil_time', metavar='gil_time', type=int, help="time (in microseconds) that the gil is held", default=200)
 parser.add_argument('-N', metavar='N', type=int, help='total width of data block', default=2**19)
-parser.add_argument('-user', metavar='user', type=int, help='whether to specify optimal manual placment', default=0)
+parser.add_argument('-user', metavar='user', type=int, help='whether to specify optimal manual placment', default=1)
 parser.add_argument('-num_gpus', metavar='num_gpus', type=int, help='number of GPUs', default=4)
 parser.add_argument('-num_tasks', metavar='num_tasks', type=int, help='total number of tasks', default=10)
 args = parser.parse_args()
@@ -113,10 +113,10 @@ with open(output, 'w') as graph:
                 if d != (l_num_bulk_tasks - 1):
                     inout_data_block += ","
                     dependency_block += " : "
-            graph.write(f"{task_id} | {weight}, {coloc}, {bridge_task_dev_id}, {gil_count}, {gil_time} | {dependency_block} | : : {inout_data_block}")
+            graph.write(f"{task_id} | {weight}, {coloc}, {bridge_task_dev_id}, {gil_count}, {gil_time} | {dependency_block} | : : {inout_data_block}\n")
             if args.user:
                 bridge_task_dev_id += 1
-                if bridge_task_dev_id == num_gpus + 3
+                if bridge_task_dev_id == num_gpus + 3:
                     bridge_task_dev_id = 3
             last_bridge_task_id_str = f"{task_id}"
             last_bridge_task_id = int(task_id)
@@ -126,7 +126,7 @@ with open(output, 'w') as graph:
             bulk_task_dev_id = 3 if args.user else 1
             for bulk_task_id in range(l_num_bulk_tasks):
                 inout_data_block = f"{bulk_task_id}"
-                graph.write(f"{task_id} | {weight}, {coloc}, {bulk_task_dev_id}, {gil_count}, {gil_tim} | {last_bridge_task_id_str} | : : {inout_data_block}")
+                graph.write(f"{task_id} | {weight}, {coloc}, {bulk_task_dev_id}, {gil_count}, {gil_time} | {last_bridge_task_id_str} | : : {inout_data_block}\n")
                 l_num_bulk_tasks_per_gpu = l_num_bulk_tasks // num_gpus
                 if args.user:
                     if l_num_bulk_tasks % num_gpus >= (bulk_task_dev_id - 3):
