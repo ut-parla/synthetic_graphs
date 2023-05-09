@@ -138,7 +138,7 @@ def main_parla(data_config, task_space, iteration, G, verbose=False, reinit=Fals
             graph_elapsed = end_internal - start_internal
             graph_execution_times.append(graph_elapsed)
 
-            print(f"Iteration {i} | Time: {graph_elapsed}", flush=True)
+            print(f"Iteration {i} | Graph Time: {graph_elapsed}", flush=True)
             #print(f"{args.weight}, {args.threads}, {graph_elapsed}")
 
             #if reinit and (i!= 0):
