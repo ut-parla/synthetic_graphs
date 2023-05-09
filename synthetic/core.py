@@ -40,7 +40,7 @@ try:
     def make_parrays(array, names=None):
         l = list()
         for count, arr in enumerate(array):
-            l.append(asarray(arr, name=names[count]))
+            l.append(asarray(arr))
         return l
 except (ImportError,AttributeError):
     def make_parrays(array, names=None):
@@ -218,6 +218,7 @@ def load_movement(file, depend_dict, verify=False, verbose=False):
             #last touched by
             old_index = re.search("\<.*?\>", line)
             old_index = None if old_index is None else old_index.group(0).strip("<>")
+            print(old_index)
             old_index = None if old_index is None else int(float(old_index))
 
             data_idx = re.search("Data\[.*?\]", line)
@@ -447,7 +448,7 @@ def setup_data(data_config, d = 10, verbose=False, device_list=None,data_move=1,
 
     #If data move is 'Eager'
     if data_move == 2:
-        data = make_parrays(data, names=names)
+        data = make_parrays(data)
 
 
     return data
