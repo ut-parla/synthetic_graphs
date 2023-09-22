@@ -390,8 +390,8 @@ def make_networkx_datagraph(task_list, task_dictionaries, data_config, movement_
     dualH = H.dual()
 
     # Add weights for data size
-    for e in dualH.edges():
-        e.weights = data_config[int(str(e))][0]
+    #for e in dualH.edges():
+    #    e.weights = data_config[int(str(e))][0]
 
     H = dualH.dual()
 
@@ -2581,6 +2581,8 @@ def plot_memory(device_list, state):
     for state in states:
         for device in device_list:
             if device.name in state:
+                print(state)
+                print(device.name)
                 memory = state[device.name].available_memory(usage=True)
                 memory_count[device.name].append(memory)
 
@@ -2790,12 +2792,12 @@ graph_w_data = make_networkx_graph(task_list, (runtime_dict, dependency_dict, wr
 graph_full = make_networkx_graph(task_list, (runtime_dict, dependency_dict, write_dict, read_dict,
                                              count_dict), data_config, (data_tasks, data_task_dict, task_to_movement_dict), check_redundant=False)
 
-#hyper, hyper_dual = make_networkx_datagraph(task_list, (runtime_dict, dependency_dict, write_dict, read_dict,
-#                                                        count_dict), data_config, (data_tasks, data_task_dict, task_to_movement_dict))
+hyper, hyper_dual = make_networkx_datagraph(task_list, (runtime_dict, dependency_dict, write_dict, read_dict,
+                                                        count_dict), data_config, (data_tasks, data_task_dict, task_to_movement_dict))
 
 
 plot_graph(graph_full, data_dict=(read_dict, write_dict, dependency_dict))
-#plot_hypergraph(hyper_dual)
+plot_hypergraph(hyper_dual)
 
 # Create devices
 gpu0 = SyntheticDevice(
@@ -2845,7 +2847,10 @@ devices = scheduler.devices
 device_map = form_device_map(devices)
 data_map = initialize_data(data_config, device_map)
 data = list(data_map.values())
-state = State(graph_full, level=0)
+
+#Level = 0 (Save minimal state)
+#Level = 1 (Save everything! Deep Copy of objects! Needed for some plotting functions below.)
+state = State(graph_full, level=1)
 
 task_handles = initialize_task_handles(graph_full, task_dictionaries,
                                        movement_dictionaries, device_map, data_map)
@@ -2866,20 +2871,24 @@ for d in data:
     print(d)
 
 t = time.perf_counter()
-scheduler.run()
+graph_t = scheduler.run()
 t = time.perf_counter() - t
-print("Sim Time: ", t)
+print("Simulator Took (s): ", t)
+print("Predicted Graph Time (s): ", graph_t)
 
 
-import sys
-sys.exit(0)
-# point = state.get_state_at_time(0.5)
-# plot_graph(graph_full, state.active_state, task_device_color_map)
+#import sys
+#sys.exit(0)
+
+#point = state.get_state_at_time(0.5)
+#print(point)
+#plot_graph(graph_full, state.active_state, task_device_color_map)
 
 # make_image_folder("reduce_graphs", state)
 # make_image_folder_time(scheduler.time, 0.04166, "reduce_graphs_time", state)
 
-plot_memory(devices, state)
-plot_active_tasks(devices, state, "all_useful")
-# plot_transfers_data(data[0], devices, state)
+#plot_memory(devices, state)
+#plot_active_tasks(devices, state, "all_useful")
+#plot_transfers_data(data[0], devices, state)
 # make_interactive(scheduler.time, state)
+
