@@ -2764,8 +2764,8 @@ def make_interactive(end_time, state):
     root.mainloop()
 
 
-#data_config, task_list = read_graphx("test.gphx")  #
-data_config, task_list = read_graphx("reduce.gph")
+data_config, task_list = read_graphx("test.gphx")  #
+#data_config, task_list = read_graphx("reduce.gph")
 runtime_dict, dependency_dict, write_dict, read_dict, count_dict = convert_to_dictionary(
     task_list)
 
@@ -2790,8 +2790,8 @@ graph_w_data = make_networkx_graph(task_list, (runtime_dict, dependency_dict, wr
 graph_full = make_networkx_graph(task_list, (runtime_dict, dependency_dict, write_dict, read_dict,
                                              count_dict), data_config, (data_tasks, data_task_dict, task_to_movement_dict), check_redundant=False)
 
-hyper, hyper_dual = make_networkx_datagraph(task_list, (runtime_dict, dependency_dict, write_dict, read_dict,
-                                                        count_dict), data_config, (data_tasks, data_task_dict, task_to_movement_dict))
+#hyper, hyper_dual = make_networkx_datagraph(task_list, (runtime_dict, dependency_dict, write_dict, read_dict,
+#                                                        count_dict), data_config, (data_tasks, data_task_dict, task_to_movement_dict))
 
 
 plot_graph(graph_full, data_dict=(read_dict, write_dict, dependency_dict))
@@ -2869,6 +2869,8 @@ t = time.perf_counter()
 scheduler.run()
 t = time.perf_counter() - t
 print("Sim Time: ", t)
+
+
 import sys
 sys.exit(0)
 # point = state.get_state_at_time(0.5)
